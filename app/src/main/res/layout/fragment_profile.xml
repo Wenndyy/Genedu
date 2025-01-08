@@ -1,0 +1,381 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.owlvation.project.genedu.Dashboard.ManagementFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_rounded_bottom"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/ic_profile"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_person"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/tv_title_tools"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_title_tools"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/title_user_act"
+                android:textSize="20sp"
+                android:letterSpacing="0.03"
+                android:lineSpacingMultiplier="1.2"
+                android:fontFamily="@font/ubuntu_bold"
+                android:textColor="@color/white"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/ic_profile"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_subtitle_tools"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/ubuntu_regular"
+                android:letterSpacing="0.05"
+                android:lineSpacingMultiplier="1.2"
+                android:text="@string/subtitle_user_act"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_tools" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profileImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_person_holder"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/profileName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:fontFamily="@font/ubuntu_medium"
+                android:text="@string/hint_username"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/profileEmail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/profileImage"
+                app:layout_constraintTop_toTopOf="@+id/profileImage"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/profileEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/ubuntu_regular"
+                android:text="@string/hint_email"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/profileImage"
+                app:layout_constraintEnd_toEndOf="@id/profileName"
+                app:layout_constraintStart_toStartOf="@+id/profileName"
+                app:layout_constraintTop_toBottomOf="@+id/profileName" />
+
+            <TextView
+                android:id="@+id/verifyMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/warning_email_verify"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="16sp"
+                android:fontFamily="@font/ubuntu_regular"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profileImage"
+                android:layout_centerHorizontal="true"/>
+
+            <Button
+                android:id="@+id/verifyNow"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_verify"
+                android:background="@drawable/background_button_filled"
+                android:fontFamily="@font/ubuntu_medium"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp"
+                android:padding="16dp"
+                android:visibility="visible"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="@id/verifyMessage"
+                app:layout_constraintStart_toStartOf="@id/verifyMessage"
+                app:layout_constraintTop_toBottomOf="@+id/verifyMessage" />
+
+            <TextView
+                android:id="@+id/textAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/account"
+                android:textSize="16sp"
+                android:textColor="@color/colorPrimary"
+                android:fontFamily="@font/ubuntu_medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/verifyNow" />
+
+            <RelativeLayout
+                android:id="@+id/layoutAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textAccount">
+
+                <ImageView
+                    android:id="@+id/ic_account"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_manage_account"
+                    android:padding="8dp"
+                    android:background="@drawable/circle_background"
+                    app:tint="@color/white" />
+
+                <TextView
+                    android:id="@+id/textMnAccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@id/ic_account"
+                    android:text="@string/title_edit_profile"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/ubuntu_regular"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutAccount1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutAccount">
+                <ImageView
+                    android:id="@+id/ic_respw"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_respaw"
+                    app:tint="@color/white"
+                    android:padding="8dp"
+                    android:background="@drawable/circle_background"/>
+                <TextView
+                    android:id="@+id/textRespw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@id/ic_respw"
+                    android:text="@string/reset_password"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/ubuntu_regular"/>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/textSettings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/settings"
+                android:textSize="16sp"
+                android:textColor="@color/colorPrimary"
+                android:fontFamily="@font/ubuntu_medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutAccount1" />
+
+            <RelativeLayout
+                android:id="@+id/layoutSettings2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textSettings">
+
+                <ImageView
+                    android:id="@+id/ic_theme"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_day"
+                    android:padding="8dp"
+                    android:background="@drawable/circle_background"/>
+
+                <TextView
+                    android:id="@+id/textTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@id/ic_theme"
+                    android:text="@string/theme"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/ubuntu_regular"/>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutSettings3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutSettings2">
+
+                <ImageView
+                    android:id="@+id/ic_language"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_language"
+                    android:padding="8dp"
+                    android:background="@drawable/circle_background"/>
+
+                <TextView
+                    android:id="@+id/textLanguage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@id/ic_language"
+                    android:text="@string/language"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/ubuntu_regular"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutSettings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutSettings3">
+
+                <ImageView
+                    android:id="@+id/ic_tos"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_tos"
+                    app:tint="@color/white"
+                    android:padding="8dp"
+                    android:background="@drawable/circle_background"/>
+
+                <TextView
+                    android:id="@+id/textTOS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@id/ic_tos"
+                    android:text="@string/title_tos_act"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/ubuntu_regular"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutSettings1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutSettings">
+                <ImageView
+                    android:id="@+id/ic_privpol"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_privpol"
+                    android:padding="8dp"
+                    app:tint="@color/white"
+                    android:background="@drawable/circle_background"/>
+                <TextView
+                    android:id="@+id/textPrivPol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@id/ic_privpol"
+                    android:text="@string/title_privpol_act"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/ubuntu_regular"/>
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btnlogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/background_button_filled"
+                android:fontFamily="@font/ubuntu_medium"
+                android:padding="16dp"
+                android:text="@string/btn_logout"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutSettings1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

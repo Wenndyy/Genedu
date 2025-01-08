@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.owlvation.project.genedu.Tool.CodeGenerator.QrGenerator">
+
+    <RelativeLayout
+        android:id="@+id/layoutTitle"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@drawable/background_rounded_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ic_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:clickable="true"
+            android:src="@drawable/ic_back"
+            app:tint="@color/white" />
+
+        <RelativeLayout
+            android:id="@+id/layoutTitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:id="@+id/ic_tr"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/qrcode" />
+
+            <TextView
+                android:id="@+id/textDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/ic_tr"
+                android:text="@string/qr_code"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:fontFamily="@font/ubuntu_bold"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/etCreateQrCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:gravity="top|left"
+        android:hint="@string/enter_your_text_here"
+        android:fontFamily="@font/ubuntu_regular"
+        android:background="@drawable/border_edit_text"
+        android:padding="16dp"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@+id/layoutTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/generateQr"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/background_button_filled"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etCreateQrCode" >
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/background_button_filled"
+            android:padding="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_generate_qr"
+            app:tint="@color/black" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/generate"
+            android:fontFamily="@font/ubuntu_medium"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageQrCode"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:src="?attr/actionBarDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/generateQr" />
+
+    <LinearLayout
+        android:id="@+id/downloadQr"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/background_button_filled"
+        app:layout_constraintTop_toBottomOf="@+id/imageQrCode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/shareQr">
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_download"
+            android:background="@drawable/background_button_filled"
+            android:scaleType="centerCrop"
+            android:padding="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/download"
+            android:fontFamily="@font/ubuntu_medium"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/shareQr"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:background="@drawable/background_button_filled"
+        app:layout_constraintTop_toBottomOf="@+id/imageQrCode"
+        app:layout_constraintStart_toEndOf="@+id/downloadQr"
+        app:layout_constraintEnd_toEndOf="parent">
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_share"
+            android:background="@drawable/background_button_filled"
+            android:scaleType="centerCrop"
+            android:padding="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/share"
+            android:fontFamily="@font/ubuntu_medium"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

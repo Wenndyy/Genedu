@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.owlvation.project.genedu.Dashboard.HomeFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_rounded_bottom"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tvGreeting"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/ubuntu_bold"
+                android:letterSpacing="0.05"
+                android:lineSpacingExtra="4dp"
+                android:maxLines="1"
+                android:text="@string/greetings"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageAccount"
+                app:layout_constraintEnd_toStartOf="@id/imageAccount"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvTagline"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/ubuntu_regular"
+                android:letterSpacing="0.05"
+                android:lineSpacingMultiplier="1.2"
+                android:text="@string/main_slogan"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageAccount" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageAccount"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_person"
+                app:civ_circle_background_color="@color/colorPrimaryDark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <SearchView
+                android:id="@+id/svMain"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_rounded_white"
+                android:iconifiedByDefault="false"
+                android:queryHint="@string/search_home"
+                android:searchIcon="@drawable/ic_search"
+                android:closeIcon="@drawable/ic_close"
+                android:theme="@style/SearchViewStyle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTagline"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                android:layout_margin="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/tvUsageStats"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/weekly_study_progress"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/ubuntu_medium"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardStreak"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="8dp"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="2dp"
+                        app:cardBackgroundColor="@color/colorPrimary"
+                        app:layout_constraintTop_toBottomOf="@id/tvUsageStats"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/cardTotalTime">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/current_streak"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/ubuntu_regular"/>
+
+                            <TextView
+                                android:id="@+id/tvStreakCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/streak_count"
+                                android:textColor="@color/white"
+                                android:textSize="18sp"
+                                android:fontFamily="@font/ubuntu_medium"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardTotalTime"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="2dp"
+                        app:cardBackgroundColor="@color/colorPrimary"
+                        app:layout_constraintTop_toTopOf="@id/cardStreak"
+                        app:layout_constraintStart_toEndOf="@id/cardStreak"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/this_week"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/ubuntu_regular"/>
+
+                            <TextView
+                                android:id="@+id/tvTotalTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/time_hours_minutes"
+                                android:textColor="@color/white"
+                                android:textSize="18sp"
+                                android:fontFamily="@font/ubuntu_medium"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/usageChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/cardStreak"/>
+
+                    <LinearLayout
+                        android:id="@+id/layoutProductiveDay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/usageChart">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_star"
+                            app:tint="@color/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/tvMostProductiveDay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:fontFamily="@font/ubuntu_medium"
+                            android:text="@string/most_productive_day"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardNotes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="8dp"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="2dp"
+                        app:cardBackgroundColor="@color/colorPrimary"
+                        app:layout_constraintTop_toBottomOf="@id/layoutProductiveDay"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/cardTasks">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:padding="12dp">
+
+                            <ImageView
+                                android:id="@+id/imageNoteIcon"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_note"
+                                />
+
+                            <TextView
+                                android:id="@+id/tvNotesCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:fontFamily="@font/ubuntu_medium"
+                                android:text="@string/notes_count"
+                                android:textColor="@color/white"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardTasks"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="2dp"
+                        app:cardBackgroundColor="@color/colorPrimary"
+                        app:layout_constraintTop_toTopOf="@id/cardNotes"
+                        app:layout_constraintStart_toEndOf="@id/cardNotes"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:padding="12dp">
+
+                            <ImageView
+                                android:id="@+id/imageTaskIcon"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_task" />
+
+                            <TextView
+                                android:id="@+id/tvTasksCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="18sp"
+                                android:fontFamily="@font/ubuntu_medium"
+                                android:text="@string/tasks_count"
+                                android:textColor="@color/white"
+                                android:layout_marginStart="8dp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tvRecentNotes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:fontFamily="@font/ubuntu_medium"
+                android:text="@string/recent_notes"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardSummary"
+                app:layout_constraintEnd_toStartOf="@id/tvViewAll" />
+
+            <TextView
+                android:id="@+id/tvViewAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_all"
+                android:fontFamily="@font/ubuntu_regular"
+                android:textSize="16sp"
+                android:layout_marginEnd="16dp"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvRecentNotes"
+                app:layout_constraintBottom_toBottomOf="@id/tvRecentNotes" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvRecentNotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingVertical="8dp"
+                android:paddingHorizontal="16dp"
+                android:orientation="horizontal"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvRecentNotes" />
+
+            <TextView
+                android:id="@+id/tvRecentTasks"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:fontFamily="@font/ubuntu_medium"
+                android:text="Recent Tasks"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rvRecentNotes"
+                app:layout_constraintEnd_toStartOf="@id/tvViewAllTask" />
+
+            <TextView
+                android:id="@+id/tvViewAllTask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_all"
+                android:fontFamily="@font/ubuntu_regular"
+                android:textSize="16sp"
+                android:layout_marginEnd="16dp"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvRecentTasks"
+                app:layout_constraintBottom_toBottomOf="@id/tvRecentTasks" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvRecentTasks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:orientation="horizontal"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvRecentTasks" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

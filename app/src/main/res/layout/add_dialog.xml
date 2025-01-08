@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <EditText
+        android:id="@+id/etHours"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/hours"
+        android:textSize="14sp"
+        android:layout_marginStart="24dp"
+        android:fontFamily="@font/ubuntu_regular"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/etMinutes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etMinutes"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/minutes"
+        android:textSize="14sp"
+        android:fontFamily="@font/ubuntu_regular"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/etHours"
+        app:layout_constraintEnd_toStartOf="@id/etSeconds"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etSeconds"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/seconds"
+        android:textSize="14sp"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="@font/ubuntu_regular"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/etMinutes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnOk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_ok"
+        android:textSize="16sp"
+        android:fontFamily="@font/ubuntu_medium"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:textColor="@color/white"
+        android:background="@drawable/background_button_filled"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etHours" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

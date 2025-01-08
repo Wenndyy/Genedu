@@ -1,0 +1,44 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.Genedu" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="Theme.Genedu" parent="Base.Theme.Genedu" />
+
+    <style name="AppTheme.FullScreenDialog" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="actionMenuTextColor">@color/colorAccent</item>
+    </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:editTextColor">@color/colorPrimary</item>
+        <item name="android:textColorHint">@android:color/darker_gray</item>
+        <item name="fontFamily">@font/ubuntu_regular</item>
+    </style>
+
+    <style name="CustomActivityAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+    </style>
+
+    <style name="CustomDateTextAppearance" parent="TextAppearance.MaterialCalendarWidget.Date">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/ubuntu_regular</item>
+    </style>
+
+    <style name="CustomWeekDayAppearance" parent="TextAppearance.MaterialCalendarWidget.WeekDay">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/ubuntu_medium</item>
+    </style>
+
+    <style name="CustomHeaderTextAppearance" parent="TextAppearance.MaterialCalendarWidget.Header">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/ubuntu_medium</item>
+    </style>
+</resources>

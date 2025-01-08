@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "385525202845",
+    "firebase_url": "https://study-buddy-f3037-default-rtdb.firebaseio.com",
+    "project_id": "study-buddy-f3037",
+    "storage_bucket": "study-buddy-f3037.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385525202845:android:e851158b7cde6b378ff974",
+        "android_client_info": {
+          "package_name": "com.ndregt.project.studybuddy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "385525202845-cqo2730ssjsrkn9tu800cf0pqqc50m92.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ndregt.project.studybuddy",
+            "certificate_hash": "a6c02ff67542cdcc5e2149404a1f6f03176600a9"
+          }
+        },
+        {
+          "client_id": "385525202845-l4fe88krknh91eu9assic3jsprrvhu4n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ndregt.project.studybuddy",
+            "certificate_hash": "5ea173dac630e21a28425f61db78aa31ce4b6fdd"
+          }
+        },
+        {
+          "client_id": "385525202845-sag0mekltaehogvomf035g5qe0svvdhm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-k91hv66lA6YTIEunMWARXwIMywxNUEI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "385525202845-0vdcnhoqmm8throeugf403s60q6d7t89.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385525202845:android:6871f42e0115402a8ff974",
+        "android_client_info": {
+          "package_name": "com.owlvation.project.genedu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "385525202845-u3dcr1gk4tr7r67a4hapa7pc4cdn14a4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.owlvation.project.genedu",
+            "certificate_hash": "a6c02ff67542cdcc5e2149404a1f6f03176600a9"
+          }
+        },
+        {
+          "client_id": "385525202845-sag0mekltaehogvomf035g5qe0svvdhm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-k91hv66lA6YTIEunMWARXwIMywxNUEI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "385525202845-0vdcnhoqmm8throeugf403s60q6d7t89.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

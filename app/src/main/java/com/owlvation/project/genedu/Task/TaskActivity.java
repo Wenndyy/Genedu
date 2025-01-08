@@ -1,0 +1,228 @@
+package com.owlvation.project.genedu.Task;
+
+import static android.content.ContentValues.TAG;
+
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.owlvation.project.genedu.R;
+import com.owlvation.project.genedu.Task.Adapter.TaskAdapter;
+import com.owlvation.project.genedu.Task.Model.AlarmDatabaseHelper;
+import com.owlvation.project.genedu.Task.Model.TaskModel;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class TaskActivity extends AppCompatActivity implements OnDialogCloseListner {
+
+    private ImageView icBack;
+    private RecyclerView recyclerView;
+    private FloatingActionButton mFab;
+    private FirebaseFirestore firestore;
+    private TaskAdapter adapter;
+    private List<TaskModel> mList;
+    private Query query;
+    SearchView searchView;
+    OnQueryTextListener queryTextListener;
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    private AlarmDatabaseHelper dbHelper;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_task);
+        dbHelper = new AlarmDatabaseHelper(this);
+        searchView = findViewById(R.id.searchTask);
+
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+
+        queryTextListener = new OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                filterTask(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterTask(newText);
+                return true;
+            }
+        };
+
+        searchView.setOnQueryTextListener(queryTextListener);
+
+        icBack = findViewById(R.id.ic_back);
+        icBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        recyclerView = findViewById(R.id.recycerlview);
+        mFab = findViewById(R.id.floatingActionButton);
+        firestore = FirebaseFirestore.getInstance();
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(TaskActivity.this));
+
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG);
+            }
+        });
+
+
+
+        mList = new ArrayList<>();
+        adapter = new TaskAdapter(TaskActivity.this, mList,this);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new TouchHelper(adapter, mList));
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+        recyclerView.setAdapter(adapter);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                showData();
+            }
+        });
+
+        showData();
+
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("task_name")) {
+            String taskName = intent.getStringExtra("task_name");
+            String dueDate = intent.getStringExtra("due_date");
+            String dueTime = intent.getStringExtra("due_time");
+
+
+            DetailTaskDialog dialog = new DetailTaskDialog();
+            Bundle bundle = new Bundle();
+            bundle.putString("task", taskName);
+            bundle.putString("dueDate", dueDate);
+            bundle.putString("dueTime", dueTime);
+            dialog.setArguments(bundle);
+
+            dialog.show(getSupportFragmentManager(), "DetailTaskDialog");
+        }
+
+    }
+
+    private void filterTask(String query) {
+        List<TaskModel> filteredList = new ArrayList<>();
+        for (TaskModel note : mList) {
+            if (note.getTask().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(note);
+            }
+        }
+        adapter.filterTask(filteredList);
+
+        if (filteredList.isEmpty()) {
+            Toast.makeText(TaskActivity.this, getString(R.string.no_matching_results_found_please_search_by_title), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private void showData() {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        query = firestore.collection("task").document(userId)
+                .collection("myTask")
+                .orderBy("dueTime", Query.Direction.DESCENDING);
+
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    mList.clear();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String id = document.getId();
+                        TaskModel taskModel = document.toObject(TaskModel.class).withId(id);
+                        mList.add(taskModel);
+
+                    }
+                    adapter.notifyDataSetChanged();
+                    if (!mList.isEmpty()) {
+                        showSwipeHintSnackbar();
+                    }
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+
+
+
+    private void showSwipeHintSnackbar() {
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
+                R.string.swipe_left_to_update_and_swipe_right_to_delete, Snackbar.LENGTH_LONG);
+        snackbar.setAction(R.string.ok, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                snackbar.dismiss();
+            }
+        });
+        snackbar.show();
+    }
+
+    @Override
+    public void onDialogClose(DialogInterface dialogInterface) {
+        showData();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onTaskClick(TaskModel taskModel) {
+        DetailTaskDialog detailDialog = new DetailTaskDialog();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("taskId", taskModel.TaskId);
+        bundle.putString("task", taskModel.getTask());
+        bundle.putString("dueDate", taskModel.getDueDate());
+        bundle.putString("dueTime", taskModel.getDueTime());
+        detailDialog.setArguments(bundle);
+
+        detailDialog.show(getSupportFragmentManager(), "DetailTaskDialog");
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+
+
+}
+

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+
+    <application
+        android:name="com.owlvation.project.genedu.Dashboard.HomeHelper.BaseApp"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/app_logo"
+        android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@drawable/app_logo"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Genedu"
+        tools:targetApi="31">
+
+
+        <activity
+            android:name="com.owlvation.project.genedu.Tool.ChatAi.ChatAiActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.owlvation.project.genedu.Dashboard.BottomNavActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|adjustPan" />
+        <activity
+            android:name="com.owlvation.project.genedu.Welcome.WelcomingScreenActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.owlvation.project.genedu.Tool.PdfViewer.PdfViewerActivity"
+            android:exported="false" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.owlvation.project.genedu.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <activity
+            android:name="com.owlvation.project.genedu.Tool.CodeGenerator.BarGenerator"
+            android:exported="false" />
+        <activity
+            android:name="com.owlvation.project.genedu.Tool.CodeGenerator.QrGenerator"
+            android:exported="false" />
+        <activity
+            android:name="com.owlvation.project.genedu.Tool.CodeGenerator.CodeGeneratorActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.owlvation.project.genedu.Tool.CodeScanner.CodeScannerActivity"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="barcode" />
+
+        <activity
+            android:name="com.owlvation.project.genedu.Tool.TextRecognition.TextRecognitionActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.owlvation.project.genedu.Tool.Stopwatch.StopwatchActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.owlvation.project.genedu.Tool.Compass.CompassActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.owlvation.project.genedu.User.PrivpolActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.owlvation.project.genedu.User.TOSActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Genedu" />
+        <activity
+            android:name="com.owlvation.project.genedu.Note.CreateNoteActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity
+            android:name="com.owlvation.project.genedu.Note.NoteActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.owlvation.project.genedu.User.EditProfile"
+            android:exported="false" />
+        <activity
+            android:name="com.owlvation.project.genedu.User.Login"
+            android:exported="false" />
+        <activity
+            android:name="com.owlvation.project.genedu.User.Register"
+            android:exported="false" />
+        <activity
+            android:name="com.owlvation.project.genedu.Mimo.MindfulMomentsActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.owlvation.project.genedu.Task.TaskActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.owlvation.project.genedu.Welcome.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name="com.owlvation.project.genedu.Task.MyBroadcastReceiver" />
+    </application>
+
+</manifest>

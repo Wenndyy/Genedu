@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.owlvation.project.genedu.Tool.Stopwatch.StopwatchActivity">
+
+    <RelativeLayout
+        android:id="@+id/layoutTitle"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@drawable/background_rounded_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ic_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:clickable="true"
+            android:src="@drawable/ic_back"
+            app:tint="@color/white" />
+
+        <RelativeLayout
+            android:id="@+id/layoutTitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:id="@+id/ic_stopwatch"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_stopwatch" />
+
+            <TextView
+                android:id="@+id/textDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/ic_stopwatch"
+                android:text="@string/title_stopwatch_act"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:fontFamily="@font/ubuntu_bold"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/time_left_sw"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/ubuntu_bold"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutTitle" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timer">
+
+        <LinearLayout
+            android:id="@+id/save"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginEnd="24dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/background_button_filled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/start_pauseBtn"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_savetime"
+                android:background="@drawable/background_button_filled"
+                android:scaleType="centerCrop"
+                android:padding="10dp"
+                app:tint="@color/black" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_save"
+                android:fontFamily="@font/ubuntu_medium"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/start_pauseBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="@drawable/background_button_filled"
+            android:text="@string/start_mimo"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:fontFamily="@font/ubuntu_medium"
+            android:layout_marginEnd="24dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/reset"
+            app:layout_constraintStart_toEndOf="@+id/save"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/reset"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/background_button_filled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/start_pauseBtn"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_reset"
+                android:background="@drawable/background_button_filled"
+                android:scaleType="centerCrop"
+                android:padding="5dp"
+                app:tint="@color/black"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/reset"
+                android:fontFamily="@font/ubuntu_medium"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ListView
+        android:id="@+id/listview1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="24dp"
+        android:padding="5dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

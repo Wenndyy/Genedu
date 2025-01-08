@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.owlvation.project.genedu.Tool.Compass.CompassActivity">
+
+    <RelativeLayout
+        android:id="@+id/layoutTitle"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@drawable/background_rounded_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ic_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:clickable="true"
+            android:src="@drawable/ic_back"
+            app:tint="@color/white" />
+
+        <RelativeLayout
+            android:id="@+id/layoutTitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:id="@+id/ic_compass"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_compas" />
+
+            <TextView
+                android:id="@+id/textDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/ic_compass"
+                android:text="@string/title_compass_act"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:fontFamily="@font/ubuntu_bold"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/degreeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_gravity="center"
+        android:autofillHints=""
+        android:text="0"
+        android:fontFamily="@font/ubuntu_bold"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutTitle"/>
+
+    <ImageView
+        android:id="@+id/compass_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_compass"
+        app:tint="#FDB515"
+        app:layout_constraintTop_toBottomOf="@+id/degreeTV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

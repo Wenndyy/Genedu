@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottom_home"
+        android:icon="@drawable/ic_home_black"
+        android:title="Home" />
+    <item
+        android:id="@+id/bottom_management"
+        android:icon="@drawable/ic_management"
+        android:title="Management" />
+    <item
+        android:id="@+id/bottom_tools"
+        android:icon="@drawable/ic_tools"
+        android:title="Tools" />
+    <item
+        android:id="@+id/bottom_profile"
+        android:icon="@drawable/ic_person"
+        android:title="Profile" />
+</menu>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.owlvation.project.genedu.User.EditProfile">
+
+    <RelativeLayout
+        android:id="@+id/layoutTitle"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@drawable/background_rounded_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ic_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:clickable="true"
+            android:src="@drawable/ic_back"
+            app:tint="@color/white" />
+
+        <RelativeLayout
+            android:id="@+id/layoutTitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:id="@+id/ic_mnAccount"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_manage_account"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/textDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/ic_mnAccount"
+                android:text="@string/title_edit_profile"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:fontFamily="@font/ubuntu_bold"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/layoutProfileImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutTitle">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImageView"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@mipmap/ic_launcher_round" />
+
+        <ImageView
+            android:id="@+id/editProfileIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom|end"
+            android:padding="10dp"
+            android:src="@drawable/ic_editt"
+            android:background="@drawable/circle_background"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/username"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/ubuntu_regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutProfileImage" />
+
+    <EditText
+        android:id="@+id/profileUsername"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="24dp"
+        android:ems="10"
+        android:hint="@string/hint_username"
+        android:fontFamily="@font/ubuntu_regular"
+        android:background="@drawable/border_edit_text"
+        android:padding="16dp"
+        android:textSize="14sp"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textUsername" />
+
+    <TextView
+        android:id="@+id/textEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/email"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/ubuntu_regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileUsername" />
+
+    <EditText
+        android:id="@+id/profileEmailAddress"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="24dp"
+        android:ems="10"
+        android:fontFamily="@font/ubuntu_regular"
+        android:background="@drawable/border_edit_text"
+        android:padding="16dp"
+        android:textSize="14sp"
+        android:hint="@string/hint_email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textEmail" />
+
+    <TextView
+        android:id="@+id/emailEditNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/warning_email_edit_profile"
+        android:textColor="#FDB515"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileEmailAddress" />
+
+    <Button
+        android:id="@+id/saveProfileInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/btn_save_change"
+        android:fontFamily="@font/ubuntu_medium"
+        android:textColor="@color/white"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:padding="16dp"
+        android:background="@drawable/background_button_filled"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailEditNote"  />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
