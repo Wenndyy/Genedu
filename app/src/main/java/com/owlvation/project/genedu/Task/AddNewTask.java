@@ -1,7 +1,5 @@
 package com.owlvation.project.genedu.Task;
 
-import static com.owlvation.project.genedu.R.string.notif_reminder;
-
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
@@ -19,7 +17,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,9 +119,6 @@ public class AddNewTask extends BottomSheetDialogFragment {
             dueDateReminder = dueDateReminderUpdate;
             dueTimeReminder = dueTimeReminderUpdate;
 
-
-            Log.d(TAG, "dueDateReminder: "+dueDateReminderUpdate);
-            Log.d(TAG, "dueTimeReminder: "+dueTimeReminderUpdate);
             mTaskEdit.setText(task);
             setDueDate.setText(dueDateUpdate);
             setDueTime.setText(dueTimeUpdate);
@@ -217,22 +211,12 @@ public class AddNewTask extends BottomSheetDialogFragment {
                         tahun = year;
                         bulan = month;
                         hari = dayOfMonth;
-                        if (isDateBeforeDueDate(year, month, dayOfMonth)) {
-                            Toast.makeText(context, notif_reminder, Toast.LENGTH_SHORT).show();
-                            return;
-                        }
                         setDueReminder.setText(dueDateReminder);
                         mSaveBtn.setEnabled(true);
                     }
                 }, YEAR, MONTH, DAY);
-                String[] dueDateParts = dueDate.split("/");
-                int dueDay = Integer.parseInt(dueDateParts[0]);
-                int dueMonth = Integer.parseInt(dueDateParts[1]);
-                int dueYear = Integer.parseInt(dueDateParts[2]);
 
-                Calendar dueCalendar = Calendar.getInstance();
-                dueCalendar.set(dueYear, dueMonth - 1, dueDay);
-                datePickerDialog.getDatePicker().setMinDate(dueCalendar.getTimeInMillis());
+                datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
 
                 datePickerDialog.show();
             }
@@ -308,7 +292,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
                     String currentDateReminder = !dueDateReminder.isEmpty() ? dueDateReminder : dueDateReminderUpdate;
                     String currentTimeReminder = !dueTimeReminder.isEmpty() ? dueTimeReminder : dueTimeReminderUpdate;
 
-                    // Update jika ada perubahan
+
                     if (!dueDateReminder.isEmpty() && !dueDateReminder.equals(dueDateReminderUpdate)) {
                         taskMap.put("dueDateReminder", dueDateReminder);
                         updateDate = true;
@@ -319,18 +303,17 @@ public class AddNewTask extends BottomSheetDialogFragment {
                         updateTime = true;
                     }
 
-                    // Jika ada reminder yang sudah diset sebelumnya (baik tanggal atau waktu)
+
                     if(currentTimeReminder != null && currentDateReminder != null &&
                             !currentTimeReminder.isEmpty() && !currentDateReminder.isEmpty()) {
 
-                        // Parse waktu current (baru atau lama)
                         if (updateTime) {
                             String[] timeParts = currentTimeReminder.split(":");
                             jam = Integer.parseInt(timeParts[0]);
                             menit = Integer.parseInt(timeParts[1]);
                         }
 
-                        // Parse tanggal current (baru atau lama)
+
                         if (updateDate) {
                             String[] dateParts = currentDateReminder.split("/");
                             hari = Integer.parseInt(dateParts[0]);
@@ -338,7 +321,6 @@ public class AddNewTask extends BottomSheetDialogFragment {
                             tahun = Integer.parseInt(dateParts[2]);
                         }
 
-                        // Ambil nilai yang tidak diupdate dari database
                         Cursor cursor = dbHelper.getAlarmById(alarmIdUpdate);
                         if (cursor != null && cursor.moveToFirst()) {
                             int hourIndex = cursor.getColumnIndex(AlarmDatabaseHelper.COLUMN_HOUR);
@@ -360,7 +342,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
                                     tahun = cursor.getInt(yearIndex);
                                 }
 
-                                // Buat alarm baru dengan kombinasi nilai baru dan lama
+
                                 alarmId = dbHelper.addAlarm(jam, menit, hari, bulan, tahun);
                                 if (alarmId != -1) {
                                     taskMap.put("alarmId", alarmId);
@@ -478,26 +460,10 @@ public class AddNewTask extends BottomSheetDialogFragment {
         );
 
         alarmManager.cancel(pendingIntent);
-
-        Log.d("Alarm", "Alarm with ID " + alarmId + " has been cancelled.");
     }
 
 
-    private boolean isDateBeforeDueDate(int year, int month, int dayOfMonth) {
-        String[] dueDateParts = dueDate.split("/");
-        int dueDay = Integer.parseInt(dueDateParts[0]);
-        int dueMonth = Integer.parseInt(dueDateParts[1]);
-        int dueYear = Integer.parseInt(dueDateParts[2]);
 
-        Calendar dueCalendar = Calendar.getInstance();
-        dueCalendar.set(dueYear, dueMonth - 1, dueDay);
-
-        Calendar reminderCalendar = Calendar.getInstance();
-        reminderCalendar.set(year, month - 1, dayOfMonth);
-
-
-        return reminderCalendar.before(dueCalendar);
-    }
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -559,13 +525,13 @@ public class AddNewTask extends BottomSheetDialogFragment {
         Intent i = new Intent(context, MyBroadcastReceiver.class);
         i.putExtra("alarm_id", alarmId);
         i.setAction("com.example.unique_action." + alarmId);
-
+        dueDate = setDueDate.getText().toString();
+        dueTime = setDueTime.getText().toString();
+        i.putExtra("id", id);
         i.putExtra("alarm_id", alarmId);
         i.putExtra("task_name", task.isEmpty() ? mTaskEdit.getText().toString().trim() : task);
-        i.putExtra("due_date", dueDate);
-        i.putExtra("due_time", dueTime);
-
-        Log.d("DEBUG", "Task: " + (task.isEmpty() ? mTaskEdit.getText().toString().trim() : task) + ", Due Date: " + dueDate + ", Due Time: " + dueTime);
+        i.putExtra("due_date", dueDate.isEmpty() ? dueDateUpdate :dueDate);
+        i.putExtra("due_time", dueTime.isEmpty() ? dueTimeUpdate :dueTime);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,

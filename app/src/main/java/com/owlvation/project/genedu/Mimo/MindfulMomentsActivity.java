@@ -67,8 +67,8 @@ public class MindfulMomentsActivity extends AppCompatActivity {
     private void resetTime() {
         if (timeCountDown != null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(com.owlvation.project.genedu.R.string.reset_time_mimo);
-            builder.setPositiveButton(com.owlvation.project.genedu.R.string.positive_button_mimo, (dialog, which) -> {
+            builder.setMessage(R.string.reset_time_mimo);
+            builder.setPositiveButton(R.string.positive_button_mimo, (dialog, which) -> {
                 if (timeCountDown != null) {
                     timeCountDown.cancel();
                     timeCountDown = null;
@@ -98,7 +98,7 @@ public class MindfulMomentsActivity extends AppCompatActivity {
                 selectedMusicUri = null;
                 Toast.makeText(this, R.string.music_selection, Toast.LENGTH_SHORT).show();
             });
-            builder.setNegativeButton(com.owlvation.project.genedu.R.string.negative_button_mimo, (dialog, which) -> {
+            builder.setNegativeButton(R.string.negative_button_mimo, (dialog, which) -> {
             });
 
             AlertDialog dialog = builder.create();
@@ -136,7 +136,7 @@ public class MindfulMomentsActivity extends AppCompatActivity {
                 timePause();
             }
         } else {
-            Toast.makeText(this, com.owlvation.project.genedu.R.string.toast_warning_start_mimo, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.toast_warning_start_mimo, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -193,7 +193,7 @@ public class MindfulMomentsActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "Error playing music", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.error_playing_music, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -237,14 +237,13 @@ public class MindfulMomentsActivity extends AppCompatActivity {
                 LinearLayout reset = findViewById(R.id.reset);
                 reset.setEnabled(false);
 
-                // Hentikan musik ketika timer selesai
                 if (mediaPlayer != null) {
                     mediaPlayer.stop();
                     mediaPlayer.release();
                     mediaPlayer = null;
                 }
 
-                Toast.makeText(MindfulMomentsActivity.this, com.owlvation.project.genedu.R.string.toast_times_up_mimo, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MindfulMomentsActivity.this, R.string.toast_times_up_mimo, Toast.LENGTH_SHORT).show();
             }
         }.start();
     }

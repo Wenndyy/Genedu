@@ -48,7 +48,7 @@
             android:name="com.owlvation.project.genedu.Welcome.WelcomingScreenActivity"
             android:exported="false" />
         <activity
-            android:name="com.owlvation.project.genedu.Tool.PdfViewer.PdfViewerActivity"
+            android:name="com.owlvation.project.genedu.Tool.DocumentViewer.DocumentViewerActivity"
             android:exported="false" />
 
         <provider

@@ -176,7 +176,7 @@ public class Register extends AppCompatActivity {
                                                                 })
                                                                 .addOnFailureListener(e -> {
                                                                     progressBar.setVisibility(View.GONE);
-                                                                    Toast.makeText(Register.this, "Error saving user data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Register.this, R.string.failed_the_registered_account_already_exists, Toast.LENGTH_SHORT).show();
                                                                 });
                                                     } else {
                                                         progressBar.setVisibility(View.GONE);
@@ -187,14 +187,14 @@ public class Register extends AppCompatActivity {
                                                     }
                                                 } else {
                                                     progressBar.setVisibility(View.GONE);
-                                                    Toast.makeText(Register.this, "Error checking user data: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(Register.this, R.string.failed_the_registered_account_already_exists, Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });
                             }
                         } else {
                             progressBar.setVisibility(View.GONE);
-                            Toast.makeText(Register.this, "Authentication Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Register.this, R.string.failed_the_registered_account_already_exists, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

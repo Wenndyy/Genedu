@@ -8,33 +8,30 @@
     android:background="@drawable/bg_dialog_detail_task"
     android:elevation="3dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="end">
 
-        <ImageView
-            android:id="@+id/close_dialog"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_close" />
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:layout_gravity="start"
+        android:layout_marginBottom="10dp">
 
         <TextView
+            android:layout_weight="2"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="start"
             android:text="@string/detail_task"
             android:fontFamily="@font/ubuntu_bold"
-            android:textColor="@color/black"
+            android:textColor="@color/colorPrimary"
             android:textSize="21sp" />
+        <ImageView
+            android:id="@+id/close_dialog"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:src="@drawable/ic_close_red" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,17 +54,32 @@
                 android:layout_height="wrap_content"
                 android:text="Task"
                 android:fontFamily="@font/ubuntu_medium"
+                android:layout_marginBottom="10dp"
                 android:textSize="18sp"
-                android:textColor="@color/black" />
+               />
 
-            <TextView
-                android:id="@+id/task_date"
+            <LinearLayout
+                android:layout_marginBottom="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date"
-                android:fontFamily="@font/ubuntu_regular"
-                android:textSize="14sp"
-                android:textColor="@color/black" />
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/task_deadline"
+                    android:fontFamily="@font/ubuntu_regular"
+                    android:textSize="14sp"
+                 />
+                <TextView
+                    android:id="@+id/task_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date"
+                    android:fontFamily="@font/ubuntu_regular"
+                    android:textSize="14sp"
+                   />
+            </LinearLayout>
+
         </LinearLayout>
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/mcheckbox"

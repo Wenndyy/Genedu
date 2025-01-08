@@ -28,16 +28,17 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         long alarmId = intent.getLongExtra("alarm_id", -1);
-        String taskName = intent.getStringExtra("task_name");  // Nama tugas
-        String dueDate = intent.getStringExtra("due_date");    // Tanggal jatuh tempo
-        String dueTime = intent.getStringExtra("due_time");    // Waktu jatuh tempo
+        String taskName = intent.getStringExtra("task_name");
+        String id = intent.getStringExtra("id");
+        String dueDate = intent.getStringExtra("due_date");
+        String dueTime = intent.getStringExtra("due_time");
+        int status = intent.getIntExtra("status",0);
+        Log.d("DEBUG", "Received task: " + taskName + ", Due Date: " + dueDate + ", Due Time: " + dueTime);
         if (alarmId == -1) {
             Log.d("DEBUG", "Received alarm with invalid ID");
             return;
         }
-        Log.d("DEBUG", "Task: " + taskName + ", Due Date: " + dueDate + ", Due Time: " + dueTime);
 
-        // Wake lock
         PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wakeLock = powerManager.newWakeLock(
                 PowerManager.PARTIAL_WAKE_LOCK |
@@ -48,7 +49,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         wakeLock.acquire(60 * 1000L);
 
         try {
-            // Vibrate
+
             Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 vibrator.vibrate(VibrationEffect.createOneShot(2000, VibrationEffect.DEFAULT_AMPLITUDE));
@@ -56,13 +57,16 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
                 vibrator.vibrate(2000);
             }
 
-            // Intent untuk membuka aplikasi
+
             Intent fullScreenIntent = new Intent(context, TaskActivity.class);
 
             fullScreenIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            fullScreenIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            fullScreenIntent.putExtra("id", id);
             fullScreenIntent.putExtra("task_name", taskName);
             fullScreenIntent.putExtra("due_date", dueDate);
             fullScreenIntent.putExtra("due_time", dueTime);
+            fullScreenIntent.putExtra("status", status);
             PendingIntent pendingIntent = PendingIntent.getActivity(
                     context,
                     (int) alarmId,
@@ -70,7 +74,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
                     PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
             );
 
-            // Set alarm sound
+
             Uri alarmSound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.task);
             if (alarmSound == null) {
                 alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -79,8 +83,8 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "Notify")
                     .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
-                    .setContentTitle("Task Reminder: " + taskName)  // Nama tugas dari intent
-                    .setContentText("Due on " + dueDate + " at " + dueTime)  // Tanggal dan waktu dari intent
+                    .setContentTitle("Task Reminder: " + taskName)
+                    .setContentText("Due on " + dueDate + " at " + dueTime)
                     .setAutoCancel(true)
                     .setPriority(NotificationCompat.PRIORITY_MAX)
                     .setCategory(NotificationCompat.CATEGORY_ALARM)
@@ -91,7 +95,6 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 
             NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
 
-            // Cek izin notifikasi jika API >= 33
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS)
                         != PackageManager.PERMISSION_GRANTED) {
@@ -100,10 +103,8 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
                 }
             }
 
-            // Tampilkan notifikasi
+
             notificationManagerCompat.notify((int) alarmId, builder.build());
-
-
 
         } finally {
             wakeLock.release();

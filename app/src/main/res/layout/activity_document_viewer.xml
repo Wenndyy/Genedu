@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.owlvation.project.genedu.Tool.PdfViewer.PdfViewerActivity">
+    tools:context="com.owlvation.project.genedu.Tool.DocumentViewer.DocumentViewerActivity">
 
     <RelativeLayout
         android:id="@+id/layoutTitle"
@@ -46,7 +46,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@id/ic_tools"
-                android:text="@string/title_pdf_viewer"
+                android:text="@string/title_document_viewer"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:fontFamily="@font/ubuntu_bold"/>
@@ -96,7 +96,7 @@
 
         <LinearLayout
             android:id="@+id/previous"
-            android:layout_width="160dp"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
@@ -142,7 +142,7 @@
 
         <LinearLayout
             android:id="@+id/next"
-            android:layout_width="160dp"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
@@ -184,9 +184,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutAction"
-       android:layout_margin="24dp"
+        android:layout_margin="24dp"
         android:elevation="8dp"
         android:background="@color/white"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
+    <LinearLayout
+        android:id="@+id/layoutDocument"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -176,7 +176,7 @@ public class Login extends AppCompatActivity {
                                                                 })
                                                                 .addOnFailureListener(e -> {
                                                                     progressBar.setVisibility(View.GONE);
-                                                                    Toast.makeText(Login.this, "Error saving user data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Login.this, R.string.failed_make_sure_the_account_is_registered, Toast.LENGTH_SHORT).show();
                                                                 });
                                                     } else {
                                                         progressBar.setVisibility(View.GONE);
@@ -187,14 +187,14 @@ public class Login extends AppCompatActivity {
                                                     }
                                                 } else {
                                                     progressBar.setVisibility(View.GONE);
-                                                    Toast.makeText(Login.this, "Error checking user data: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(Login.this, R.string.failed_make_sure_the_account_is_registered, Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });
                             }
                         } else {
                             progressBar.setVisibility(View.GONE);
-                            Toast.makeText(Login.this, "Authentication Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this, R.string.failed_make_sure_the_account_is_registered, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

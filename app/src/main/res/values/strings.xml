@@ -146,8 +146,8 @@
     <string name="error_imageview_not_found">Error: ImageView not found</string>
     <string name="choose_an_app">Choose an app</string>
     <string name="failed_to_share_qr_code">Failed to share QR code</string>
-    <string name="pdf_viewer">PDF Viewer</string>
-    <string name="title_pdf_viewer">Your Viewer PDF File</string>
+    <string name="document_viewer">Document Viewer</string>
+    <string name="title_document_viewer">Your Viewer Document File</string>
     <string name="pick_file">Pick File</string>
     <string name="previous">Previous</string>
     <string name="next">Next</string>
@@ -263,5 +263,7 @@
     <string name="notif_reminder">The reminder date should not be less than the due date</string>
     <string name="add_music">Add Music</string>
     <string name="music_selection">Music selection has been reset</string>
+    <string name="task_deadline">Task deadline: </string>
+    <string name="error_playing_music">Error playing music</string>
 
 </resources>

@@ -74,6 +74,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         bundle.putString("dueDateReminder", taskModel.getDueDateReminder());
         bundle.putString("dueTimeReminder", taskModel.getDueTimeReminder());
         bundle.putString("id", taskModel.TaskId);
+        bundle.putInt("status", taskModel.getStatus());
         bundle.putLong("alarmId", taskModel.getAlarmId());
 
         AddNewTask addNewTask = new AddNewTask();
@@ -86,11 +87,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         TaskModel taskModel = todoList.get(position);
-        holder.mCheckBox.setText(taskModel.getTask());
+        holder.taksName.setText(taskModel.getTask());
 
-        holder.mDueDateTv.setText(activity.getString(R.string.due_on) + taskModel.getDueDate());
+        holder.mDueDateTv.setText(taskModel.getDueDate());
 
-        holder.mDueTimeTv.setText(activity.getString(R.string.at) + taskModel.getDueTime());
+        holder.mDueTimeTv.setText(taskModel.getDueTime());
+        holder.mCheckBox.setOnCheckedChangeListener(null);
 
         holder.mCheckBox.setChecked(toBoolean(taskModel.getStatus()));
 
@@ -129,14 +131,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-
+        TextView taksName;
         TextView mDueDateTv;
         TextView mDueTimeTv;
         CheckBox mCheckBox;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            taksName = itemView.findViewById(R.id.taskname);
             mDueTimeTv = itemView.findViewById(R.id.tv_due_time);
             mDueDateTv = itemView.findViewById(R.id.tv_due_date);
             mCheckBox = itemView.findViewById(R.id.mcheckbox);

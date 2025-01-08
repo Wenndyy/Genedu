@@ -2,7 +2,6 @@ package com.owlvation.project.genedu.Note;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
@@ -149,8 +148,6 @@ public class NoteActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.e("NoteActivity", "Error fetching notes: " + e.getMessage());
-
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 });

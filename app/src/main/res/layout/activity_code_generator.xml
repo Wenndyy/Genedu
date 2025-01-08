@@ -88,17 +88,20 @@
                 android:layout_height="200dp"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"
+                android:layout_gravity="center"
                 android:background="@drawable/background">
 
                 <ImageView
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:src="@drawable/qrcode"
-                    android:paddingStart="18dp"/>
+                   />
 
                 <ImageView
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:src="@drawable/barcode"/>
             </LinearLayout>
         </LinearLayout>

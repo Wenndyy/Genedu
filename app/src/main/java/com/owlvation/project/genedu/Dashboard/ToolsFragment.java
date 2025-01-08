@@ -42,7 +42,7 @@ public class ToolsFragment extends Fragment {
         models.add(new Model(R.drawable.ic_tr, R.string.text_recognition, R.string.title_text_recognition));
         models.add(new Model(R.drawable.ic_scannercode, R.string.code_scanner, R.string.title_scanner_code));
         models.add(new Model(R.drawable.ic_generator, R.string.code_generator, R.string.title_generator_code));
-        models.add(new Model(R.drawable.ic_pdf, R.string.pdf_viewer, R.string.title_pdf_viewer));
+        models.add(new Model(R.drawable.ic_pdf, R.string.document_viewer, R.string.title_document_viewer));
         models.add(new Model(R.drawable.ic_ai_bot, R.string.geneduai, R.string.geduai_desc));
         adapter = new Adapter(models, requireContext());
 

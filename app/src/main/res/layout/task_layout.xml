@@ -21,18 +21,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp">
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/mcheckbox"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/layout_task"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/ubuntu_medium"
-                android:paddingStart="10dp"
-                android:text="This is task 1"
-                android:textSize="16sp"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/mcheckbox"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ubuntu_medium"
+                   />
+                <TextView
+                    android:id="@+id/taskname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ubuntu_medium"
+                    android:text="This is task 1"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
+
+
 
             <TextView
                 android:id="@+id/tv_due_date"
@@ -45,7 +60,7 @@
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tv_due_time"
-                app:layout_constraintTop_toBottomOf="@+id/mcheckbox" />
+                app:layout_constraintTop_toBottomOf="@+id/layout_task" />
 
             <TextView
                 android:id="@+id/tv_due_time"
@@ -58,7 +73,7 @@
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mcheckbox" />
+                app:layout_constraintTop_toBottomOf="@+id/layout_task" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

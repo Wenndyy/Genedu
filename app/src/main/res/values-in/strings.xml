@@ -145,8 +145,8 @@
     <string name="error_imageview_not_found">Error: ImageView tidak ditemukan</string>
     <string name="choose_an_app">Pilih aplikasi</string>
     <string name="failed_to_share_qr_code">Gagal membagikan Kode QR</string>
-    <string name="pdf_viewer">PDF Viewer</string>
-    <string name="title_pdf_viewer">Penampil File PDF Anda</string>
+    <string name="document_viewer">Document Viewer</string>
+    <string name="title_document_viewer">Penampil File Document Anda</string>
     <string name="pick_file">Pilih File</string>
     <string name="previous">Sebelumnya</string>
     <string name="next">Selanjutnya</string>
@@ -218,7 +218,7 @@
     <string name="subtitle_user_act">Kelola dan perbarui informasi akun Anda</string>
     <string name="exit">Keluar Aplikasi</string>
     <string name="geneduai">GeneduAI</string>
-    <string name="geduai_desc">Your learning assistent</string>
+    <string name="geduai_desc">Asisten pembelajaran Anda</string>
     <string name="tasks_for_date">Tugas untuk %s</string>
     <string name="due_time">Waktu</string>
     <string name="close">Tutup</string>
@@ -261,5 +261,6 @@
     <string name="notif_reminder">Tanggal pengingat tidak boleh lebih kecil dari tanggal jatuh tempo</string>
     <string name="add_music">Tambah Musik</string>
     <string name="music_selection">Pilihan musik telah diatur ulang</string>
-
+    <string name="task_deadline">Waktu tenggat: </string>
+    <string name="error_playing_music">Error memutar musik</string>
 </resources>

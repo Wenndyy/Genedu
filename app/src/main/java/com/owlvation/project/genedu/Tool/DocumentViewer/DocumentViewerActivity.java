@@ -1,4 +1,4 @@
-package com.owlvation.project.genedu.Tool.PdfViewer;
+package com.owlvation.project.genedu.Tool.DocumentViewer;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -19,7 +19,7 @@ import com.owlvation.project.genedu.R;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class PdfViewerActivity extends AppCompatActivity {
+public class DocumentViewerActivity extends AppCompatActivity {
 
     TextView numberOfPage;
     ImageView result;
@@ -33,7 +33,7 @@ public class PdfViewerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pdf_viewer);
+        setContentView(R.layout.activity_document_viewer);
 
         pickFile = findViewById(R.id.pickFile);
         prevPage = findViewById(R.id.previous);

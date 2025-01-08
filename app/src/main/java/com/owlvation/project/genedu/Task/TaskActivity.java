@@ -119,23 +119,41 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("task_name")) {
+            String id = intent.getStringExtra("id");
             String taskName = intent.getStringExtra("task_name");
             String dueDate = intent.getStringExtra("due_date");
             String dueTime = intent.getStringExtra("due_time");
+            int status = intent.getIntExtra("status",0);
 
 
-            DetailTaskDialog dialog = new DetailTaskDialog();
-            Bundle bundle = new Bundle();
-            bundle.putString("task", taskName);
-            bundle.putString("dueDate", dueDate);
-            bundle.putString("dueTime", dueTime);
-            dialog.setArguments(bundle);
 
-            dialog.show(getSupportFragmentManager(), "DetailTaskDialog");
+
+            showDetailTaskDialog(id, taskName, dueDate, dueTime,status);
+        } else {
+            Log.e("TaskActivity", "Intent is null");
         }
 
     }
 
+    private void showDetailTaskDialog(String id, String taskName, String dueDate, String dueTime, int status) {
+        Log.d("TaskActivity", "Attempting to show DetailTaskDialog");
+
+        DetailTaskDialog dialog = new DetailTaskDialog();
+        Bundle bundle = new Bundle();
+        bundle.putString("id", id);
+        bundle.putString("task", taskName);
+        bundle.putString("dueDate", dueDate);
+        bundle.putString("dueTime", dueTime);
+        bundle.putInt("status", status);
+        dialog.setArguments(bundle);
+
+        try {
+            dialog.show(getSupportFragmentManager(), "DetailTaskDialog");
+            Log.d("TaskActivity", "DetailTaskDialog shown successfully");
+        } catch (Exception e) {
+            Log.e("TaskActivity", "Failed to show DetailTaskDialog", e);
+        }
+    }
     private void filterTask(String query) {
         List<TaskModel> filteredList = new ArrayList<>();
         for (TaskModel note : mList) {
@@ -155,7 +173,7 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         query = firestore.collection("task").document(userId)
                 .collection("myTask")
-                .orderBy("dueTime", Query.Direction.DESCENDING);
+                .orderBy("dueDate", Query.Direction.DESCENDING);
 
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -166,7 +184,6 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
                         String id = document.getId();
                         TaskModel taskModel = document.toObject(TaskModel.class).withId(id);
                         mList.add(taskModel);
-
                     }
                     adapter.notifyDataSetChanged();
                     if (!mList.isEmpty()) {
@@ -175,9 +192,9 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
-
                 swipeRefreshLayout.setRefreshing(false);
             }
+
         });
     }
 
@@ -197,8 +214,10 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
 
     @Override
     public void onDialogClose(DialogInterface dialogInterface) {
+        swipeRefreshLayout.setRefreshing(true);
         showData();
         adapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -210,6 +229,7 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
         bundle.putString("task", taskModel.getTask());
         bundle.putString("dueDate", taskModel.getDueDate());
         bundle.putString("dueTime", taskModel.getDueTime());
+        bundle.putInt("status", taskModel.getStatus());
         detailDialog.setArguments(bundle);
 
         detailDialog.show(getSupportFragmentManager(), "DetailTaskDialog");

@@ -44,7 +44,6 @@ public class AlarmDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // Add new alarm
     public long addAlarm(int hour, int minute, int day, int month, int year) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -58,30 +57,14 @@ public class AlarmDatabaseHelper extends SQLiteOpenHelper {
         return db.insert(TABLE_ALARMS, null, values);
     }
 
-    // Get all alarms
     public Cursor getAllAlarms() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.query(TABLE_ALARMS, null, null, null, null, null, null);
     }
 
-    // Delete alarm
     public void deleteAlarm(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_ALARMS, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
-    }
-
-    // Update alarm
-    public void updateAlarm(long id, int hour, int minute, int day, int month, int year) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put(COLUMN_HOUR, hour);
-        values.put(COLUMN_MINUTE, minute);
-        values.put(COLUMN_DAY, day);
-        values.put(COLUMN_MONTH, month);
-        values.put(COLUMN_YEAR, year);
-
-        db.update(TABLE_ALARMS, values, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
     }
 
 

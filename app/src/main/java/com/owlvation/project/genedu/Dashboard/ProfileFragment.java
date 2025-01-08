@@ -29,6 +29,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
@@ -150,16 +151,37 @@ public class ProfileFragment extends Fragment {
         btnLogout.setOnClickListener(v -> showLogoutConfirmationDialog());
 
         verifyNow.setOnClickListener(v -> resendVerificationEmail());
+        if (user != null) {
+            boolean isEmailUser = false;
+            boolean hasGoogleProvider = false;
 
-        resetPassLocal.setOnClickListener(v -> {
-            if (user.isEmailVerified()) {
-                resetPassLocal.setEnabled(true);
-                resetPassword();
-            } else {
-                resetPassLocal.setEnabled(false);
-                Toast.makeText(getActivity(), R.string.please_verify_your_email_to_reset_your_password, Toast.LENGTH_SHORT).show();
+
+            for (UserInfo profile : user.getProviderData()) {
+                String providerId = profile.getProviderId();
+                if (providerId.equals("password")) {
+                    isEmailUser = true;
+                }
+                if (providerId.equals("google.com")) {
+                    hasGoogleProvider = true;
+                }
             }
-        });
+
+
+            if (isEmailUser && !hasGoogleProvider) {
+                resetPassLocal.setVisibility(View.VISIBLE);
+                resetPassLocal.setOnClickListener(v -> {
+                    if (user.isEmailVerified()) {
+                        resetPassLocal.setEnabled(true);
+                        resetPassword();
+                    } else {
+                        resetPassLocal.setEnabled(false);
+                        Toast.makeText(getActivity(), R.string.please_verify_your_email_to_reset_your_password, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                resetPassLocal.setVisibility(View.GONE);
+            }
+        }
 
         changeProfileImage.setOnClickListener(v -> {
             if (user.isEmailVerified()) {
@@ -174,6 +196,8 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
+
+
 
     private void loadUserProfile() {
         if (!isAdded() || getActivity() == null) return;

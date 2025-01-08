@@ -68,6 +68,15 @@ public class ChatAiActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.error_input_message, Toast.LENGTH_SHORT).show();
             }
         });
+
+        ImageView icClear = findViewById(R.id.ic_clear);
+        icClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearChatMessages();
+            }
+        });
+
     }
 
     private void addChatMessage(String message, boolean isUser) {
@@ -121,6 +130,10 @@ public class ChatAiActivity extends AppCompatActivity {
         if (imm != null) {
             imm.hideSoftInputFromWindow(inputMessage.getWindowToken(), 0);
         }
+    }
+    private void clearChatMessages() {
+        chatMessages.clear();
+        chatAdapter.notifyDataSetChanged();
     }
 
 

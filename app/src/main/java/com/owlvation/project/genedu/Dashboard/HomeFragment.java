@@ -371,7 +371,7 @@ public class HomeFragment extends Fragment {
             db.collection("task")
                     .document(currentUser.getUid())
                     .collection("myTask")
-                    .orderBy("dueTime", Query.Direction.DESCENDING)
+                    .orderBy("dueDate", Query.Direction.DESCENDING)
                     .get()
                     .addOnSuccessListener(queryDocumentSnapshots -> {
                         if (isAdded()) {
@@ -381,6 +381,7 @@ public class HomeFragment extends Fragment {
                             recentTasksList.clear();
                             int count = 0;
                             for (DocumentSnapshot document : queryDocumentSnapshots) {
+                                Log.d("TaskData", "Document: " + document.getData());
                                 if (count >= 3) break;
 
                                 TaskModel task = document.toObject(TaskModel.class);

@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -106,7 +105,6 @@ public class TouchHelper extends ItemTouchHelper.SimpleCallback {
                 alarmManager.cancel(pendingIntent);
             }
 
-            Log.d("Alarm", "Alarm with ID " + alarmId + " has been cancelled.");
         }
     }
 

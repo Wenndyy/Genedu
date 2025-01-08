@@ -16,7 +16,7 @@ import com.owlvation.project.genedu.Tool.ChatAi.ChatAiActivity;
 import com.owlvation.project.genedu.Tool.CodeGenerator.CodeGeneratorActivity;
 import com.owlvation.project.genedu.Tool.CodeScanner.CodeScannerActivity;
 import com.owlvation.project.genedu.Tool.Compass.CompassActivity;
-import com.owlvation.project.genedu.Tool.PdfViewer.PdfViewerActivity;
+import com.owlvation.project.genedu.Tool.DocumentViewer.DocumentViewerActivity;
 import com.owlvation.project.genedu.Tool.Stopwatch.StopwatchActivity;
 import com.owlvation.project.genedu.Tool.TextRecognition.TextRecognitionActivity;
 
@@ -68,8 +68,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             } else if (model.getTitle() == R.string.code_generator) {
                 Intent moveCodeGenerator = new Intent(context, CodeGeneratorActivity.class);
                 context.startActivity(moveCodeGenerator);
-            } else if (model.getTitle() == R.string.pdf_viewer) {
-                Intent movePdfViewer = new Intent(context, PdfViewerActivity.class);
+            } else if (model.getTitle() == R.string.document_viewer) {
+                Intent movePdfViewer = new Intent(context, DocumentViewerActivity.class);
                 context.startActivity(movePdfViewer);
             } else if (model.getTitle() == R.string.geneduai) {
                 Intent moveChatAi = new Intent(context, ChatAiActivity.class);
