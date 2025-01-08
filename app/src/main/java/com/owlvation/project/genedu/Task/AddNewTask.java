@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +76,8 @@ public class AddNewTask extends BottomSheetDialogFragment {
 
     private String date;
 
+    private boolean check;
+
     public static AddNewTask newInstance() {
         return new AddNewTask();
     }
@@ -104,6 +107,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         boolean isUpdate = false;
+        check = false;
 
         final Bundle bundle = getArguments();
         if (bundle != null) {
@@ -146,11 +150,15 @@ public class AddNewTask extends BottomSheetDialogFragment {
 
         switchToggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
+                check = true;
                 layoutReminderDueDate.setVisibility(View.VISIBLE);
                 layoutReminderDueTime.setVisibility(View.VISIBLE);
             } else {
                 layoutReminderDueDate.setVisibility(View.GONE);
                 layoutReminderDueTime.setVisibility(View.GONE);
+                dueDateReminder = "";
+                dueTimeReminder = "";
+                check = false;
             }
         });
 
@@ -296,11 +304,15 @@ public class AddNewTask extends BottomSheetDialogFragment {
                     if (!dueDateReminder.isEmpty() && !dueDateReminder.equals(dueDateReminderUpdate)) {
                         taskMap.put("dueDateReminder", dueDateReminder);
                         updateDate = true;
+                    }else if (dueDateReminder.isEmpty() && dueDateReminderUpdate != null) {
+                        taskMap.put("dueDateReminder", "");
                     }
 
                     if (!dueTimeReminder.isEmpty() && !dueTimeReminder.equals(dueTimeReminderUpdate)) {
                         taskMap.put("dueTimeReminder", dueTimeReminder);
                         updateTime = true;
+                    } else if (dueTimeReminder.isEmpty() && dueTimeReminderUpdate != null) {
+                        taskMap.put("dueTimeReminder", "");
                     }
 
 
@@ -371,7 +383,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
                                                     Toast.makeText(context,
                                                             "Set due date reminder for "+ date + " at " + jam + ":" + menit,
                                                             Toast.LENGTH_SHORT).show();
-                                                    setTimer(alarmId);
+                                                    setTimer(alarmId, id);
                                                     cancelPreviousAlarm(alarmIdUpdate);
                                                     notification();
                                                 }
@@ -393,6 +405,12 @@ public class AddNewTask extends BottomSheetDialogFragment {
                     }
 
                 } else {
+                    if (check ){
+                        if(dueTimeReminder.isEmpty() || dueTimeReminder.isEmpty()){
+                            Toast.makeText(context, getString(R.string.please_fill_in_all_fields), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
                     if (task.isEmpty() || dueDate.isEmpty() || dueTime.isEmpty()) {
                         Toast.makeText(context, getString(R.string.please_fill_in_all_fields), Toast.LENGTH_SHORT).show();
                         return;
@@ -414,6 +432,9 @@ public class AddNewTask extends BottomSheetDialogFragment {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentReference> task) {
                                         if (task.isSuccessful()) {
+                                            String idTask = task.getResult().getId();
+                                            Log.d("Firestore", "Task ID: " + idTask);
+
                                             if (dueDateReminder != null && !dueDateReminder.isEmpty() &&
                                                     dueTimeReminder != null && !dueTimeReminder.isEmpty()) {
 
@@ -422,7 +443,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
                                                     Toast.makeText(context,
                                                             "Set due date reminder for "+ date + " at " + jam + ":" + menit,
                                                             Toast.LENGTH_SHORT).show();
-                                                    setTimer(alarmIdNew);
+                                                    setTimer(alarmIdNew, idTask);
                                                     notification();
                                                 }
                                             }
@@ -505,7 +526,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
         }
     }
 
-    private void setTimer(long alarmId) {
+    private void setTimer(long alarmId, String idTask) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         Calendar cal_alarm = Calendar.getInstance();
@@ -527,7 +548,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
         i.setAction("com.example.unique_action." + alarmId);
         dueDate = setDueDate.getText().toString();
         dueTime = setDueTime.getText().toString();
-        i.putExtra("id", id);
+        i.putExtra("id", idTask);
         i.putExtra("alarm_id", alarmId);
         i.putExtra("task_name", task.isEmpty() ? mTaskEdit.getText().toString().trim() : task);
         i.putExtra("due_date", dueDate.isEmpty() ? dueDateUpdate :dueDate);
@@ -540,7 +561,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP, cal_alarm.getTimeInMillis(), pendingIntent);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal_alarm.getTimeInMillis(), pendingIntent);
     }
 }
 

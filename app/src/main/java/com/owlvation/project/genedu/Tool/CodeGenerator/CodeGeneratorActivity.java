@@ -43,6 +43,7 @@ public class CodeGeneratorActivity extends AppCompatActivity {
         icBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                onBackPressed();
                 finish();
             }
         });

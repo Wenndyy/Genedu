@@ -36,6 +36,7 @@ public class BarGenerator extends AppCompatActivity {
     private ImageView imageBarCode;
     private LinearLayout download, share, generate;
     private Bitmap barcodeBitmap;
+    private ImageView icBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,15 @@ public class BarGenerator extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 shareBarcode();
+            }
+        });
+
+        icBack = findViewById(R.id.ic_back);
+        icBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+                finish();
             }
         });
     }
@@ -180,7 +190,7 @@ public class BarGenerator extends AppCompatActivity {
 
                 File imagePath = new File(getCacheDir(), "images");
                 File newFile = new File(imagePath, "image.png");
-                Uri contentUri = FileProvider.getUriForFile(this, "com.ndregt.project.genedu.fileprovider", newFile);
+                Uri contentUri = FileProvider.getUriForFile(this, "com.owlvation.project.genedu.fileprovider", newFile);
 
                 if (contentUri != null) {
                     Intent shareIntent = new Intent();

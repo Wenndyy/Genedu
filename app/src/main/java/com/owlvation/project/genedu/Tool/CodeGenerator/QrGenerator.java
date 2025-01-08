@@ -36,6 +36,7 @@ public class QrGenerator extends AppCompatActivity {
     private ImageView imageQrCode;
     private LinearLayout download, share, generate;
     private Bitmap qrcodeBitmap;
+    private ImageView icBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,14 @@ public class QrGenerator extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 shareQrCode();
+            }
+        });
+        icBack = findViewById(R.id.ic_back);
+        icBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+                finish();
             }
         });
     }
@@ -163,7 +172,7 @@ public class QrGenerator extends AppCompatActivity {
 
                 File imagePath = new File(getCacheDir(), "images");
                 File newFile = new File(imagePath, "image.png");
-                Uri contentUri = FileProvider.getUriForFile(this, "com.ndregt.project.genedu.fileprovider", newFile);
+                Uri contentUri = FileProvider.getUriForFile(this, "com.owlvation.project.genedu.fileprovider", newFile);
 
                 if (contentUri != null) {
                     Intent shareIntent = new Intent();

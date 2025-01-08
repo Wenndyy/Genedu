@@ -80,6 +80,7 @@ public class NoteActivity extends AppCompatActivity {
 
         noteList = new ArrayList<>();
 
+
         icBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +92,7 @@ public class NoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(NoteActivity.this, CreateNoteActivity.class));
+                finish();
             }
         });
 
@@ -120,6 +122,7 @@ public class NoteActivity extends AppCompatActivity {
 
     private void fetchNotes() {
         noteList.clear();
+        swipeRefreshLayout.setRefreshing(true);
 
         firebaseFirestore.collection("notes")
                 .document(firebaseUser.getUid())
@@ -148,6 +151,7 @@ public class NoteActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        searchView.setEnabled(true); // Aktifkan kembali meskipun terjadi error
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 });

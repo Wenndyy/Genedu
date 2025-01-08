@@ -1,7 +1,9 @@
 package com.owlvation.project.genedu.Note;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +18,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -79,6 +83,14 @@ public class CreateNoteActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.please_wait));
         progressDialog.setCancelable(false);
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAPTURE_IMAGE);
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CAPTURE_IMAGE);
+        }
+
 
         mPickPhotoNote.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -195,7 +207,9 @@ public class CreateNoteActivity extends AppCompatActivity {
             public void onSuccess(Void unused) {
                 progressDialog.dismiss();
                 Toast.makeText(CreateNoteActivity.this, getString(R.string.note_created_successfully), Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(CreateNoteActivity.this, NoteActivity.class));
+                Intent intent = new Intent(new Intent(CreateNoteActivity.this, NoteActivity.class));
+                startActivity(intent);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -251,7 +265,9 @@ public class CreateNoteActivity extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
                         progressDialog.dismiss();
                         Toast.makeText(CreateNoteActivity.this, getString(R.string.note_updated_successfully), Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(CreateNoteActivity.this, NoteActivity.class));
+                        Intent intent = new Intent(new Intent(CreateNoteActivity.this, NoteActivity.class));
+                        startActivity(intent);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         finish();
                     }
                 })
@@ -272,8 +288,9 @@ public class CreateNoteActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         progressDialog.dismiss();
-                        Toast.makeText(CreateNoteActivity.this, getString(R.string.note_updated_successfully), Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(CreateNoteActivity.this, NoteActivity.class));
+                        Intent intent = new Intent(new Intent(CreateNoteActivity.this, NoteActivity.class));
+                        startActivity(intent);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         finish();
                     }
                 })

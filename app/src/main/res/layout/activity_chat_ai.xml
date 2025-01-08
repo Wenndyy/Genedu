@@ -47,7 +47,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@id/ic_tr"
-                android:text="@string/geneduai"
+                android:text="@string/geduai_desc"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:fontFamily="@font/ubuntu_bold"/>

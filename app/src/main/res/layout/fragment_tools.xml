@@ -70,7 +70,7 @@
                 android:iconifiedByDefault="false"
                 android:queryHint="@string/search_tools"
                 android:searchIcon="@drawable/ic_search"
-                android:closeIcon="@drawable/ic_close_red"
+                android:closeIcon="@drawable/ic_close"
                 android:theme="@style/SearchViewStyle"
                 android:fontFamily="@font/ubuntu_regular"
                 app:layout_constraintStart_toStartOf="parent"

@@ -74,6 +74,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timer">
@@ -81,7 +82,7 @@
         <LinearLayout
             android:id="@+id/save"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:orientation="horizontal"
             android:layout_marginEnd="24dp"
             android:gravity="center_vertical"
@@ -115,7 +116,7 @@
         <Button
             android:id="@+id/start_pauseBtn"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="48dp"
             android:background="@drawable/background_button_filled"
             android:text="@string/start_mimo"
             android:textColor="@color/white"
@@ -131,7 +132,7 @@
         <LinearLayout
             android:id="@+id/reset"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:background="@drawable/background_button_filled"
