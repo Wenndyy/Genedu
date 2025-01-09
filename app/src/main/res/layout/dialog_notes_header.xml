@@ -1,0 +1,40 @@
+<!-- layout/dialog_notes_header.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="start"
+        android:paddingHorizontal="15dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:weightSum="2">
+        <TextView
+            android:layout_weight="2"
+            android:id="@+id/tvDialogTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:fontFamily="@font/ubuntu_bold"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp" />
+
+
+        <ImageView
+            android:id="@+id/close_dialog"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:src="@drawable/ic_close_red" />
+
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

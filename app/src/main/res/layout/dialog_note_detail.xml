@@ -5,6 +5,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="24dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="start"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:layout_weight="2"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="@string/detail_note"
+            android:fontFamily="@font/ubuntu_bold"
+            android:textColor="@color/colorPrimary"
+            android:textSize="21sp" />
+        <ImageView
+            android:id="@+id/close_dialog"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:src="@drawable/ic_close_red" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/titleTextView"

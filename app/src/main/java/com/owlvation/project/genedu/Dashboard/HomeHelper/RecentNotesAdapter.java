@@ -109,15 +109,17 @@ public class RecentNotesAdapter extends RecyclerView.Adapter<RecentNotesAdapter.
         } else {
             imageView.setVisibility(View.GONE);
         }
-
-        builder.setPositiveButton(R.string.ok, null);
+        
 
         AlertDialog alertDialog = builder.create();
         alertDialog.setOnShowListener(dialog -> {
             alertDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
         });
-
+        ImageView closeDialog = dialogView.findViewById(R.id.close_dialog);
+        closeDialog.setOnClickListener(v -> {
+            alertDialog.dismiss();
+        });
         alertDialog.show();
     }
 }

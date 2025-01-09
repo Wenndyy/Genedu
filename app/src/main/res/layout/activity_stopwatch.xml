@@ -124,6 +124,7 @@
             android:fontFamily="@font/ubuntu_medium"
             android:layout_marginEnd="24dp"
             android:gravity="center"
+            app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/reset"
             app:layout_constraintStart_toEndOf="@+id/save"

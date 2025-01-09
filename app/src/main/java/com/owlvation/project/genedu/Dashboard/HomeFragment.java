@@ -25,6 +25,8 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -204,6 +206,11 @@ public class HomeFragment extends Fragment {
                 }
             });
 
+            dataSet.setDrawValues(true);
+            dataSet.setHighlightEnabled(true);
+            dataSet.setDrawHighlightIndicators(true);
+            dataSet.setHighLightColor(getResources().getColor(R.color.colorPrimaryDark));
+
             LineData lineData = new LineData(dataSet);
             usageChart.setData(lineData);
 
@@ -221,6 +228,22 @@ public class HomeFragment extends Fragment {
             leftAxis.setGridColor(getResources().getColor(R.color.colorAccent));
             leftAxis.setTextColor(getResources().getColor(R.color.colorPrimary));
             leftAxis.setTextSize(12f);
+            CustomMarkerView marker = new CustomMarkerView(requireContext(), R.layout.custom_marker_view);
+            marker.setChartView(usageChart);
+            usageChart.setMarker(marker);
+
+            usageChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+                @Override
+                public void onValueSelected(Entry e, Highlight h) {
+                    usageChart.moveViewToX(e.getX());
+                    usageChart.highlightValue(h);
+                }
+
+                @Override
+                public void onNothingSelected() {
+                    usageChart.highlightValue(null);
+                }
+            });
 
             usageChart.getAxisRight().setEnabled(false);
             usageChart.getDescription().setEnabled(false);
@@ -230,6 +253,8 @@ public class HomeFragment extends Fragment {
             usageChart.setScaleEnabled(false);
             usageChart.animateY(1000);
             usageChart.invalidate();
+
+
 
         } catch (Exception e) {
             Log.e(TAG, "Error updating chart", e);

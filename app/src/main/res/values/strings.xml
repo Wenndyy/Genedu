@@ -265,5 +265,7 @@
     <string name="music_selection">Music selection has been reset</string>
     <string name="task_deadline">Task deadline: </string>
     <string name="error_playing_music">Error playing music</string>
+    <string name="detail_note">Detail Note</string>
+    <string name="minute">minute</string>
 
 </resources>

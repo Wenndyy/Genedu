@@ -263,4 +263,6 @@
     <string name="music_selection">Pilihan musik telah diatur ulang</string>
     <string name="task_deadline">Waktu tenggat: </string>
     <string name="error_playing_music">Error memutar musik</string>
+    <string name="detail_note">Detail Catatan</string>
+    <string name="minute">menit</string>
 </resources>

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
@@ -392,25 +393,20 @@ public class ManagementFragment extends Fragment {
 
         if (tasksForDate != null && !tasksForDate.isEmpty()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-            builder.setTitle(getString(R.string.tasks_for_date, dateString));
 
-            ListView listView = new ListView(requireContext());
-            List<String> taskDescriptions = new ArrayList<>();
+            View dialogView = getLayoutInflater().inflate(R.layout.dialog_notes_header, null);
 
-            for (TaskModel task : tasksForDate) {
-                taskDescriptions.add(String.format("%s\n%s: %s",
-                        task.getTask(),
-                        getString(R.string.due_time),
-                        task.getDueTime()));
-            }
+            TextView tvDialogTitle = dialogView.findViewById(R.id.tvDialogTitle);
+            tvDialogTitle.setText(getString(R.string.tasks_for_date, dateString));
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
-                    android.R.layout.simple_list_item_1, taskDescriptions);
+            ListView listView = dialogView.findViewById(R.id.listView);
+            TasksAdapter adapter = new TasksAdapter(requireContext(), tasksForDate);
             listView.setAdapter(adapter);
 
-            builder.setView(listView);
-            builder.setPositiveButton(R.string.close, null);
+            listView.setDivider(new ColorDrawable(requireContext().getColor(R.color.grey)));
+            listView.setDividerHeight(2);
 
+            listView.setPadding(8, 8, 8, 8);
             listView.setOnItemClickListener((parent, view, position, id) -> {
                 TaskModel selectedTask = tasksForDate.get(position);
                 Intent intent = new Intent(getActivity(), TaskActivity.class);
@@ -418,7 +414,14 @@ public class ManagementFragment extends Fragment {
                 startActivity(intent);
             });
 
-            builder.show();
+            builder.setView(dialogView);
+            ImageView closeDialog = dialogView.findViewById(R.id.close_dialog);
+
+            AlertDialog alertDialog = builder.create();
+
+            closeDialog.setOnClickListener(v -> alertDialog.dismiss());
+
+            alertDialog.show();
         } else {
             Toast.makeText(requireContext(),
                     R.string.no_tasks_for_date,
@@ -426,46 +429,44 @@ public class ManagementFragment extends Fragment {
         }
     }
 
+
     private void showNotesForDate(String dateString) {
         List<NoteModel> notesForDate = notesByDate.get(dateString);
-
         if (notesForDate != null && !notesForDate.isEmpty()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-            builder.setTitle(getString(R.string.notes_for_date, dateString));
 
-            ListView listView = new ListView(requireContext());
-            List<String> noteDescriptions = new ArrayList<>();
+            View dialogView = getLayoutInflater().inflate(R.layout.dialog_notes_header, null);
 
-            for (NoteModel note : notesForDate) {
-                SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-                String timeStr = timeFormat.format(note.getTimestamp());
+            TextView tvDialogTitle = dialogView.findViewById(R.id.tvDialogTitle);
+            tvDialogTitle.setText(getString(R.string.notes_for_date, dateString));
 
-                noteDescriptions.add(String.format("%s\n%s: %s",
-                        note.getTitle(),
-                        getString(R.string.created_at),
-                        timeStr));
-            }
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
-                    android.R.layout.simple_list_item_1, noteDescriptions);
+            ListView listView = dialogView.findViewById(R.id.listView);
+            NotesAdapter adapter = new NotesAdapter(requireContext(), notesForDate);
             listView.setAdapter(adapter);
 
-            builder.setView(listView);
-            builder.setPositiveButton(R.string.close, null);
+            listView.setDivider(new ColorDrawable(requireContext().getColor(R.color.grey)));
+            listView.setDividerHeight(2);
+            listView.setPadding(8, 8, 8, 8);
 
             listView.setOnItemClickListener((parent, view, position, id) -> {
                 NoteModel selectedNote = notesForDate.get(position);
                 showNoteDetail(selectedNote);
             });
 
-            builder.show();
+            builder.setView(dialogView);
+            ImageView closeDialog = dialogView.findViewById(R.id.close_dialog);
+
+            AlertDialog alertDialog = builder.create();
+
+            closeDialog.setOnClickListener(v -> alertDialog.dismiss());
+
+            alertDialog.show();
         } else {
             Toast.makeText(requireContext(),
                     R.string.no_notes_for_date,
                     Toast.LENGTH_SHORT).show();
         }
     }
-
     private void showNoteDetail(NoteModel note) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         View dialogView = LayoutInflater.from(requireContext())
@@ -492,7 +493,7 @@ public class ManagementFragment extends Fragment {
         }
 
         builder.setView(dialogView);
-        builder.setPositiveButton(R.string.ok, null);
+
 
         AlertDialog alertDialog = builder.create();
         alertDialog.setOnShowListener(dialog -> {
@@ -502,6 +503,10 @@ public class ManagementFragment extends Fragment {
             );
         });
 
+        ImageView closeDialog = dialogView.findViewById(R.id.close_dialog);
+        closeDialog.setOnClickListener(v -> {
+            alertDialog.dismiss();
+        });
         alertDialog.show();
     }
 
