@@ -59,7 +59,7 @@ public class MindfulMomentsActivity extends AppCompatActivity {
             }
         });
 
-        Button selectMusicButton = findViewById(R.id.btnAddMusic);
+        LinearLayout selectMusicButton = findViewById(R.id.btnAddMusic);
         selectMusicButton.setOnClickListener(v -> openMusicPicker());
 
     }
@@ -143,7 +143,7 @@ public class MindfulMomentsActivity extends AppCompatActivity {
 
     private void setTimeFunction() {
         Dialog timeDialog = new Dialog(this);
-        timeDialog.setContentView(R.layout.add_dialog);
+        timeDialog.setContentView(R.layout.dialog_add_mimo);
         EditText etHours = timeDialog.findViewById(R.id.etHours);
         EditText etMinutes = timeDialog.findViewById(R.id.etMinutes);
         EditText etSeconds = timeDialog.findViewById(R.id.etSeconds);

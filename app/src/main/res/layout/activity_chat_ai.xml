@@ -77,31 +77,32 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_alignParentBottom="true"
-        android:padding="8dp"
+        android:padding="16dp"
         android:id="@+id/bottom_layout">
+
         <EditText
+            android:id="@+id/inputMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/inputMessage"
-            android:layout_centerInParent="true"
-            android:hint="Type your message"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="14sp"
+            android:layout_toStartOf="@id/send_button"
+            android:background="@drawable/background_button_outlined"
+            android:hint="@string/type_your_message"
             android:maxLines="3"
-            android:padding="16dp"
-            android:layout_toLeftOf="@id/send_button"
-            android:background="@drawable/background_button_outlined"/>
+            android:padding="16dp" />
+
         <ImageButton
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:id="@+id/send_button"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="8dp"
             android:background="@drawable/circle_background"
-            android:textColor="@color/white"
             android:src="@drawable/ic_top_arrow"
-            android:padding="8dp"
-            android:text="Send"
-          />
+            android:padding="8dp" />
     </RelativeLayout>
 
 </RelativeLayout>

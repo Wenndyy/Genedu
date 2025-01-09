@@ -11,21 +11,20 @@
         android:orientation="horizontal"
         android:layout_gravity="start"
         android:layout_marginBottom="10dp">
-
         <TextView
             android:layout_weight="2"
-
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="start"
             android:text="@string/detail_note"
-            android:fontFamily="@font/ubuntu_bold"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/ubuntu_medium"
             android:textColor="@color/colorPrimary"
-            android:textSize="21sp" />
+            android:textSize="16sp" />
         <ImageView
             android:id="@+id/close_dialog"
-            android:layout_width="21dp"
-            android:layout_height="21dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/ic_close_red" />
     </LinearLayout>
 
@@ -33,15 +32,14 @@
         android:id="@+id/titleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/ubuntu_regular"/>
+        android:textSize="14sp"
+        android:fontFamily="@font/ubuntu_medium"/>
 
     <TextView
         android:id="@+id/contentTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
+        android:textSize="12sp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/ubuntu_regular"/>
 

@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_marker"
-    android:padding="12dp">
+    android:padding="8dp">
 
     <TextView
         android:id="@+id/tvContent"
@@ -11,6 +11,6 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/ubuntu_regular"
         android:textColor="@color/white"
-        android:textSize="10sp"/>
+        android:textSize="12sp"/>
 
 </LinearLayout>

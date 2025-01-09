@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <TextView
@@ -9,10 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
+        tools:text="Category"
         android:textSize="14sp"
         android:textColor="@color/colorPrimary"
         android:fontFamily="@font/ubuntu_medium"
         android:background="@drawable/spinner_background"
         android:gravity="start|center_vertical"/>
-
 </LinearLayout>

@@ -65,7 +65,7 @@
         android:gravity="top|left"
         android:hint="@string/enter_your_text_here"
         android:fontFamily="@font/ubuntu_regular"
-        android:background="@drawable/border_edit_text"
+        android:background="@drawable/background_button_outlined"
         android:padding="16dp"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@+id/layoutTitle"

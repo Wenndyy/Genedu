@@ -3,7 +3,7 @@
     <string name="app_name">Genedu</string>
     <string name="default_web_client_id">385525202845-rd48gu97ksmbbe1v45ucfqavqc7ikg6h.apps.googleusercontent.com</string>
     <string name="user">Pengguna</string>
-    <string name="main_slogan">Tingkatkan Perjalanan Belajarmu dengan Study Buddy: Atur, Fokus, Raih!</string>
+    <string name="main_slogan">Tingkatkan Perjalanan Belajarmu dengan Genedu: Atur, Fokus, Raih!</string>
     <string name="main_task">Task</string>
     <string name="task_slogan">Selesaikan Tugas, Raih Masa Depan!</string>
     <string name="note_slogan">Catat Segera, Ingat Selamanya!</string>
@@ -53,7 +53,7 @@
     <string name="title_note_act">Semua Catatan Anda</string>
     <string name="search_notes">Cari catatan…</string>
     <string name="title_privpol_act">Kebijakan Privasi</string>
-    <string name="title_privpol">Study Buddy - Kebijakan Privasi</string>
+    <string name="title_privpol">Genedu - Kebijakan Privasi</string>
     <string name="slogan_register">Buat Akun Anda, Nikmati Fitur Kami!</string>
     <string name="confirm_password">Konfirmasi Kata Sandi</string>
     <string name="hint_confirm_password">Konfirmasi kata sandi Anda</string>
@@ -62,9 +62,9 @@
     <string name="title_task_act">Rencanakan Hari Anda</string>
     <string name="search_tasks">Cari tugas…</string>
     <string name="title_tools_act">Kotak Alat Untuk Anda</string>
-    <string name="search_tools">Cari alat…</string>
+    <string name="search_tools">Temukan alat belajar disini…</string>
     <string name="title_tos_act">Ketentuan Penggunaan</string>
-    <string name="title_tos">Study Buddy - Ketentuan Penggunaan</string>
+    <string name="title_tos">Genedu - Ketentuan Penggunaan</string>
     <string name="title_user_act">Profil Anda</string>
     <string name="warning_email_verify">Email Belum Diverifikasi!</string>
     <string name="btn_verify">Verifikasi Sekarang</string>
@@ -265,4 +265,6 @@
     <string name="error_playing_music">Error memutar musik</string>
     <string name="detail_note">Detail Catatan</string>
     <string name="minute">menit</string>
+    <string name="reminder">Reminder</string>
+    <string name="type_your_message">Type your message</string>
 </resources>

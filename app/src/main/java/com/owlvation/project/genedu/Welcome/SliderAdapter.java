@@ -44,7 +44,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.slide_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_slide, parent, false);
         return new ViewHolder(view);
     }
 

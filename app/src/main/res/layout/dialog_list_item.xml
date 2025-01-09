@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-
-   >
+    android:layout_margin="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,8 +17,7 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:fontFamily="@font/ubuntu_medium"
-            />
+            android:fontFamily="@font/ubuntu_medium" />
 
         <TextView
             android:id="@+id/tvTime"
@@ -28,10 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:textSize="14sp"
-            android:fontFamily="@font/ubuntu_regular"
-           />
-
+            android:fontFamily="@font/ubuntu_regular" />
 
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>

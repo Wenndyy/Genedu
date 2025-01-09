@@ -101,7 +101,7 @@ public class ManagementFragment extends Fragment {
 
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(
                 requireContext(),
-                R.layout.spinner_item,
+                R.layout.item_spinner,
                 R.id.spinnerText,
                 items
         ) {
@@ -429,7 +429,6 @@ public class ManagementFragment extends Fragment {
         }
     }
 
-
     private void showNotesForDate(String dateString) {
         List<NoteModel> notesForDate = notesByDate.get(dateString);
         if (notesForDate != null && !notesForDate.isEmpty()) {
@@ -467,6 +466,7 @@ public class ManagementFragment extends Fragment {
                     Toast.LENGTH_SHORT).show();
         }
     }
+
     private void showNoteDetail(NoteModel note) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         View dialogView = LayoutInflater.from(requireContext())

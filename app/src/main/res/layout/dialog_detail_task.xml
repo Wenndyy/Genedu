@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:padding="16dp"
     android:layout_marginHorizontal="20dp"
@@ -13,81 +13,74 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="start"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="16dp">
 
         <TextView
             android:layout_weight="2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="start"
+            android:layout_gravity="center_vertical"
             android:text="@string/detail_task"
-            android:fontFamily="@font/ubuntu_bold"
+            android:fontFamily="@font/ubuntu_medium"
             android:textColor="@color/colorPrimary"
-            android:textSize="21sp" />
+            android:textSize="18sp" />
         <ImageView
             android:id="@+id/close_dialog"
-            android:layout_width="21dp"
-            android:layout_height="21dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/ic_close_red" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:paddingTop="12dp">
+        android:orientation="vertical"
+        >
+
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-           >
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/task_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Task"
+                android:layout_weight="1"
+                tools:text="Task"
                 android:fontFamily="@font/ubuntu_medium"
-                android:layout_marginBottom="10dp"
-                android:textSize="18sp"
-               />
+                android:textSize="16sp" />
 
-            <LinearLayout
-                android:layout_marginBottom="10dp"
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/mcheckbox"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:fontFamily="@font/ubuntu_medium" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/task_deadline"
-                    android:fontFamily="@font/ubuntu_regular"
-                    android:textSize="14sp"
-                 />
-                <TextView
-                    android:id="@+id/task_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Date"
-                    android:fontFamily="@font/ubuntu_regular"
-                    android:textSize="14sp"
-                   />
-            </LinearLayout>
+                android:text="@string/task_deadline"
+                android:fontFamily="@font/ubuntu_regular"
+                android:textSize="14sp" />
 
+            <TextView
+                android:id="@+id/task_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="1/1/2025"
+                android:fontFamily="@font/ubuntu_regular"
+                android:textSize="14sp" />
         </LinearLayout>
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/mcheckbox"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/ubuntu_medium"
-            android:paddingStart="10dp"
 
-            android:textSize="16sp"
-           />
     </LinearLayout>
-
-
 </LinearLayout>

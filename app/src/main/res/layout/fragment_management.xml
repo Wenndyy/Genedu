@@ -68,7 +68,7 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/background_rounded_white"
                 android:iconifiedByDefault="false"
-                android:queryHint="@string/search_tools"
+                android:queryHint="@string/search_management"
                 android:searchIcon="@drawable/ic_search"
                 android:closeIcon="@drawable/ic_close"
                 android:theme="@style/SearchViewStyle"
