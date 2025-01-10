@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp"
+    android:padding="12dp"
     android:layout_gravity="start"
     android:gravity="top">
     <ImageView
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bubble_ai"
-        android:padding="10dp"
+        android:padding="8dp"
         android:textColor="@color/white"
         android:textSize="16sp" />
 </LinearLayout>

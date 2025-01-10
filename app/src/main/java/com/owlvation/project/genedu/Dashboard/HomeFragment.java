@@ -1,5 +1,6 @@
 package com.owlvation.project.genedu.Dashboard;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -67,13 +68,17 @@ public class HomeFragment extends Fragment {
     private List<NoteModel> recentNotesList;
     private List<TaskModel> recentTasksList;
     private LineChart usageChart;
-
+    private ProgressDialog progressDialog;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         db = FirebaseFirestore.getInstance();
+
+        progressDialog = new ProgressDialog(requireContext());
+        progressDialog.setMessage(getString(R.string.please_wait));
+        progressDialog.setCancelable(false);
 
         initializeViews();
         setupUsageChart();
@@ -322,6 +327,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadProfileName() {
+        progressDialog.show();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             db.collection("users")
@@ -334,14 +340,20 @@ public class HomeFragment extends Fragment {
                         } else {
                             Log.e("HomeFragment", "User document doesn't exist");
                         }
+                        progressDialog.dismiss();
                     })
-                    .addOnFailureListener(e -> Log.e("HomeFragment", "Error fetching user profile", e));
+                    .addOnFailureListener(e -> {
+                        Log.e("HomeFragment", "Error fetching user profile", e);
+                        progressDialog.dismiss();
+                    });
         } else {
             Log.e("HomeFragment", "Current user is null");
+            progressDialog.dismiss();
         }
     }
 
     private void loadProfileImage() {
+        progressDialog.show();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -351,14 +363,20 @@ public class HomeFragment extends Fragment {
                         if (isAdded()) {
                             Picasso.get().load(uri).into(imageAccount);
                         }
+                        progressDialog.dismiss();
                     })
-                    .addOnFailureListener(exception -> Log.e("HomeFragment", "Error loading profile image: " + exception.getMessage()));
+                    .addOnFailureListener(exception -> {
+                        Log.e("HomeFragment", "Error loading profile image: " + exception.getMessage());
+                        progressDialog.dismiss();
+                    });
         } else {
             Log.e("HomeFragment", "Current user is null");
+            progressDialog.dismiss();
         }
     }
 
     private void loadNotesData() {
+        progressDialog.show();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             db.collection("notes")
@@ -385,12 +403,17 @@ public class HomeFragment extends Fragment {
                             }
                             recentNotesAdapter.notifyDataSetChanged();
                         }
+                        progressDialog.dismiss();
                     })
-                    .addOnFailureListener(e -> Log.e("HomeFragment", "Error fetching notes", e));
+                    .addOnFailureListener(e -> {
+                        Log.e("HomeFragment", "Error fetching notes", e);
+                        progressDialog.dismiss();
+                    });
         }
     }
 
     private void loadTasksData() {
+        progressDialog.show();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             db.collection("task")
@@ -418,8 +441,12 @@ public class HomeFragment extends Fragment {
                             }
                             recentTasksAdapter.notifyDataSetChanged();
                         }
+                        progressDialog.dismiss();
                     })
-                    .addOnFailureListener(e -> Log.e("HomeFragment", "Error fetching tasks", e));
+                    .addOnFailureListener(e -> {
+                        Log.e("HomeFragment", "Error fetching tasks", e);
+                        progressDialog.dismiss();
+                    });
         }
     }
 
@@ -434,6 +461,14 @@ public class HomeFragment extends Fragment {
             recentTasksAdapter.filterTasks(filteredTasks);
         } else if (recentTasksList != null) {
             recentTasksAdapter.filterTasks(recentTasksList);
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
         }
     }
 }

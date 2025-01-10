@@ -147,7 +147,7 @@
     <string name="choose_an_app">Choose an app</string>
     <string name="failed_to_share_qr_code">Failed to share QR code</string>
     <string name="document_viewer">Document Viewer</string>
-    <string name="title_document_viewer">Your Viewer Document File</string>
+    <string name="title_document_viewer">Your Document Viewer</string>
     <string name="pick_file">Pick File</string>
     <string name="previous">Previous</string>
     <string name="next">Next</string>
@@ -268,6 +268,6 @@
     <string name="detail_note">Detail Note</string>
     <string name="minute">minute</string>
     <string name="reminder">Reminder</string>
-    <string name="type_your_message">Type your message</string>
-
+    <string name="type_your_message">Type your message…</string>
+    <string name="_0_0">0/0</string>
 </resources>

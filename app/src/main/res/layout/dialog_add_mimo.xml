@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:padding="16dp">
 
     <EditText
         android:id="@+id/etHours"
@@ -51,7 +51,7 @@
         android:text="@string/btn_ok"
         android:textSize="16sp"
         android:fontFamily="@font/ubuntu_medium"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:textColor="@color/white"

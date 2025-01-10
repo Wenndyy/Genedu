@@ -10,14 +10,14 @@
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:background="@drawable/background_rounded_bottom"
         app:elevation="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_rounded_bottom"
-            android:padding="16dp">
+            android:padding="16dp"
+            app:layout_scrollFlags="scroll|enterAlways">
 
             <ImageView
                 android:id="@+id/ic_profile"
@@ -72,7 +72,7 @@
             android:id="@+id/layout_body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="80dp">
+            android:layout_marginBottom="76dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profileImage"
@@ -115,7 +115,7 @@
                 android:id="@+id/verifyMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/warning_email_verify"
                 android:textColor="@android:color/holo_red_light"
                 android:textSize="16sp"
@@ -128,9 +128,8 @@
 
             <Button
                 android:id="@+id/verifyNow"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:layout_marginHorizontal="16dp"
                 android:text="@string/btn_verify"
                 android:background="@drawable/background_button_filled"
                 android:fontFamily="@font/ubuntu_medium"
@@ -138,10 +137,9 @@
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:layout_marginTop="8dp"
-
                 android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/verifyMessage"
+                app:layout_constraintStart_toStartOf="@id/verifyMessage"
                 app:layout_constraintTop_toBottomOf="@+id/verifyMessage" />
 
             <TextView
@@ -149,7 +147,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/account"
                 android:textSize="16sp"
                 android:textColor="@color/colorPrimary"
@@ -223,7 +221,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/settings"
                 android:textSize="16sp"
                 android:textColor="@color/colorPrimary"
@@ -363,7 +361,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/background_button_filled"
                 android:fontFamily="@font/ubuntu_medium"

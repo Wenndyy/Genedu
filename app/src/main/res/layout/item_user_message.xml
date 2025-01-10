@@ -3,16 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp"
+    android:padding="12dp"
     android:gravity="end">
 
     <TextView
-        android:layout_marginLeft="80dp"
+        android:layout_marginStart="80dp"
         android:id="@+id/tvUserMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bubble_user"
-        android:padding="10dp"
+        android:padding="8dp"
         android:textColor="@android:color/white"
         android:textSize="16sp" />
 </LinearLayout>

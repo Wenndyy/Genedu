@@ -20,7 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp">
+            android:padding="12dp">
             <LinearLayout
                 android:id="@+id/layout_task"
                 android:layout_width="match_parent"
@@ -31,10 +31,9 @@
                 app:layout_constraintTop_toTopOf="parent">
                 <com.google.android.material.checkbox.MaterialCheckBox
                     android:id="@+id/mcheckbox"
-                    android:layout_width="50dp"
+                    android:layout_width="48dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/ubuntu_medium"
-                   />
+                    android:fontFamily="@font/ubuntu_medium" />
                 <TextView
                     android:id="@+id/taskname"
                     android:layout_width="wrap_content"

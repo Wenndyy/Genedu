@@ -146,7 +146,7 @@
     <string name="choose_an_app">Pilih aplikasi</string>
     <string name="failed_to_share_qr_code">Gagal membagikan Kode QR</string>
     <string name="document_viewer">Document Viewer</string>
-    <string name="title_document_viewer">Penampil File Document Anda</string>
+    <string name="title_document_viewer">Penampil Document Anda</string>
     <string name="pick_file">Pilih File</string>
     <string name="previous">Sebelumnya</string>
     <string name="next">Selanjutnya</string>
@@ -265,6 +265,7 @@
     <string name="error_playing_music">Error memutar musik</string>
     <string name="detail_note">Detail Catatan</string>
     <string name="minute">menit</string>
-    <string name="reminder">Reminder</string>
-    <string name="type_your_message">Type your message</string>
+    <string name="reminder">Pengingat</string>
+    <string name="type_your_message">Ketik pesan anda…</string>
+    <string name="_0_0">0/0</string>
 </resources>

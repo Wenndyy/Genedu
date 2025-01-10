@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -54,7 +55,8 @@ public class AddNewTask extends BottomSheetDialogFragment {
     private TextView setDueTimeReminder;
     private TextView setDueReminder;
     private EditText mTaskEdit;
-    private LinearLayout mSaveBtn, layoutReminderDueDate, layoutReminderDueTime;
+    private LinearLayout layoutReminderDueDate, layoutReminderDueTime;
+    private Button mSaveBtn;
     private FirebaseFirestore firestore;
     private Context context;
     private String userId;
