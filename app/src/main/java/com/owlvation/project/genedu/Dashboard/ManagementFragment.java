@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -24,6 +22,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -399,28 +400,24 @@ public class ManagementFragment extends Fragment {
             TextView tvDialogTitle = dialogView.findViewById(R.id.tvDialogTitle);
             tvDialogTitle.setText(getString(R.string.tasks_for_date, dateString));
 
-            ListView listView = dialogView.findViewById(R.id.listView);
-            TasksAdapter adapter = new TasksAdapter(requireContext(), tasksForDate);
-            listView.setAdapter(adapter);
+            RecyclerView recyclerView = dialogView.findViewById(R.id.recyclerView);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
+            recyclerView.setLayoutManager(layoutManager);
 
-            listView.setDivider(new ColorDrawable(requireContext().getColor(R.color.grey)));
-            listView.setDividerHeight(2);
 
-            listView.setPadding(8, 8, 8, 8);
-            listView.setOnItemClickListener((parent, view, position, id) -> {
-                TaskModel selectedTask = tasksForDate.get(position);
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(requireContext(), layoutManager.getOrientation());
+            recyclerView.addItemDecoration(dividerItemDecoration);
+
+            TasksAdapter adapter = new TasksAdapter(requireContext(), tasksForDate, task -> {
                 Intent intent = new Intent(getActivity(), TaskActivity.class);
-                intent.putExtra("taskId", selectedTask.TaskId);
+                intent.putExtra("taskId", task.TaskId);
                 startActivity(intent);
             });
+            recyclerView.setAdapter(adapter);
 
-            builder.setView(dialogView);
             ImageView closeDialog = dialogView.findViewById(R.id.close_dialog);
-
-            AlertDialog alertDialog = builder.create();
-
+            AlertDialog alertDialog = builder.setView(dialogView).create();
             closeDialog.setOnClickListener(v -> alertDialog.dismiss());
-
             alertDialog.show();
         } else {
             Toast.makeText(requireContext(),
@@ -428,6 +425,7 @@ public class ManagementFragment extends Fragment {
                     Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private void showNotesForDate(String dateString) {
         List<NoteModel> notesForDate = notesByDate.get(dateString);
@@ -439,26 +437,19 @@ public class ManagementFragment extends Fragment {
             TextView tvDialogTitle = dialogView.findViewById(R.id.tvDialogTitle);
             tvDialogTitle.setText(getString(R.string.notes_for_date, dateString));
 
-            ListView listView = dialogView.findViewById(R.id.listView);
-            NotesAdapter adapter = new NotesAdapter(requireContext(), notesForDate);
-            listView.setAdapter(adapter);
+            RecyclerView recyclerView = dialogView.findViewById(R.id.recyclerView);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
+            recyclerView.setLayoutManager(layoutManager);
 
-            listView.setDivider(new ColorDrawable(requireContext().getColor(R.color.grey)));
-            listView.setDividerHeight(2);
-            listView.setPadding(8, 8, 8, 8);
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(requireContext(), layoutManager.getOrientation());
+            recyclerView.addItemDecoration(dividerItemDecoration);
 
-            listView.setOnItemClickListener((parent, view, position, id) -> {
-                NoteModel selectedNote = notesForDate.get(position);
-                showNoteDetail(selectedNote);
-            });
+            NotesAdapter adapter = new NotesAdapter(requireContext(), notesForDate, this::showNoteDetail);
+            recyclerView.setAdapter(adapter);
 
-            builder.setView(dialogView);
             ImageView closeDialog = dialogView.findViewById(R.id.close_dialog);
-
-            AlertDialog alertDialog = builder.create();
-
+            AlertDialog alertDialog = builder.setView(dialogView).create();
             closeDialog.setOnClickListener(v -> alertDialog.dismiss());
-
             alertDialog.show();
         } else {
             Toast.makeText(requireContext(),

@@ -5,7 +5,6 @@ import com.google.firebase.firestore.ServerTimestamp;
 import java.util.Date;
 
 public class NoteModel {
-
     private String documentId;
     private String title;
     private String content;

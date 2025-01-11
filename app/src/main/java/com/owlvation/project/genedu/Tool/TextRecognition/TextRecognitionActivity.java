@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -150,9 +151,16 @@ public class TextRecognitionActivity extends AppCompatActivity {
     }
 
     private boolean checkPermission() {
-        int camerapermission = ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA);
-        return camerapermission == PackageManager.PERMISSION_GRANTED;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                    == PackageManager.PERMISSION_GRANTED;
+        } else {
+            boolean cameraPermission = ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+            return cameraPermission;
+        }
     }
+
 
     private void requestPermission() {
         int PERMISSION_CODE = 200;

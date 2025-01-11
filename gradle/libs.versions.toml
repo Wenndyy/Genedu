@@ -1,5 +1,5 @@
 [versions]
-agp = "8.3.2"
+agp = "8.7.3"
 barcodeScanning = "17.3.0"
 circleimageview = "3.1.0"
 core = "3.5.3"
@@ -38,6 +38,8 @@ guava = "33.4.0-android"
 textRecognition = "16.0.1"
 threetenabp = "1.4.8"
 volley = "1.2.1"
+poi = "5.2.3"
+log4jCore = "2.20.0"
 
 [libraries]
 barcode-scanning = { module = "com.google.mlkit:barcode-scanning", version.ref = "barcodeScanning" }
@@ -79,6 +81,10 @@ dexter = { group = "com.karumi", name = "dexter", version.ref = "dexter" }
 text-recognition = { module = "com.google.mlkit:text-recognition", version.ref = "textRecognition" }
 threetenabp = { module = "com.jakewharton.threetenabp:threetenabp", version.ref = "threetenabp" }
 volley = { module = "com.android.volley:volley", version.ref = "volley" }
+poi = { module = "org.apache.poi:poi", version.ref = "poi" }
+poi-scratchpad = { module = "org.apache.poi:poi-scratchpad", version.ref = "poi" }
+poi-ooxml = { module = "org.apache.poi:poi-ooxml", version.ref = "poi" }
+log4j-core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4jCore" }
 
 
 [plugins]

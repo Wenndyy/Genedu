@@ -24,7 +24,6 @@ import com.owlvation.project.genedu.Task.TaskActivity;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> {
-
     private List<TaskModel> todoList;
     private TaskActivity activity;
     private FirebaseFirestore firestore;

@@ -70,9 +70,7 @@ public class NoteActivity extends AppCompatActivity {
         mCreateNoteFab = findViewById(R.id.createFabNote);
         recyclerView = findViewById(R.id.recycerlviewNote);
         recyclerView.setHasFixedSize(true);
-
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
-
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -151,7 +149,7 @@ public class NoteActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        searchView.setEnabled(true); // Aktifkan kembali meskipun terjadi error
+                        searchView.setEnabled(true);
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 });

@@ -125,9 +125,6 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
             String dueTime = intent.getStringExtra("due_time");
             int status = intent.getIntExtra("status",0);
 
-
-
-
             showDetailTaskDialog(id, taskName, dueDate, dueTime,status);
         } else {
             Log.e("TaskActivity", "Intent is null");
@@ -136,8 +133,6 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
     }
 
     private void showDetailTaskDialog(String id, String taskName, String dueDate, String dueTime, int status) {
-        Log.d("TaskActivity", "Attempting to show DetailTaskDialog");
-
         DetailTaskDialog dialog = new DetailTaskDialog();
         Bundle bundle = new Bundle();
         bundle.putString("id", id);
@@ -233,7 +228,6 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
         detailDialog.setArguments(bundle);
 
         detailDialog.show(getSupportFragmentManager(), "DetailTaskDialog");
-
     }
 
     @Override
@@ -241,8 +235,6 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
         super.onBackPressed();
         finish();
     }
-
-
 
 }
 

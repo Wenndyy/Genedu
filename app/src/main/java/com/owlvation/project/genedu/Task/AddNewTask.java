@@ -1,5 +1,6 @@
 package com.owlvation.project.genedu.Task;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
@@ -10,6 +11,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.media.AudioAttributes;
 import android.net.Uri;
@@ -32,6 +34,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -55,8 +59,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
     private TextView setDueTimeReminder;
     private TextView setDueReminder;
     private EditText mTaskEdit;
-    private LinearLayout layoutReminderDueDate, layoutReminderDueTime;
-    private Button mSaveBtn;
+    private LinearLayout  layoutReminderDueDate, layoutReminderDueTime;
     private FirebaseFirestore firestore;
     private Context context;
     private String userId;
@@ -70,14 +73,12 @@ public class AddNewTask extends BottomSheetDialogFragment {
     private String dueDateReminderUpdate = "";
     private String dueTimeReminderUpdate = "";
     private Switch switchToggle;
-
+    private Button mSaveBtn;
     private String task = "";
     private long alarmIdUpdate ,alarmId;
     private AlarmDatabaseHelper dbHelper;
     private int jam, menit, hari, bulan, tahun;
-
     private String date;
-
     private boolean check;
 
     public static AddNewTask newInstance() {
@@ -163,9 +164,6 @@ public class AddNewTask extends BottomSheetDialogFragment {
                 check = false;
             }
         });
-
-
-
 
         mTaskEdit.addTextChangedListener(new TextWatcher() {
             @Override
@@ -274,8 +272,6 @@ public class AddNewTask extends BottomSheetDialogFragment {
             }
         });
 
-
-
         boolean finalIsUpdate = isUpdate;
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -316,7 +312,6 @@ public class AddNewTask extends BottomSheetDialogFragment {
                     } else if (dueTimeReminder.isEmpty() && dueTimeReminderUpdate != null) {
                         taskMap.put("dueTimeReminder", "");
                     }
-
 
                     if(currentTimeReminder != null && currentDateReminder != null &&
                             !currentTimeReminder.isEmpty() && !currentDateReminder.isEmpty()) {
@@ -369,8 +364,6 @@ public class AddNewTask extends BottomSheetDialogFragment {
                         }
                     }
 
-
-
                     if (!taskMap.isEmpty()) {
                         firestore.collection("task").document(userId)
                                 .collection("myTask").document(id)
@@ -383,11 +376,11 @@ public class AddNewTask extends BottomSheetDialogFragment {
                                                 if (alarmId != -1) {
                                                     date = hari + "/" + (bulan + 1) + "/" + tahun;
                                                     Toast.makeText(context,
-                                                            "Set due date reminder for "+ date + " at " + jam + ":" + menit,
+                                                            context.getString(R.string.set_due_date_reminder_for)+ date + context.getString(R.string.at_) + jam + ":" + menit,
                                                             Toast.LENGTH_SHORT).show();
                                                     setTimer(alarmId, id);
                                                     cancelPreviousAlarm(alarmIdUpdate);
-                                                    notification();
+                                                    checkAndRequestNotificationPermission();
                                                 }
                                             }
 
@@ -443,10 +436,10 @@ public class AddNewTask extends BottomSheetDialogFragment {
                                                 if (alarmIdNew != -1) {
                                                     date = hari + "/" + (bulan + 1) + "/" + tahun;
                                                     Toast.makeText(context,
-                                                            "Set due date reminder for "+ date + " at " + jam + ":" + menit,
+                                                            context.getString(R.string.set_due_date_reminder_for)+ date + context.getString(R.string.at_) + jam + ":" + menit,
                                                             Toast.LENGTH_SHORT).show();
                                                     setTimer(alarmIdNew, idTask);
-                                                    notification();
+                                                    checkAndRequestNotificationPermission();
                                                 }
                                             }
                                             Toast.makeText(context, R.string.task_added_successfully, Toast.LENGTH_SHORT).show();
@@ -469,12 +462,27 @@ public class AddNewTask extends BottomSheetDialogFragment {
 
     }
 
+    private void checkAndRequestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                ActivityCompat.requestPermissions(
+                        (Activity) context,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                        1001
+                );
+            } else {
+                notification();
+            }
+        } else {
+            notification();
+        }
+    }
 
     private void cancelPreviousAlarm(long alarmId) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
         Intent intent = new Intent(context, MyBroadcastReceiver.class);
-
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
                 (int) alarmId,
@@ -483,6 +491,19 @@ public class AddNewTask extends BottomSheetDialogFragment {
         );
 
         alarmManager.cancel(pendingIntent);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 1001) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                notification();
+            } else {
+                Toast.makeText(context, R.string.permission_was_denied, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 

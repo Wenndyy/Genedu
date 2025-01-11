@@ -32,7 +32,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
-
     private Context context;
     private List<NoteModel> noteList;
     private FirebaseFirestore firebaseFirestore;

@@ -22,7 +22,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.owlvation.project.genedu.R;
 
 public class DetailTaskDialog extends DialogFragment {
-
     private ImageView closeButton;
     private static final String TAG = "DetailTaskDialog";
     private FirebaseFirestore firestore;
@@ -43,10 +42,6 @@ public class DetailTaskDialog extends DialogFragment {
         closeButton.setOnClickListener(v -> dismiss());
         firestore = FirebaseFirestore.getInstance();
         MaterialCheckBox mCheckBox = view.findViewById(R.id.mcheckbox);
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-
-
 
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -59,11 +54,8 @@ public class DetailTaskDialog extends DialogFragment {
             int status = bundle.getInt("status");
             dueDateTextView.setText(dueText);
             mCheckBox.setChecked(toBoolean(status));
-
             mCheckBox.setOnCheckedChangeListener(null);
-
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
             String iduser = currentUser.getUid();
 
 
@@ -101,7 +93,6 @@ public class DetailTaskDialog extends DialogFragment {
         super.onStart();
 
         if (getDialog() != null && getDialog().getWindow() != null) {
-
             WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
             params.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9);
             params.height = WindowManager.LayoutParams.WRAP_CONTENT;

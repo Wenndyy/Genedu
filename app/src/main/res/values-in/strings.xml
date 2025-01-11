@@ -268,4 +268,15 @@
     <string name="reminder">Pengingat</string>
     <string name="type_your_message">Ketik pesan anda…</string>
     <string name="_0_0">0/0</string>
+    <string name="invalid_file_format">Invalid file format</string>
+    <string name="google_sign_in_failed">"Login Google gagal: "</string>
+    <string name="error_opening_file">"Kesalahan membuka file: "</string>
+    <string name="error_rendering_pdf_page">"Kesalahan merender halaman PDF: "</string>
+    <string name="apiKey">AIzaSyAzW3O17sUNN1VwcG0cNRGHzYMU4gMWtdY</string>
+    <string name="set_due_date_reminder_for">"Atur pengingat tanggal jatuh tempo untuk "</string>
+    <string name="at_">" pada "</string>
+    <string name="permission_was_denied">Izin POST_NOTIFICATIONS ditolak.</string>
+    <string name="music_selected">Musik Dipilih</string>
+    <string name="select_music">Pilih Musik</string>
+    <string name="task_reminder">"Pengingat Tugas: "</string>
 </resources>

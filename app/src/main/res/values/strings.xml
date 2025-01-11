@@ -270,4 +270,15 @@
     <string name="reminder">Reminder</string>
     <string name="type_your_message">Type your message…</string>
     <string name="_0_0">0/0</string>
+    <string name="invalid_file_format">Invalid file format</string>
+    <string name="google_sign_in_failed">"Google sign-in failed: "</string>
+    <string name="error_opening_file">"Error opening file: "</string>
+    <string name="error_rendering_pdf_page">"Error rendering PDF page: "</string>
+    <string name="apiKey">AIzaSyAzW3O17sUNN1VwcG0cNRGHzYMU4gMWtdY</string>
+    <string name="set_due_date_reminder_for">"Set due date reminder for "</string>
+    <string name="at_">" at "</string>
+    <string name="permission_was_denied">POST_NOTIFICATIONS permission was denied.</string>
+    <string name="music_selected">Music Selected</string>
+    <string name="select_music">Select Music</string>
+    <string name="task_reminder">"Task Reminder: "</string>
 </resources>
