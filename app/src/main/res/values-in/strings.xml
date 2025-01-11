@@ -218,7 +218,7 @@
     <string name="subtitle_user_act">Kelola dan perbarui informasi akun Anda</string>
     <string name="exit">Keluar Aplikasi</string>
     <string name="geneduai">GeneduAI</string>
-    <string name="geduai_desc">Asisten pembelajaran Anda</string>
+    <string name="geduai_desc">Asisten Belajar Anda</string>
     <string name="tasks_for_date">Tugas untuk %s</string>
     <string name="due_time">Waktu</string>
     <string name="close">Tutup</string>
@@ -268,4 +268,5 @@
     <string name="reminder">Pengingat</string>
     <string name="type_your_message">Ketik pesan anda…</string>
     <string name="_0_0">0/0</string>
+    <string name="detected_text">Teks Terdeteksi</string>
 </resources>

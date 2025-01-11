@@ -2,7 +2,6 @@ package com.owlvation.project.genedu.Note;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
@@ -14,15 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.owlvation.project.genedu.R;
 
 import java.util.ArrayList;
@@ -42,7 +38,6 @@ public class NoteActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout;
 
     SearchView searchView;
-    OnQueryTextListener queryTextListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +45,20 @@ public class NoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_note);
 
         searchView = findViewById(R.id.searchNote);
-        queryTextListener = new OnQueryTextListener() {
+        icBack = findViewById(R.id.ic_back);
+        mCreateNoteFab = findViewById(R.id.createFabNote);
+        recyclerView = findViewById(R.id.recycerlviewNote);
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+
+        noteList = new ArrayList<>();
+        adapter = new NoteAdapter(this, noteList, firebaseFirestore, firebaseUser);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        searchView.setOnQueryTextListener(new OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 filterNotes(query);
@@ -62,60 +70,39 @@ public class NoteActivity extends AppCompatActivity {
                 filterNotes(newText);
                 return true;
             }
-        };
-
-        searchView.setOnQueryTextListener(queryTextListener);
-
-        icBack = findViewById(R.id.ic_back);
-        mCreateNoteFab = findViewById(R.id.createFabNote);
-        recyclerView = findViewById(R.id.recycerlviewNote);
-        recyclerView.setHasFixedSize(true);
-
-        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
-
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        noteList = new ArrayList<>();
-
-
-        icBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
         });
 
-        mCreateNoteFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(NoteActivity.this, CreateNoteActivity.class));
-                finish();
-            }
+        icBack.setOnClickListener(v -> onBackPressed());
+
+        mCreateNoteFab.setOnClickListener(v -> {
+            startActivity(new Intent(NoteActivity.this, CreateNoteActivity.class));
+            finish();
         });
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                fetchNotes();
-            }
-        });
+        swipeRefreshLayout.setOnRefreshListener(this::fetchNotes);
 
         fetchNotes();
     }
 
     private void filterNotes(String query) {
-        List<NoteModel> filteredList = new ArrayList<>();
-        for (NoteModel note : noteList) {
-            if (note.getTitle().toLowerCase().contains(query.toLowerCase())) {
-                filteredList.add(note);
-            }
+        if (adapter == null) {
+            return;
         }
+
+        List<NoteModel> filteredList = new ArrayList<>();
+        if (!query.isEmpty()) {
+            for (NoteModel note : noteList) {
+                if (note.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                    filteredList.add(note);
+                }
+            }
+        } else {
+            filteredList.addAll(noteList);
+        }
+
         adapter.filterList(filteredList);
 
-        if (filteredList.isEmpty()) {
+        if (!query.isEmpty() && filteredList.isEmpty()) {
             Toast.makeText(NoteActivity.this, R.string.no_matching_results_found_please_search_by_title, Toast.LENGTH_SHORT).show();
         }
     }
@@ -129,32 +116,53 @@ public class NoteActivity extends AppCompatActivity {
                 .collection("myNotes")
                 .orderBy("timestamp", Query.Direction.DESCENDING)
                 .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                            NoteModel note = documentSnapshot.toObject(NoteModel.class);
-                            note.setDocumentId(documentSnapshot.getId());
-                            noteList.add(note);
-                        }
-
-                        if (adapter == null) {
-                            adapter = new NoteAdapter(NoteActivity.this, noteList, firebaseFirestore, firebaseUser);
-                            recyclerView.setAdapter(adapter);
-                        } else {
-                            adapter.notifyDataSetChanged();
-                        }
-
-                        swipeRefreshLayout.setRefreshing(false);
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                        NoteModel note = documentSnapshot.toObject(NoteModel.class);
+                        note.setDocumentId(documentSnapshot.getId());
+                        noteList.add(note);
                     }
+
+                    if (adapter == null) {
+                        adapter = new NoteAdapter(this, noteList, firebaseFirestore, firebaseUser);
+                        recyclerView.setAdapter(adapter);
+                    } else {
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    swipeRefreshLayout.setRefreshing(false);
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        searchView.setEnabled(true); // Aktifkan kembali meskipun terjadi error
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
+                .addOnFailureListener(e -> {
+                    searchView.setEnabled(true);
+                    swipeRefreshLayout.setRefreshing(false);
                 });
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("notes", new ArrayList<>(noteList));
+        outState.putString("searchQuery", searchView.getQuery().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        ArrayList<NoteModel> savedNotes = savedInstanceState.getParcelableArrayList("notes");
+        if (savedNotes != null) {
+            noteList.clear();
+            noteList.addAll(savedNotes);
+            adapter = new NoteAdapter(this, noteList, firebaseFirestore, firebaseUser);
+            recyclerView.setAdapter(adapter);
+        } else {
+            fetchNotes();
+        }
+
+        String savedQuery = savedInstanceState.getString("searchQuery", "");
+        searchView.setQuery(savedQuery, false);
+        if (!savedQuery.isEmpty()) {
+            filterNotes(savedQuery);
+        }
     }
 
     @Override

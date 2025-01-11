@@ -254,7 +254,7 @@ public class CodeScannerActivity extends AppCompatActivity {
     private void copyTextToClipboard() {
         String textToCopy = resultText.getText().toString();
         if (!textToCopy.isEmpty()) {
-            ClipData clip = ClipData.newPlainText("Detected Text", textToCopy);
+            ClipData clip = ClipData.newPlainText(getString(R.string.detected_text), textToCopy);
             clipboardManager.setPrimaryClip(clip);
             Toast.makeText(this, R.string.successfully_copied_text_to_clipboard, Toast.LENGTH_SHORT).show();
         } else {

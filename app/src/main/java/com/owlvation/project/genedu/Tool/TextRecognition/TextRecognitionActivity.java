@@ -96,14 +96,13 @@ public class TextRecognitionActivity extends AppCompatActivity {
     private void copyTextToClipboard() {
         String textToCopy = resultText.getText().toString();
         if (!textToCopy.isEmpty()) {
-            ClipData clip = ClipData.newPlainText("Detected Text", textToCopy);
+            ClipData clip = ClipData.newPlainText(getString(R.string.detected_text), textToCopy);
             clipboardManager.setPrimaryClip(clip);
             Toast.makeText(this, R.string.successfully_copied_text_to_clipboard, Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, R.string.failed_no_text_to_copy, Toast.LENGTH_SHORT).show();
         }
     }
-
 
     private void showImageDialog() {
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_choose_image_source, null);

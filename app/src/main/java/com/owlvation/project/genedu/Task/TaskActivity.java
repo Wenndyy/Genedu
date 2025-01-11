@@ -99,8 +99,6 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
             }
         });
 
-
-
         mList = new ArrayList<>();
         adapter = new TaskAdapter(TaskActivity.this, mList,this);
 
@@ -124,9 +122,6 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
             String dueDate = intent.getStringExtra("due_date");
             String dueTime = intent.getStringExtra("due_time");
             int status = intent.getIntExtra("status",0);
-
-
-
 
             showDetailTaskDialog(id, taskName, dueDate, dueTime,status);
         } else {
@@ -198,8 +193,6 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
         });
     }
 
-
-
     private void showSwipeHintSnackbar() {
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
                 R.string.swipe_left_to_update_and_swipe_right_to_delete, Snackbar.LENGTH_LONG);
@@ -241,8 +234,5 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
         super.onBackPressed();
         finish();
     }
-
-
-
 }
 

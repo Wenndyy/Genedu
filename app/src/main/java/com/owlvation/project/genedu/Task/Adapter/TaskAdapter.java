@@ -89,9 +89,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         TaskModel taskModel = todoList.get(position);
         holder.taksName.setText(taskModel.getTask());
 
-        holder.mDueDateTv.setText(taskModel.getDueDate());
+        holder.mDueDateTv.setText(activity.getString(R.string.due_on) + taskModel.getDueDate());
 
-        holder.mDueTimeTv.setText(taskModel.getDueTime());
+        holder.mDueTimeTv.setText(activity.getString(R.string.at) + taskModel.getDueTime());
+
         holder.mCheckBox.setOnCheckedChangeListener(null);
 
         holder.mCheckBox.setChecked(toBoolean(taskModel.getStatus()));

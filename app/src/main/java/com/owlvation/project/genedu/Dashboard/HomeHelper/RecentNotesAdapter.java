@@ -109,7 +109,6 @@ public class RecentNotesAdapter extends RecyclerView.Adapter<RecentNotesAdapter.
         } else {
             imageView.setVisibility(View.GONE);
         }
-        
 
         AlertDialog alertDialog = builder.create();
         alertDialog.setOnShowListener(dialog -> {

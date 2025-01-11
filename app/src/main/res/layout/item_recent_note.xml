@@ -54,7 +54,7 @@
                 android:layout_marginTop="8dp"
                 android:textSize="12sp"
                 android:fontFamily="@font/ubuntu_regular"
-                android:text="@string/due_on"
+                android:text="@string/created_on"
                 android:textColor="@color/white"/>
         </LinearLayout>
 

@@ -220,7 +220,7 @@
     <string name="subtitle_user_act">Manage and update your account information</string>
     <string name="exit">Exit Application</string>
     <string name="geneduai">GeneduAI</string>
-    <string name="geduai_desc">Your learning assistent</string>
+    <string name="geduai_desc">Your Learning Assistent</string>
     <string name="tasks_for_date">Tasks for %s</string>
     <string name="due_time">Due Time</string>
     <string name="close">Close</string>
@@ -270,4 +270,5 @@
     <string name="reminder">Reminder</string>
     <string name="type_your_message">Type your message…</string>
     <string name="_0_0">0/0</string>
+    <string name="detected_text">Detected Text</string>
 </resources>
