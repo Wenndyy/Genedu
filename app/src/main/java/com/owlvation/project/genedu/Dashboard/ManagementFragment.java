@@ -400,7 +400,7 @@ public class ManagementFragment extends Fragment {
             TextView tvDialogTitle = dialogView.findViewById(R.id.tvDialogTitle);
             tvDialogTitle.setText(getString(R.string.tasks_for_date, dateString));
 
-            RecyclerView recyclerView = dialogView.findViewById(R.id.recyclerView);
+            RecyclerView recyclerView = dialogView.findViewById(R.id.listView);
             LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
             recyclerView.setLayoutManager(layoutManager);
 
@@ -437,7 +437,7 @@ public class ManagementFragment extends Fragment {
             TextView tvDialogTitle = dialogView.findViewById(R.id.tvDialogTitle);
             tvDialogTitle.setText(getString(R.string.notes_for_date, dateString));
 
-            RecyclerView recyclerView = dialogView.findViewById(R.id.recyclerView);
+            RecyclerView recyclerView = dialogView.findViewById(R.id.listView);
             LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
             recyclerView.setLayoutManager(layoutManager);
 

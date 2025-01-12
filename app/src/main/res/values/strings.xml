@@ -281,4 +281,11 @@
     <string name="music_selected">Music Selected</string>
     <string name="select_music">Select Music</string>
     <string name="task_reminder">"Task Reminder: "</string>
+    <string name="failed_to_capture_image">Failed to capture image. Please try again.</string>
+    <string name="camera_not_supported">Camera is not supported on this device.</string>
+    <string name="permission_required">Permission Required</string>
+    <string name="no_camera_on_device">No camera available on this device.</string>
+    <string name="camera_permission_message">Camera permission is required to scan barcodes. Please enable the permission in the settings.</string>
+
+
 </resources>

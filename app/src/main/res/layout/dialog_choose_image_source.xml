@@ -85,7 +85,6 @@
         android:text="@string/cancel"
         android:textSize="16sp"
         android:textAllCaps="false"
-        app:backgroundTint="@null"
         android:background="@drawable/background_button_filled"
         android:textColor="@color/white"
         android:fontFamily="@font/ubuntu_medium"

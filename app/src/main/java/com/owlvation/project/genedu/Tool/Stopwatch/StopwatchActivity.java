@@ -46,7 +46,7 @@ public class StopwatchActivity extends AppCompatActivity {
         startPauseButton = findViewById(R.id.start_pauseBtn);
         reset = findViewById(R.id.reset);
         save = findViewById(R.id.save);
-        recyclerView  =  findViewById(R.id.recyclerView);
+        recyclerView  =  findViewById(R.id.listview1);
 
         handler = new Handler();
         timerList = new ArrayList<>();

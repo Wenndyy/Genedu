@@ -279,4 +279,11 @@
     <string name="music_selected">Musik Dipilih</string>
     <string name="select_music">Pilih Musik</string>
     <string name="task_reminder">"Pengingat Tugas: "</string>
+    <string name="failed_to_capture_image">Gagal menangkap gambar. Silakan coba lagi.</string>
+    <string name="camera_not_supported">Kamera tidak didukung di perangkat ini.</string>
+    <string name="permission_required">Izin Diperlukan</string>
+    <string name="camera_permission_message">Izin kamera diperlukan untuk memindai kode batang. Silakan aktifkan izin di pengaturan.</string>
+    <string name="no_camera_on_device">Kamera tidak tersedia pada perangkat ini.</string>
+
+
 </resources>
