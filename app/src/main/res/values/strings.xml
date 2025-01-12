@@ -289,4 +289,8 @@
     <string name="camera_permission_message">Camera permission is required to scan barcodes. Please enable the permission in the settings.</string>
     <string name="toast_warning_time_not_selected">Please select a valid time</string>
     <string name="toast_warning_music_not_selected">Please select a music</string>
+    <string name="no_internet_title">No Internet Connection</string>
+    <string name="no_internet_message">Please check your internet connection and try again.</string>
+    <string name="retry_button">Retry</string>
+    <string name="close_button">Close</string>
 </resources>

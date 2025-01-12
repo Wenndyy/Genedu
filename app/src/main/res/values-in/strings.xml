@@ -287,4 +287,8 @@
     <string name="no_camera_on_device">Kamera tidak tersedia pada perangkat ini.</string>
     <string name="toast_warning_time_not_selected">Silakan pilih waktu yang valid</string>
     <string name="toast_warning_music_not_selected">Silakan pilih musik</string>
+    <string name="no_internet_title">Tidak Ada Koneksi Internet</string>
+    <string name="no_internet_message">Mohon periksa koneksi internet Anda dan coba lagi.</string>
+    <string name="retry_button">Muat Ulang</string>
+    <string name="close_button">Tutup</string>
 </resources>
