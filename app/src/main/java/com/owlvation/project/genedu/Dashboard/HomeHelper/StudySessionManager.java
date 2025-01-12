@@ -86,7 +86,7 @@ public class StudySessionManager {
         if (currentUser == null) return;
 
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
@@ -95,12 +95,17 @@ public class StudySessionManager {
         Date startDate = cal.getTime();
         String startDateStr = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(startDate);
 
+        Calendar endCal = (Calendar) cal.clone();
+        endCal.add(Calendar.DAY_OF_YEAR, 6);
+        String endDateStr = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(endCal.getTime());
+
         FirebaseFirestore.getInstance()
                 .collection("usage_stats")
                 .document(currentUser.getUid())
                 .collection("daily")
                 .orderBy("date", Query.Direction.ASCENDING)
                 .whereGreaterThanOrEqualTo("date", startDateStr)
+                .whereLessThanOrEqualTo("date", endDateStr)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     List<DailyStudyData> stats = new ArrayList<>();
@@ -110,6 +115,8 @@ public class StudySessionManager {
                     int maxMinutes = 0;
                     String mostProductiveDay = "";
 
+                    String lastDateWithStudy = null;
+
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                         String date = document.getString("date");
                         Long minutes = document.getLong("minutes");
@@ -118,7 +125,29 @@ public class StudySessionManager {
                             totalWeeklyMinutes += minutes;
 
                             if (minutes > 0) {
-                                currentStreak++;
+                                if (lastDateWithStudy != null) {
+                                    try {
+                                        Calendar lastCal = Calendar.getInstance();
+                                        lastCal.setTime(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(lastDateWithStudy));
+                                        lastCal.add(Calendar.DAY_OF_YEAR, 1);
+
+                                        Calendar currentCal = Calendar.getInstance();
+                                        currentCal.setTime(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(date));
+
+                                        if (currentCal.get(Calendar.DAY_OF_YEAR) == lastCal.get(Calendar.DAY_OF_YEAR) &&
+                                                currentCal.get(Calendar.YEAR) == lastCal.get(Calendar.YEAR)) {
+                                            currentStreak++;
+                                        } else {
+                                            currentStreak = 1;
+                                        }
+                                    } catch (ParseException e) {
+                                        Log.e(TAG, "Error parsing date", e);
+                                        currentStreak = 0;
+                                    }
+                                } else {
+                                    currentStreak = 1;
+                                }
+                                lastDateWithStudy = date;
                             } else {
                                 currentStreak = 0;
                             }
@@ -153,11 +182,50 @@ public class StudySessionManager {
                 .addOnFailureListener(e -> Log.e(TAG, "Error fetching weekly stats", e));
     }
 
+    private void deleteLastWeekData() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) return;
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+        cal.add(Calendar.WEEK_OF_YEAR, -1);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        Date startDate = cal.getTime();
+        String startDateStr = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(startDate);
+
+        Calendar endCal = (Calendar) cal.clone();
+        endCal.add(Calendar.DAY_OF_YEAR, 6);
+        String endDateStr = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(endCal.getTime());
+
+        FirebaseFirestore.getInstance()
+                .collection("usage_stats")
+                .document(currentUser.getUid())
+                .collection("daily")
+                .whereGreaterThanOrEqualTo("date", startDateStr)
+                .whereLessThanOrEqualTo("date", endDateStr)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        document.getReference().delete()
+                                .addOnSuccessListener(aVoid -> Log.d(TAG, "Deleted last week's data: " + document.getId()))
+                                .addOnFailureListener(e -> Log.e(TAG, "Error deleting last week's data", e));
+                    }
+                })
+                .addOnFailureListener(e -> Log.e(TAG, "Error fetching last week's data", e));
+    }
+
     public void startSession() {
         if (!isSessionActive) {
             if (isNewWeek()) {
-                resetSession();
+                deleteLastWeekData();
                 setLastResetDate(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
+                resetSession();
+                weeklyStats.setValue(new ArrayList<>());
+                studySummary.setValue(new StudySummary(0, 0, "", 0));
             }
 
             sessionStartTime = System.currentTimeMillis();
@@ -271,6 +339,12 @@ public class StudySessionManager {
 
             Calendar currentCal = Calendar.getInstance();
             currentCal.setTime(currentDate);
+
+            if (currentCal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY &&
+                    currentCal.get(Calendar.HOUR_OF_DAY) == 0 &&
+                    currentCal.get(Calendar.MINUTE) == 0) {
+                return true;
+            }
 
             return currentCal.get(Calendar.WEEK_OF_YEAR) != lastResetCal.get(Calendar.WEEK_OF_YEAR);
         } catch (ParseException e) {

@@ -222,6 +222,7 @@ public class HomeFragment extends Fragment {
             XAxis xAxis = usageChart.getXAxis();
             xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+            xAxis.setAxisMinimum(0f);
             xAxis.setGranularity(1f);
             xAxis.setDrawGridLines(false);
             xAxis.setTextColor(getResources().getColor(R.color.colorPrimary));
@@ -229,6 +230,7 @@ public class HomeFragment extends Fragment {
 
             YAxis leftAxis = usageChart.getAxisLeft();
             leftAxis.setAxisMinimum(0f);
+            leftAxis.setGranularity(1f);
             leftAxis.setDrawGridLines(true);
             leftAxis.setGridColor(getResources().getColor(R.color.colorAccent));
             leftAxis.setTextColor(getResources().getColor(R.color.colorPrimary));

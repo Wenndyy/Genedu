@@ -137,6 +137,7 @@
         android:textSize="16sp"
         android:textAllCaps="false"
         android:background="@drawable/background_button_filled"
+        app:backgroundTint="@null"
         android:textColor="@color/white"
         android:fontFamily="@font/ubuntu_medium"
         android:layout_marginTop="16dp"

@@ -11,7 +11,8 @@
         android:id="@+id/tvUserMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bubble_user"
+        android:background="@drawable/bubble_message"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:padding="8dp"
         android:textColor="@android:color/white"
         android:textSize="16sp" />
