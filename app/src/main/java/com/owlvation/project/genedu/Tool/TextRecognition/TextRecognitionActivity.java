@@ -1,7 +1,5 @@
 package com.owlvation.project.genedu.Tool.TextRecognition;
 
-import static android.Manifest.permission_group.CAMERA;
-
 import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -12,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -96,13 +95,14 @@ public class TextRecognitionActivity extends AppCompatActivity {
     private void copyTextToClipboard() {
         String textToCopy = resultText.getText().toString();
         if (!textToCopy.isEmpty()) {
-            ClipData clip = ClipData.newPlainText(getString(R.string.detected_text), textToCopy);
+            ClipData clip = ClipData.newPlainText("Detected Text", textToCopy);
             clipboardManager.setPrimaryClip(clip);
             Toast.makeText(this, R.string.successfully_copied_text_to_clipboard, Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, R.string.failed_no_text_to_copy, Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private void showImageDialog() {
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_choose_image_source, null);
@@ -149,9 +149,16 @@ public class TextRecognitionActivity extends AppCompatActivity {
     }
 
     private boolean checkPermission() {
-        int camerapermission = ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA);
-        return camerapermission == PackageManager.PERMISSION_GRANTED;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                    == PackageManager.PERMISSION_GRANTED;
+        } else {
+            boolean cameraPermission = ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+            return cameraPermission;
+        }
     }
+
 
     private void requestPermission() {
         int PERMISSION_CODE = 200;

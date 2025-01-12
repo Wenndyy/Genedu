@@ -87,7 +87,7 @@ public class ChatAiActivity extends AppCompatActivity {
 
 
     private void getResultFromAI(String inputText) {
-        String apiKey = "AIzaSyAzW3O17sUNN1VwcG0cNRGHzYMU4gMWtdY";
+        String apiKey = getString(R.string.apiKey);
         GenerativeModel generativeModel = new GenerativeModel("gemini-1.5-flash", apiKey);
         GenerativeModelFutures modelFutures = GenerativeModelFutures.from(generativeModel);
 
@@ -135,7 +135,5 @@ public class ChatAiActivity extends AppCompatActivity {
         chatMessages.clear();
         chatAdapter.notifyDataSetChanged();
     }
-
-
 
 }

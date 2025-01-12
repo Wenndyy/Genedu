@@ -4,21 +4,21 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.owlvation.project.genedu.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class StopwatchActivity extends AppCompatActivity {
@@ -28,10 +28,9 @@ public class StopwatchActivity extends AppCompatActivity {
     private ImageView icBack;
     private long MillisecondTime, StartTime, TimeBuff, UpdateTime = 0L;
     private Handler handler;
-    private ListView listView;
-    private String[] ListElements = new String[]{};
-    private List<String> ListElementsArrayList;
-    private ArrayAdapter<String> adapter;
+    private RecyclerView recyclerView;
+    private TimerAdapter timerAdapter;
+    private List<String> timerList;
     private boolean isRunning = false;
 
     @Override
@@ -44,12 +43,17 @@ public class StopwatchActivity extends AppCompatActivity {
         startPauseButton = findViewById(R.id.start_pauseBtn);
         reset = findViewById(R.id.reset);
         save = findViewById(R.id.save);
+        recyclerView  =  findViewById(R.id.listview1);
 
-        listView = findViewById(R.id.listview1);
         handler = new Handler();
-        ListElementsArrayList = new ArrayList<>(Arrays.asList(ListElements));
-        adapter = new ArrayAdapter<>(StopwatchActivity.this, android.R.layout.simple_list_item_1, ListElementsArrayList);
-        listView.setAdapter(adapter);
+        timerList = new ArrayList<>();
+
+        timerAdapter = new TimerAdapter(timerList);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(timerAdapter);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
         startPauseButton.setOnClickListener(view -> {
             if (isRunning) {
@@ -73,8 +77,8 @@ public class StopwatchActivity extends AppCompatActivity {
             if (!isRunning && TimeBuff == 0L) {
                 Toast.makeText(StopwatchActivity.this, R.string.toast_save_laps, Toast.LENGTH_LONG).show();
             } else {
-                ListElementsArrayList.add(timer.getText().toString());
-                adapter.notifyDataSetChanged();
+                timerList.add(timer.getText().toString());
+                timerAdapter.notifyDataSetChanged();
             }
         });
 
@@ -114,8 +118,8 @@ public class StopwatchActivity extends AppCompatActivity {
             UpdateTime = 0L;
 
             timer.setText(R.string.time_left_sw);
-            ListElementsArrayList.clear();
-            adapter.notifyDataSetChanged();
+            timerList.clear();
+            timerAdapter.notifyDataSetChanged();
 
             startPauseButton.setText(R.string.start_mimo);
             isRunning = false;

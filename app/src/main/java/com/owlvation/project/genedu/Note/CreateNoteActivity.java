@@ -39,7 +39,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CreateNoteActivity extends AppCompatActivity {
-
     private static final int REQUEST_PICK_IMAGE = 2;
     private static final int REQUEST_CAPTURE_IMAGE = 1;
     EditText mCreateTitleNote, mCreateDescNote;

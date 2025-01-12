@@ -24,7 +24,6 @@ import com.owlvation.project.genedu.Task.TaskActivity;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> {
-
     private List<TaskModel> todoList;
     private TaskActivity activity;
     private FirebaseFirestore firestore;
@@ -89,10 +88,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         TaskModel taskModel = todoList.get(position);
         holder.taksName.setText(taskModel.getTask());
 
-        holder.mDueDateTv.setText(activity.getString(R.string.due_on) + taskModel.getDueDate());
+        holder.mDueDateTv.setText(taskModel.getDueDate());
 
-        holder.mDueTimeTv.setText(activity.getString(R.string.at) + taskModel.getDueTime());
-
+        holder.mDueTimeTv.setText(taskModel.getDueTime());
         holder.mCheckBox.setOnCheckedChangeListener(null);
 
         holder.mCheckBox.setChecked(toBoolean(taskModel.getStatus()));

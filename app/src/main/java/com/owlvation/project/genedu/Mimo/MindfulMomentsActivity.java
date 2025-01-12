@@ -23,7 +23,6 @@ import com.owlvation.project.genedu.R;
 import java.util.Random;
 
 public class MindfulMomentsActivity extends AppCompatActivity {
-
     private long timeSelected = 0;
     private CountDownTimer timeCountDown;
     private long timeProgress = 0;
@@ -323,7 +322,7 @@ public class MindfulMomentsActivity extends AppCompatActivity {
     private void openMusicPicker() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("audio/*");
-        startActivityForResult(Intent.createChooser(intent, "Select Music"), 1);
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.select_music)), 1);
     }
 
 
@@ -332,7 +331,7 @@ public class MindfulMomentsActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
             selectedMusicUri = data.getData();
-            Toast.makeText(this, "Music Selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.music_selected, Toast.LENGTH_SHORT).show();
         }
     }
 

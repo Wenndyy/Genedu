@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.owlvation.project.genedu"
-        minSdk 23
+        minSdk 26
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -35,6 +35,7 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            pickFirst '/META-INF/DEPENDENCIES'
         }
     }
 }
@@ -77,6 +78,10 @@ dependencies {
     implementation(libs.exifinterface)
     implementation(libs.reactive.streams)
     implementation(libs.guava)
+    implementation libs.poi
+    implementation libs.poi.ooxml
+    implementation libs.poi.scratchpad
+    implementation libs.log4j.core
 }
 
 java {
