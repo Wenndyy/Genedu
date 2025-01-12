@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -62,6 +61,7 @@ public class TextRecognitionActivity extends AppCompatActivity {
         copy = findViewById(R.id.copy);
 
         clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+
 
         copy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,14 +149,8 @@ public class TextRecognitionActivity extends AppCompatActivity {
     }
 
     private boolean checkPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                    == PackageManager.PERMISSION_GRANTED;
-        } else {
-            boolean cameraPermission = ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
-            return cameraPermission;
-        }
+        int camerapermission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA);
+        return camerapermission == PackageManager.PERMISSION_GRANTED;
     }
 
 
@@ -173,10 +167,7 @@ public class TextRecognitionActivity extends AppCompatActivity {
 
     private void captureImage() {
         Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        if (takePicture.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePicture, REQUEST_IMAGE_CAPTURE);
-        }
+        startActivityForResult(takePicture, REQUEST_IMAGE_CAPTURE);
     }
 
     private void pickImageFromGallery() {

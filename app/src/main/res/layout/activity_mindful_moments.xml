@@ -218,39 +218,7 @@
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
-                android:id="@+id/btnAddMusic"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:gravity="center_vertical"
-                android:background="@drawable/background_button_filled"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layout_timer"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintVertical_bias="0">
 
-                <ImageButton
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/ic_music"
-                    android:background="@drawable/background_button_filled"
-                    android:scaleType="centerCrop"
-                    android:padding="8dp"
-                    app:tint="@color/black" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_music"
-                    android:gravity="center"
-                    android:fontFamily="@font/ubuntu_medium"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"/>
-            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

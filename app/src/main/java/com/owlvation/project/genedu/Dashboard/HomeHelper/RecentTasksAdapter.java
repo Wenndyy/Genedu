@@ -1,9 +1,13 @@
 package com.owlvation.project.genedu.Dashboard.HomeHelper;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,9 +50,7 @@ public class RecentTasksAdapter extends RecyclerView.Adapter<RecentTasksAdapter.
         holder.dueTimeTextView.setText(context.getString(R.string.at) + task.getDueTime());
 
         holder.itemView.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onTaskClick(task);
-            }
+            showTaskDetail(task);
         });
     }
 
@@ -73,5 +75,34 @@ public class RecentTasksAdapter extends RecyclerView.Adapter<RecentTasksAdapter.
             dueDateTextView = itemView.findViewById(R.id.dueDateTextView);
             dueTimeTextView = itemView.findViewById(R.id.dueTimeTextView);
         }
+    }
+
+    private void showTaskDetail(TaskModel task){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View dialogView = LayoutInflater.from(context)
+                .inflate(R.layout.dialog_note_detail, null);
+
+        TextView titleTextView = dialogView.findViewById(R.id.titleTextView);
+        TextView contentTextView = dialogView.findViewById(R.id.contentTextView);
+
+
+        titleTextView.setText(context.getString(R.string.title) + task.getTask());
+        contentTextView.setText(context.getString(R.string.task_deadline)+ " " +  task.getDueDate() +context.getString(R.string.at_) + task.getDueTime() );
+        builder.setView(dialogView);
+
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setOnShowListener(dialog -> {
+            alertDialog.getWindow().setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        });
+        ImageView closeDialog = dialogView.findViewById(R.id.close_dialog);
+        closeDialog.setOnClickListener(v -> {
+            alertDialog.dismiss();
+        });
+        alertDialog.show();
+
     }
 }

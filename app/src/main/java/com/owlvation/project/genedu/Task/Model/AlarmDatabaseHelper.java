@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class AlarmDatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "AlarmDB";
@@ -53,8 +54,9 @@ public class AlarmDatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_DAY, day);
         values.put(COLUMN_MONTH, month);
         values.put(COLUMN_YEAR, year);
-
-        return db.insert(TABLE_ALARMS, null, values);
+        long id = db.insert(TABLE_ALARMS, null, values);
+        Log.d("AlarmDatabaseHelper", "Alarm added with ID: " + id);
+        return id;
     }
 
     public Cursor getAllAlarms() {
@@ -64,8 +66,14 @@ public class AlarmDatabaseHelper extends SQLiteOpenHelper {
 
     public void deleteAlarm(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_ALARMS, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
+        int rowsDeleted = db.delete(TABLE_ALARMS, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
+        if (rowsDeleted > 0) {
+            Log.d("AlarmDatabaseHelper", "Alarm with ID " + id + " deleted.");
+        } else {
+            Log.e("AlarmDatabaseHelper", "No alarm found with ID " + id);
+        }
     }
+
 
 
     public Cursor getAlarmById(long id) {

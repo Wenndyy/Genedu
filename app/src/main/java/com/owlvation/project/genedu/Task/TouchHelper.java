@@ -6,8 +6,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -53,12 +55,24 @@ public class TouchHelper extends ItemTouchHelper.SimpleCallback {
                         public void onClick(DialogInterface dialog, int which) {
                             TaskModel tk = taskList.get(position);
                             long alarmId = tk.getAlarmId();
-                            dbHelper.deleteAlarm(alarmId);
-                            cancelAlarm(adapter.getContext(), alarmId);
-                            adapter.deleteTask(position);
-                            Toast.makeText(adapter.getContext(),
-                                   R.string.delete_task,
-                                    Toast.LENGTH_SHORT).show();
+                            String id = tk.TaskId;
+                            String task_name = tk.getTask();
+                            String idAlarm = String.valueOf(tk.getAlarmId());
+                            String due_date = tk.getDueDate();
+                            String due_time = tk.getDueTime();
+
+                            Log.d("TouchHelper", "Deleting alarm with ID: " + alarmId);
+                            Cursor cursor = dbHelper.getAlarmById(alarmId);
+                            if (cursor != null && cursor.moveToFirst()) {
+                                Log.d("TouchHelper", "Alarm found in database. Deleting...");
+                                dbHelper.deleteAlarm(alarmId);
+                                cancelPreviousAlarm(adapter.getContext(),alarmId,id,task_name, due_date,due_time);
+                                adapter.deleteTask(position);
+                                Toast.makeText(adapter.getContext(), R.string.delete_task, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.e("TouchHelper", "Alarm ID " + alarmId + " not found in database.");
+                                adapter.notifyItemChanged(position);
+                            }
                         }
                     }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                 @Override
@@ -86,30 +100,29 @@ public class TouchHelper extends ItemTouchHelper.SimpleCallback {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
     }
 
-    private void cancelAlarm(Context context, long alarmId) {
-        if (alarmId != -1) {
-            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+    private void cancelPreviousAlarm(Context context,long alarmId, String id, String task, String dueDate, String dueTime) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-            Intent intent = new Intent(context, MyBroadcastReceiver.class);
-            intent.putExtra("alarm_id", alarmId);
+        Intent i = new Intent(context, MyBroadcastReceiver.class);
+        i.putExtra("alarm_id", alarmId);
+        i.setAction("com.example.unique_action." + alarmId);
 
+        i.putExtra("id", id);
+        i.putExtra("alarm_id", alarmId);
+        i.putExtra("task_name", task);
+        i.putExtra("due_date", dueDate);
+        i.putExtra("due_time", dueTime);
 
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                    context,
-                    (int) alarmId,
-                    intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-            );
+        Log.d("cancelAlarmDelete", "idTask: " + id + " task name: "+ task+ " alarm id: "+alarmId+" due date: "+dueDate+" due time: "+dueTime);
 
-            if (alarmManager != null) {
-                alarmManager.cancel(pendingIntent);
-            }
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context,
+                (int) alarmId,
+                i,
+                PendingIntent.FLAG_UPDATE_CURRENT  | PendingIntent.FLAG_IMMUTABLE
+        );
 
-        }
+        alarmManager.cancel(pendingIntent);
     }
-
-
-
-
 
 }

@@ -34,6 +34,7 @@ import com.owlvation.project.genedu.Mimo.MindfulMomentsActivity;
 import com.owlvation.project.genedu.Note.NoteActivity;
 import com.owlvation.project.genedu.Note.NoteModel;
 import com.owlvation.project.genedu.R;
+import com.owlvation.project.genedu.Task.Adapter.TaskAdapter;
 import com.owlvation.project.genedu.Task.Model.TaskModel;
 import com.owlvation.project.genedu.Task.TaskActivity;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -408,11 +409,7 @@ public class ManagementFragment extends Fragment {
             DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(requireContext(), layoutManager.getOrientation());
             recyclerView.addItemDecoration(dividerItemDecoration);
 
-            TasksAdapter adapter = new TasksAdapter(requireContext(), tasksForDate, task -> {
-                Intent intent = new Intent(getActivity(), TaskActivity.class);
-                intent.putExtra("taskId", task.TaskId);
-                startActivity(intent);
-            });
+            TasksAdapter adapter = new TasksAdapter(requireContext(), tasksForDate, this::showTaskDetail);
             recyclerView.setAdapter(adapter);
 
             ImageView closeDialog = dialogView.findViewById(R.id.close_dialog);
@@ -499,6 +496,35 @@ public class ManagementFragment extends Fragment {
             alertDialog.dismiss();
         });
         alertDialog.show();
+    }
+
+    private void showTaskDetail(TaskModel task){
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        View dialogView = LayoutInflater.from(requireContext())
+                .inflate(R.layout.dialog_note_detail, null);
+
+        TextView titleTextView = dialogView.findViewById(R.id.titleTextView);
+        TextView contentTextView = dialogView.findViewById(R.id.contentTextView);
+
+
+        titleTextView.setText(getString(R.string.title) + task.getTask());
+        contentTextView.setText(getString(R.string.task_deadline)+ " " +  task.getDueDate() + getString(R.string.at_) + task.getDueTime() );
+        builder.setView(dialogView);
+
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setOnShowListener(dialog -> {
+            alertDialog.getWindow().setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        });
+        ImageView closeDialog = dialogView.findViewById(R.id.close_dialog);
+        closeDialog.setOnClickListener(v -> {
+            alertDialog.dismiss();
+        });
+        alertDialog.show();
+
     }
 
     private void setupClickListeners() {

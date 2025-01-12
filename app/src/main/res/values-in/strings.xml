@@ -285,4 +285,6 @@
     <string name="permission_required">Izin Diperlukan</string>
     <string name="camera_permission_message">Izin kamera diperlukan untuk memindai kode batang. Silakan aktifkan izin di pengaturan.</string>
     <string name="no_camera_on_device">Kamera tidak tersedia pada perangkat ini.</string>
+    <string name="toast_warning_time_not_selected">Silakan pilih waktu yang valid</string>
+    <string name="toast_warning_music_not_selected">Silakan pilih musik</string>
 </resources>

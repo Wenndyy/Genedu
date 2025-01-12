@@ -1,6 +1,5 @@
 package com.owlvation.project.genedu.Tool.CodeScanner;
 
-import static android.Manifest.permission_group.CAMERA;
 
 import android.Manifest;
 import android.content.ClipData;
@@ -62,6 +61,7 @@ public class CodeScannerActivity extends AppCompatActivity {
         pick = findViewById(R.id.pickCode);
         copy = findViewById(R.id.copyText);
 
+
         clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 
         copy.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +74,7 @@ public class CodeScannerActivity extends AppCompatActivity {
         pick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showImageDialog();
+               showImageDialog();
             }
         });
 
@@ -139,7 +139,7 @@ public class CodeScannerActivity extends AppCompatActivity {
     }
 
     private boolean checkPermission() {
-        int camerapermission = ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA);
+        int camerapermission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA);
         return camerapermission == PackageManager.PERMISSION_GRANTED;
     }
 
@@ -155,11 +155,8 @@ public class CodeScannerActivity extends AppCompatActivity {
     }
 
     private void captureImage() {
-        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        if (takePicture.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePicture, REQUEST_IMAGE_CAPTURE);
-        }
+        Intent capturePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(capturePhotoIntent, REQUEST_IMAGE_CAPTURE);
     }
 
     private void pickImageFromGallery() {

@@ -2,8 +2,10 @@ package com.owlvation.project.genedu.Task;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -129,7 +131,7 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
         } else {
             Log.e("TaskActivity", "Intent is null");
         }
-
+        logAllAlarms(this);
     }
 
     private void showDetailTaskDialog(String id, String taskName, String dueDate, String dueTime, int status) {
@@ -235,6 +237,47 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
         super.onBackPressed();
         finish();
     }
+
+    public void logAllAlarms(Context context) {
+        AlarmDatabaseHelper dbHelper = new AlarmDatabaseHelper(context);
+        Cursor cursor = dbHelper.getAllAlarms();
+
+        if (cursor != null && cursor.moveToFirst()) {
+            Log.d("AlarmDatabase", "Listing all alarms:");
+            do {
+                int indexId = cursor.getColumnIndex(AlarmDatabaseHelper.COLUMN_ID);
+                int indexHour = cursor.getColumnIndex(AlarmDatabaseHelper.COLUMN_HOUR);
+                int indexMinute = cursor.getColumnIndex(AlarmDatabaseHelper.COLUMN_MINUTE);
+                int indexDay = cursor.getColumnIndex(AlarmDatabaseHelper.COLUMN_DAY);
+                int indexMonth = cursor.getColumnIndex(AlarmDatabaseHelper.COLUMN_MONTH);
+                int indexYear = cursor.getColumnIndex(AlarmDatabaseHelper.COLUMN_YEAR);
+                int indexEnabled = cursor.getColumnIndex(AlarmDatabaseHelper.COLUMN_ENABLED);
+
+                if (indexId == -1 || indexHour == -1 || indexMinute == -1 || indexDay == -1 || indexMonth == -1 || indexYear == -1 || indexEnabled == -1) {
+                    Log.e("AlarmDatabase", "Column not found in Cursor.");
+                    continue;
+                }
+
+                long id = cursor.getLong(indexId);
+                int hour = cursor.getInt(indexHour);
+                int minute = cursor.getInt(indexMinute);
+                int day = cursor.getInt(indexDay);
+                int month = cursor.getInt(indexMonth);
+                int year = cursor.getInt(indexYear);
+                boolean enabled = cursor.getInt(indexEnabled) == 1;
+
+                Log.d("AlarmDatabase", "Alarm ID: " + id +
+                        ", Time: " + hour + ":" + minute +
+                        ", Date: " + day + "/" + (month + 1) + "/" + year +
+                        ", Enabled: " + enabled);
+            } while (cursor.moveToNext());
+            cursor.close();
+        } else {
+            Log.d("AlarmDatabase", "No alarms found.");
+        }
+    }
+
+
 
 }
 

@@ -287,4 +287,6 @@
     <string name="permission_required">Permission Required</string>
     <string name="no_camera_on_device">No camera available on this device.</string>
     <string name="camera_permission_message">Camera permission is required to scan barcodes. Please enable the permission in the settings.</string>
+    <string name="toast_warning_time_not_selected">Please select a valid time</string>
+    <string name="toast_warning_music_not_selected">Please select a music</string>
 </resources>

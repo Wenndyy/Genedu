@@ -2,13 +2,18 @@ package com.owlvation.project.genedu.Mimo;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.provider.OpenableColumns;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -29,12 +34,12 @@ public class MindfulMomentsActivity extends AppCompatActivity {
     private long pauseOffSet = 0;
     private boolean isStart = true;
     ImageView icBack;
-
+    private Dialog currentDialog;
     private MediaPlayer mediaPlayer;
     private int currentTrackIndex = -1;
     private static final int PICK_AUDIO_REQUEST = 1;
     private Uri selectedMusicUri = null;
-    private int[] musicTracks = {R.raw.lofi1, R.raw.lofi2, R.raw.lofi3, R.raw.lofi4, R.raw.lofi5}; // Daftar musik lofi
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +63,6 @@ public class MindfulMomentsActivity extends AppCompatActivity {
             }
         });
 
-        LinearLayout selectMusicButton = findViewById(R.id.btnAddMusic);
-        selectMusicButton.setOnClickListener(v -> openMusicPicker());
 
     }
 
@@ -89,6 +92,7 @@ public class MindfulMomentsActivity extends AppCompatActivity {
                 LinearLayout add = findViewById(R.id.add);
                 add.setEnabled(true);
                 if (mediaPlayer != null) {
+                    mediaPlayer.seekTo(0);
                     mediaPlayer.stop();
                     mediaPlayer.release();
                     mediaPlayer = null;
@@ -141,12 +145,22 @@ public class MindfulMomentsActivity extends AppCompatActivity {
 
 
     private void setTimeFunction() {
-        Dialog timeDialog = new Dialog(this);
-        timeDialog.setContentView(R.layout.dialog_add_mimo);
-        EditText etHours = timeDialog.findViewById(R.id.etHours);
-        EditText etMinutes = timeDialog.findViewById(R.id.etMinutes);
-        EditText etSeconds = timeDialog.findViewById(R.id.etSeconds);
-        Button btnOk = timeDialog.findViewById(R.id.btnOk);
+        currentDialog = new Dialog(this);
+        currentDialog.setContentView(R.layout.dialog_add_mimo);
+
+        EditText etHours = currentDialog.findViewById(R.id.etHours);
+        EditText etMinutes = currentDialog.findViewById(R.id.etMinutes);
+        EditText etSeconds = currentDialog.findViewById(R.id.etSeconds);
+        Button btnOk = currentDialog.findViewById(R.id.btnOk);
+        LinearLayout btnAddMusic = currentDialog.findViewById(R.id.add);
+
+
+        btnAddMusic.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("audio/*");
+            startActivityForResult(Intent.createChooser(intent, getString(R.string.select_music)), PICK_AUDIO_REQUEST);
+        });
+
 
         btnOk.setOnClickListener(v -> {
             long hours = etHours.getText().toString().isEmpty() ? 0 : Long.parseLong(etHours.getText().toString());
@@ -154,17 +168,29 @@ public class MindfulMomentsActivity extends AppCompatActivity {
             long seconds = etSeconds.getText().toString().isEmpty() ? 0 : Long.parseLong(etSeconds.getText().toString());
 
             timeSelected = (hours * 3600 + minutes * 60 + seconds) * 1000;
+            if (timeSelected <= 0) {
+                Toast.makeText(this, R.string.toast_warning_time_not_selected, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (selectedMusicUri == null) {
+                Toast.makeText(this, R.string.toast_warning_music_not_selected, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             String formattedTime = convertTimeToString(timeSelected / 1000);
 
             TextView timeSet = findViewById(R.id.tvTimeLeft);
             if (timeSet != null) {
                 timeSet.setText(formattedTime);
             }
-            timeDialog.dismiss();
+            currentDialog.dismiss();
+            currentDialog = null;
         });
 
-        timeDialog.show();
+        currentDialog.show();
     }
+
 
     private void playMusic() {
         if (mediaPlayer != null) {
@@ -176,8 +202,7 @@ public class MindfulMomentsActivity extends AppCompatActivity {
                 mediaPlayer = new MediaPlayer();
                 mediaPlayer.setDataSource(this, selectedMusicUri);
                 mediaPlayer.prepare();
-            } else {
-                playRandomMusic();
+                mediaPlayer.seekTo(0);
             }
             mediaPlayer.start();
 
@@ -237,6 +262,7 @@ public class MindfulMomentsActivity extends AppCompatActivity {
                 reset.setEnabled(false);
 
                 if (mediaPlayer != null) {
+                    mediaPlayer.seekTo(0);
                     mediaPlayer.stop();
                     mediaPlayer.release();
                     mediaPlayer = null;
@@ -261,6 +287,7 @@ public class MindfulMomentsActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.toast_exit_mimo, Toast.LENGTH_SHORT).show();
         } else {
             stopMusicAndTimer();
+            selectedMusicUri = null;
             super.onBackPressed();
             finish();
         }
@@ -278,33 +305,8 @@ public class MindfulMomentsActivity extends AppCompatActivity {
             mediaPlayer.release();
             mediaPlayer = null;
         }
+        selectedMusicUri = null;
     }
-
-
-    private void playRandomMusic() {
-
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-        }
-        if (currentTrackIndex == -1) {
-            Random random = new Random();
-            currentTrackIndex = random.nextInt(musicTracks.length);
-        }
-
-
-        mediaPlayer = MediaPlayer.create(this, musicTracks[currentTrackIndex]);
-        mediaPlayer.start();
-
-        mediaPlayer.setOnCompletionListener(mp -> {
-            if (timeCountDown != null && timeProgress < timeSelected) {
-                playRandomMusic();
-            } else {
-                mediaPlayer.release();
-                mediaPlayer = null;
-            }
-        });
-    }
-
 
     private void stopMusicAndTimer() {
         if (timeCountDown != null) {
@@ -313,26 +315,63 @@ public class MindfulMomentsActivity extends AppCompatActivity {
         }
 
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.seekTo(0);
             mediaPlayer.stop();
             mediaPlayer.release();
             mediaPlayer = null;
         }
+
+        selectedMusicUri = null;
     }
-
-    private void openMusicPicker() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("audio/*");
-        startActivityForResult(Intent.createChooser(intent, getString(R.string.select_music)), 1);
-    }
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
-            selectedMusicUri = data.getData();
-            Toast.makeText(this, R.string.music_selected, Toast.LENGTH_SHORT).show();
+        if (requestCode == PICK_AUDIO_REQUEST && resultCode == RESULT_OK && data != null) {
+            Uri newMusicUri = data.getData();
+            if (newMusicUri != null) {
+                selectedMusicUri = newMusicUri;
+                String fileName = getFileNameFromUri(selectedMusicUri);
+
+                // Debug log
+                Log.d("MindfulMoments", "Selected music URI: " + selectedMusicUri);
+                Log.d("MindfulMoments", "File name: " + fileName);
+
+                // Memperbarui TextView dalam dialog
+                updateDialogMusicName(fileName);
+            }
         }
     }
+    private void updateDialogMusicName(String fileName) {
+        if (currentDialog != null && currentDialog.isShowing()) {
+            TextView selectedMusicText = currentDialog.findViewById(R.id.select_music_name);
+            if (selectedMusicText != null) {
+                selectedMusicText.setText(fileName);
+                Log.d("MindfulMoments", "File name: " + fileName);
+            } else {
+                Log.e("MindfulMoments", "TextView with ID select_music not found in the dialog!");
+            }
+        }
+    }
+    private String getFileNameFromUri(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            try (Cursor cursor = getContentResolver().query(uri, null, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                    if (index != -1) {
+                        result = cursor.getString(index);
+                    }
+                }
+            }
+        } else if (uri.getScheme().equals("file")) {
+            result = uri.getLastPathSegment();
+        }
+        if (result == null) {
+            result = "Unknown file";
+        }
+        return result;
+    }
+
+
 
 }

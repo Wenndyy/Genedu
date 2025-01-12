@@ -279,7 +279,6 @@ public class AddNewTask extends BottomSheetDialogFragment {
                 String task = mTaskEdit.getText().toString();
 
                 if (finalIsUpdate) {
-
                     Map<String, Object> taskMap = new HashMap<>();
                     boolean updateTime = false, updateDate = false;
 
@@ -378,8 +377,10 @@ public class AddNewTask extends BottomSheetDialogFragment {
                                                     Toast.makeText(context,
                                                             context.getString(R.string.set_due_date_reminder_for)+ date + context.getString(R.string.at_) + jam + ":" + menit,
                                                             Toast.LENGTH_SHORT).show();
+                                                    Log.d(TAG, "alarmIdUpdate: "+alarmIdUpdate);
+                                                    cancelPreviousAlarm(alarmIdUpdate, id);
+                                                    dbHelper.deleteAlarm(alarmIdUpdate);
                                                     setTimer(alarmId, id);
-                                                    cancelPreviousAlarm(alarmIdUpdate);
                                                     checkAndRequestNotificationPermission();
                                                 }
                                             }
@@ -480,18 +481,30 @@ public class AddNewTask extends BottomSheetDialogFragment {
         }
     }
 
-    private void cancelPreviousAlarm(long alarmId) {
+    private void cancelPreviousAlarm(long alarmId, String id) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, MyBroadcastReceiver.class);
+
+        Intent i = new Intent(context, MyBroadcastReceiver.class);
+        i.putExtra("alarm_id", alarmId);
+        i.setAction("com.example.unique_action." + alarmId);
+        dueDate = setDueDate.getText().toString();
+        dueTime = setDueTime.getText().toString();
+        i.putExtra("id", id);
+        i.putExtra("alarm_id", alarmId);
+        i.putExtra("task_name", task.isEmpty() ? mTaskEdit.getText().toString().trim() : task);
+        i.putExtra("due_date", dueDate.isEmpty() ? dueDateUpdate :dueDate);
+        i.putExtra("due_time", dueTime.isEmpty() ? dueTimeUpdate :dueTime);
+
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
                 (int) alarmId,
-                intent,
+                i,
                 PendingIntent.FLAG_UPDATE_CURRENT  | PendingIntent.FLAG_IMMUTABLE
         );
 
         alarmManager.cancel(pendingIntent);
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
