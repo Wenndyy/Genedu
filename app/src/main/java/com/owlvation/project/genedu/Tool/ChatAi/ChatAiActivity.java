@@ -1,6 +1,7 @@
 package com.owlvation.project.genedu.Tool.ChatAi;
 
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,6 +39,7 @@ public class ChatAiActivity extends AppCompatActivity {
     private EditText inputMessage;
     private ImageButton btnSend;
     private ImageView icBack;
+    private RelativeLayout layout_bottom;
 
     private NetworkChangeReceiver networkChangeReceiver;
 
@@ -47,6 +50,7 @@ public class ChatAiActivity extends AppCompatActivity {
         chatRecyclerView = findViewById(R.id.chatRecyclerView);
         inputMessage = findViewById(R.id.inputMessage);
         btnSend = findViewById(R.id.send_button);
+        layout_bottom = findViewById(R.id.bottom_layout);
 
         chatMessages = new ArrayList<>();
         chatAdapter = new ChatAdapter(chatMessages);
@@ -83,6 +87,12 @@ public class ChatAiActivity extends AppCompatActivity {
             }
         });
 
+        int currentMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        if (currentMode == Configuration.UI_MODE_NIGHT_YES) {
+            layout_bottom.setBackgroundColor(getResources().getColor(android.R.color.system_background_dark));
+        } else {
+            layout_bottom.setBackgroundColor(getResources().getColor(android.R.color.system_background_light));
+        }
     }
 
     private void addChatMessage(String message, boolean isUser) {

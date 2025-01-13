@@ -95,37 +95,40 @@
             tools:ignore="RtlSymmetry" />
     </androidx.core.widget.NestedScrollView>
 
-    <RelativeLayout
-        android:id="@+id/bottom_layout"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_gravity="bottom"
-        android:padding="16dp"
-        app:layout_anchor="@id/chatRecyclerView"
-        app:layout_anchorGravity="bottom">
+        android:layout_gravity="bottom">
 
-        <EditText
-            android:id="@+id/inputMessage"
+        <RelativeLayout
+            android:id="@+id/bottom_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toStartOf="@id/send_button"
-            android:background="@drawable/background_button_outlined"
-            android:hint="@string/type_your_message"
-            android:maxLines="3"
-            android:padding="16dp"
-            android:textSize="14sp" />
+            android:layout_height="80dp"
+            android:padding="16dp">
 
-        <ImageButton
-            android:id="@+id/send_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/circle_background"
-            android:padding="8dp"
-            android:src="@drawable/ic_top_arrow" />
-    </RelativeLayout>
+            <EditText
+                android:id="@+id/inputMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_toStartOf="@id/send_button"
+                android:background="@drawable/background_button_outlined"
+                android:hint="@string/type_your_message"
+                android:maxLines="3"
+                android:padding="16dp"
+                android:textSize="14sp" />
+
+            <ImageButton
+                android:id="@+id/send_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/circle_background"
+                android:padding="8dp"
+                android:src="@drawable/ic_top_arrow" />
+        </RelativeLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
