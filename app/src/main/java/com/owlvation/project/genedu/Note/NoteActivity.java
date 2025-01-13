@@ -1,6 +1,8 @@
 package com.owlvation.project.genedu.Note;
 
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,6 +25,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.owlvation.project.genedu.Network.NetworkChangeReceiver;
 import com.owlvation.project.genedu.R;
 
 import java.util.ArrayList;
@@ -43,6 +46,8 @@ public class NoteActivity extends AppCompatActivity {
 
     SearchView searchView;
     OnQueryTextListener queryTextListener;
+
+    private NetworkChangeReceiver networkChangeReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +82,7 @@ public class NoteActivity extends AppCompatActivity {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         noteList = new ArrayList<>();
+        networkChangeReceiver = new NetworkChangeReceiver();
 
 
         icBack.setOnClickListener(new View.OnClickListener() {
@@ -159,5 +165,18 @@ public class NoteActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(networkChangeReceiver);
     }
 }

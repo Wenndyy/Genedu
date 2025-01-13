@@ -1,10 +1,12 @@
 package com.owlvation.project.genedu.Tool.Compass;
 
 
+import android.content.IntentFilter;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.owlvation.project.genedu.Network.NetworkChangeReceiver;
 import com.owlvation.project.genedu.R;
 
 
@@ -23,6 +26,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     private float DegreeStart = 0f;
     TextView DegreeTV;
     ImageView icBack;
+    private NetworkChangeReceiver networkChangeReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         compassimage = (ImageView) findViewById(R.id.compass_image);
         DegreeTV = findViewById(R.id.degreeTV);
         SensorManage = (SensorManager) getSystemService(SENSOR_SERVICE);
-
+        networkChangeReceiver = new NetworkChangeReceiver();
         icBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,6 +50,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     protected void onPause() {
         super.onPause();
         SensorManage.unregisterListener(this);
+        unregisterReceiver(networkChangeReceiver);
     }
 
     @Override
@@ -53,6 +58,9 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         super.onResume();
         SensorManage.registerListener(this, SensorManage.getDefaultSensor(Sensor.TYPE_ORIENTATION),
                 SensorManager.SENSOR_DELAY_GAME);
+
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, intentFilter);
     }
 
     @Override
@@ -79,4 +87,6 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         super.onBackPressed();
         finish();
     }
+
+
 }

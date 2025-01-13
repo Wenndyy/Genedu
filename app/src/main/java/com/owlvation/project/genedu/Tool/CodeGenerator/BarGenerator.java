@@ -1,12 +1,14 @@
 package com.owlvation.project.genedu.Tool.CodeGenerator;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -24,6 +26,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.owlvation.project.genedu.Network.NetworkChangeReceiver;
 import com.owlvation.project.genedu.R;
 
 import java.io.File;
@@ -37,6 +40,7 @@ public class BarGenerator extends AppCompatActivity {
     private LinearLayout download, share, generate;
     private Bitmap barcodeBitmap;
     private ImageView icBack;
+    private NetworkChangeReceiver networkChangeReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,8 @@ public class BarGenerator extends AppCompatActivity {
         download = findViewById(R.id.downloadBar);
         share = findViewById(R.id.shareBar);
         generate = findViewById(R.id.generateBar);
+        networkChangeReceiver = new NetworkChangeReceiver();
+
 
         generate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,4 +216,16 @@ public class BarGenerator extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(networkChangeReceiver);
+    }
 }

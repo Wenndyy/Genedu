@@ -5,7 +5,9 @@ import static android.content.ContentValues.TAG;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +32,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.owlvation.project.genedu.Network.NetworkChangeReceiver;
 import com.owlvation.project.genedu.R;
 import com.owlvation.project.genedu.Task.Adapter.TaskAdapter;
 import com.owlvation.project.genedu.Task.Model.AlarmDatabaseHelper;
@@ -51,17 +54,18 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
     OnQueryTextListener queryTextListener;
     SwipeRefreshLayout swipeRefreshLayout;
 
-    private AlarmDatabaseHelper dbHelper;
+    private NetworkChangeReceiver networkChangeReceiver;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
-        dbHelper = new AlarmDatabaseHelper(this);
+
         searchView = findViewById(R.id.searchTask);
 
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+        networkChangeReceiver = new NetworkChangeReceiver();
 
         queryTextListener = new OnQueryTextListener() {
             @Override
@@ -278,6 +282,17 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, intentFilter);
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(networkChangeReceiver);
+    }
 }
 

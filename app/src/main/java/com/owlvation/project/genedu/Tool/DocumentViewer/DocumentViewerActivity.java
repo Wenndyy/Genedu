@@ -1,6 +1,7 @@
 package com.owlvation.project.genedu.Tool.DocumentViewer;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -9,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.pdf.PdfRenderer;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.owlvation.project.genedu.Network.NetworkChangeReceiver;
 import com.owlvation.project.genedu.R;
 
 import org.apache.poi.hwpf.HWPFDocument;
@@ -62,6 +65,7 @@ public class DocumentViewerActivity extends AppCompatActivity {
     public static final int PICK_FILE = 99;
     private ImageView icBack;
     private String currentFileType = "";
+    private NetworkChangeReceiver networkChangeReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +83,7 @@ public class DocumentViewerActivity extends AppCompatActivity {
         numberOfPage = findViewById(R.id.numberPage);
         result = findViewById(R.id.resultFile);
         icBack = findViewById(R.id.ic_back);
+        networkChangeReceiver = new NetworkChangeReceiver();
     }
 
     private void setupClickListeners() {
@@ -664,5 +669,18 @@ public class DocumentViewerActivity extends AppCompatActivity {
         }
 
         return result.toString();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(networkChangeReceiver);
     }
 }

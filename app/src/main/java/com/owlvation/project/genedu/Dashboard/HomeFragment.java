@@ -2,7 +2,9 @@ package com.owlvation.project.genedu.Dashboard;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Rect;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +41,7 @@ import com.google.firebase.storage.StorageReference;
 import com.owlvation.project.genedu.Dashboard.HomeHelper.RecentNotesAdapter;
 import com.owlvation.project.genedu.Dashboard.HomeHelper.RecentTasksAdapter;
 import com.owlvation.project.genedu.Dashboard.HomeHelper.StudySessionManager;
+import com.owlvation.project.genedu.Network.NetworkChangeReceiver;
 import com.owlvation.project.genedu.Note.CreateNoteActivity;
 import com.owlvation.project.genedu.Note.NoteActivity;
 import com.owlvation.project.genedu.Note.NoteModel;
@@ -69,12 +72,14 @@ public class HomeFragment extends Fragment {
     private List<TaskModel> recentTasksList;
     private LineChart usageChart;
     private ProgressDialog progressDialog;
+    private NetworkChangeReceiver networkChangeReceiver;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         db = FirebaseFirestore.getInstance();
+        networkChangeReceiver = new NetworkChangeReceiver();
 
         progressDialog = new ProgressDialog(requireContext());
         progressDialog.setMessage(getString(R.string.please_wait));
@@ -472,5 +477,18 @@ public class HomeFragment extends Fragment {
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        requireActivity().registerReceiver(networkChangeReceiver, intentFilter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        requireActivity().unregisterReceiver(networkChangeReceiver);
     }
 }

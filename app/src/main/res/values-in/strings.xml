@@ -291,4 +291,9 @@
     <string name="no_internet_message">Mohon periksa koneksi internet Anda dan coba lagi.</string>
     <string name="retry_button">Muat Ulang</string>
     <string name="close_button">Tutup</string>
+    <string name="dialog_title_no_internet">Tidak Ada Koneksi Internet</string>
+    <string name="dialog_message_no_internet">Sepertinya Anda sedang offline. Periksa koneksi internet Anda dan coba lagi.</string>
+    <string name="dialog_button_reload">Muat Ulang</string>
+    <string name="dialog_button_exit">Keluar</string>
+    <string name="no_text_detected">Tidak ada teks yang terdeteksi dalam gambar.</string>
 </resources>

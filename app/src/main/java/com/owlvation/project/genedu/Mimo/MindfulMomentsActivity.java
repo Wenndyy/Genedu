@@ -2,8 +2,10 @@ package com.owlvation.project.genedu.Mimo;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -23,6 +25,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.owlvation.project.genedu.Network.NetworkChangeReceiver;
 import com.owlvation.project.genedu.R;
 
 import java.util.Random;
@@ -40,6 +43,8 @@ public class MindfulMomentsActivity extends AppCompatActivity {
     private static final int PICK_AUDIO_REQUEST = 1;
     private Uri selectedMusicUri = null;
 
+    private NetworkChangeReceiver networkChangeReceiver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,9 @@ public class MindfulMomentsActivity extends AppCompatActivity {
 
         LinearLayout reset = findViewById(R.id.reset);
         reset.setOnClickListener(v -> resetTime());
+
+        networkChangeReceiver = new NetworkChangeReceiver();
+
 
         icBack = findViewById(R.id.ic_back);
         icBack.setOnClickListener(new View.OnClickListener() {
@@ -332,11 +340,6 @@ public class MindfulMomentsActivity extends AppCompatActivity {
                 selectedMusicUri = newMusicUri;
                 String fileName = getFileNameFromUri(selectedMusicUri);
 
-                // Debug log
-                Log.d("MindfulMoments", "Selected music URI: " + selectedMusicUri);
-                Log.d("MindfulMoments", "File name: " + fileName);
-
-                // Memperbarui TextView dalam dialog
                 updateDialogMusicName(fileName);
             }
         }
@@ -373,5 +376,17 @@ public class MindfulMomentsActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(networkChangeReceiver);
+    }
 
 }

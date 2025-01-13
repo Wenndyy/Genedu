@@ -11,9 +11,11 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.media.AudioAttributes;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,6 +46,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.owlvation.project.genedu.Network.NetworkChangeReceiver;
 import com.owlvation.project.genedu.R;
 import com.owlvation.project.genedu.Task.Model.AlarmDatabaseHelper;
 
@@ -81,6 +84,8 @@ public class AddNewTask extends BottomSheetDialogFragment {
     private String date;
     private boolean check;
 
+    private NetworkChangeReceiver networkChangeReceiver;
+
     public static AddNewTask newInstance() {
         return new AddNewTask();
     }
@@ -108,6 +113,9 @@ public class AddNewTask extends BottomSheetDialogFragment {
         dbHelper = new AlarmDatabaseHelper(context);
         firestore = FirebaseFirestore.getInstance();
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        networkChangeReceiver = new NetworkChangeReceiver();
+
 
         boolean isUpdate = false;
         check = false;
@@ -598,6 +606,19 @@ public class AddNewTask extends BottomSheetDialogFragment {
         );
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal_alarm.getTimeInMillis(), pendingIntent);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        requireActivity().registerReceiver(networkChangeReceiver, intentFilter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        requireActivity().unregisterReceiver(networkChangeReceiver);
     }
 }
 

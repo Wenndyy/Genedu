@@ -293,4 +293,10 @@
     <string name="no_internet_message">Please check your internet connection and try again.</string>
     <string name="retry_button">Retry</string>
     <string name="close_button">Close</string>
+    <string name="dialog_title_no_internet">No Internet Connection</string>
+    <string name="dialog_message_no_internet">It seems you are offline. Please check your internet connection and try again.</string>
+    <string name="dialog_button_reload">Reload</string>
+    <string name="dialog_button_exit">Exit</string>
+    <string name="no_text_detected">No text detected in the image.</string>
+
 </resources>

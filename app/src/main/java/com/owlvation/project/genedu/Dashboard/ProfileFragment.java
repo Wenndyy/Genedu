@@ -3,8 +3,10 @@ package com.owlvation.project.genedu.Dashboard;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +37,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.owlvation.project.genedu.Network.NetworkChangeReceiver;
 import com.owlvation.project.genedu.R;
 import com.owlvation.project.genedu.User.EditProfile;
 import com.owlvation.project.genedu.User.PrivpolActivity;
@@ -72,12 +75,14 @@ public class ProfileFragment extends Fragment {
     private ImageView icTheme;
     private ListenerRegistration userListener;
 
+    private NetworkChangeReceiver networkChangeReceiver;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         sharedPreferences = requireActivity().getSharedPreferences(THEME_PREFS, Context.MODE_PRIVATE);
-
+        networkChangeReceiver = new NetworkChangeReceiver();
         initializeViews();
         setupFirebase();
         setupListeners();
@@ -382,6 +387,7 @@ public class ProfileFragment extends Fragment {
             userListener.remove();
             userListener = null;
         }
+        requireActivity().unregisterReceiver(networkChangeReceiver);
     }
 
     private void checkLoadingComplete(int[] loadingTasks) {
@@ -425,4 +431,13 @@ public class ProfileFragment extends Fragment {
             requireActivity().recreate();
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        requireActivity().registerReceiver(networkChangeReceiver, intentFilter);
+    }
+
+
 }

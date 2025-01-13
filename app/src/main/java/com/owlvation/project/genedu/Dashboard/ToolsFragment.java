@@ -1,5 +1,7 @@
 package com.owlvation.project.genedu.Dashboard;
 
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.owlvation.project.genedu.Network.NetworkChangeReceiver;
 import com.owlvation.project.genedu.R;
 import com.owlvation.project.genedu.Tool.Adapter;
 import com.owlvation.project.genedu.Tool.Model;
@@ -26,6 +29,8 @@ public class ToolsFragment extends Fragment {
     private List<Model> models;
     private List<Model> filteredList;
     private SearchView searchView;
+
+    private NetworkChangeReceiver networkChangeReceiver;
 
     @Nullable
     @Override
@@ -50,6 +55,8 @@ public class ToolsFragment extends Fragment {
         recyclerView.setPadding(24, 0, 24, 0);
 
         filteredList = new ArrayList<>(models);
+
+        networkChangeReceiver = new NetworkChangeReceiver();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -87,4 +94,18 @@ public class ToolsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        requireActivity().registerReceiver(networkChangeReceiver, intentFilter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        requireActivity().unregisterReceiver(networkChangeReceiver);
+    }
+
 }

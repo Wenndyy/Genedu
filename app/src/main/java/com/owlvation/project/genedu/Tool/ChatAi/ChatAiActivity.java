@@ -1,5 +1,7 @@
 package com.owlvation.project.genedu.Tool.ChatAi;
 
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +24,7 @@ import com.google.ai.client.generativeai.type.GenerateContentResponse;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.owlvation.project.genedu.Network.NetworkChangeReceiver;
 import com.owlvation.project.genedu.R;
 
 import java.util.ArrayList;
@@ -35,6 +38,7 @@ public class ChatAiActivity extends AppCompatActivity {
     private ImageButton btnSend;
     private ImageView icBack;
 
+    private NetworkChangeReceiver networkChangeReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,8 @@ public class ChatAiActivity extends AppCompatActivity {
 
         chatMessages = new ArrayList<>();
         chatAdapter = new ChatAdapter(chatMessages);
+        networkChangeReceiver = new NetworkChangeReceiver();
+
 
         chatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         chatRecyclerView.setAdapter(chatAdapter);
@@ -134,6 +140,19 @@ public class ChatAiActivity extends AppCompatActivity {
     private void clearChatMessages() {
         chatMessages.clear();
         chatAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(networkChangeReceiver);
     }
 
 }

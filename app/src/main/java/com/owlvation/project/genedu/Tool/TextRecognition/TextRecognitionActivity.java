@@ -5,10 +5,14 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -34,6 +38,7 @@ import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
+import com.owlvation.project.genedu.Network.NetworkChangeReceiver;
 import com.owlvation.project.genedu.R;
 
 import java.io.IOException;
@@ -47,6 +52,7 @@ public class TextRecognitionActivity extends AppCompatActivity {
     private ClipboardManager clipboardManager;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int PICK_IMAGE_REQUEST = 2;
+    private NetworkChangeReceiver networkChangeReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +67,7 @@ public class TextRecognitionActivity extends AppCompatActivity {
         copy = findViewById(R.id.copy);
 
         clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-
+        networkChangeReceiver = new NetworkChangeReceiver();
 
         copy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -218,39 +224,75 @@ public class TextRecognitionActivity extends AppCompatActivity {
             return;
         }
 
-        InputImage image = InputImage.fromBitmap(imageBitmap, 0);
+        Bitmap processedBitmap = toGrayscale(imageBitmap);
+        processedBitmap = sharpenImage(processedBitmap);
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(processedBitmap, 1500, 1500, true);
+        InputImage image = InputImage.fromBitmap(resizedBitmap, 0);
         TextRecognizer recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
-        Task<Text> result = recognizer.process(image).addOnSuccessListener(new OnSuccessListener<Text>() {
-            @Override
-            public void onSuccess(Text text) {
-                StringBuilder result = new StringBuilder();
-                for (Text.TextBlock block : text.getTextBlocks()) {
-                    String blockText = block.getText();
-                    Point[] blockCornerpoint = block.getCornerPoints();
-                    Rect blockFrame = block.getBoundingBox();
-                    for (Text.Line line : block.getLines()) {
-                        String lineText = line.getText();
-                        Point[] lineCornerPoint = line.getCornerPoints();
-                        Rect lineRect = line.getBoundingBox();
-                        for (Text.Element element : line.getElements()) {
-                            String elementText = element.getText();
-                            result.append(elementText);
+
+        recognizer.process(image)
+                .addOnSuccessListener(new OnSuccessListener<Text>() {
+                    @Override
+                    public void onSuccess(Text text) {
+                        if (text.getTextBlocks().isEmpty()) {
+                            Toast.makeText(getApplicationContext(), getString(R.string.no_text_detected), Toast.LENGTH_SHORT).show();
+                            return;
                         }
-                        resultText.setText(blockText);
+
+                        StringBuilder resultBuilder = new StringBuilder();
+                        for (Text.TextBlock block : text.getTextBlocks()) {
+                            resultBuilder.append(block.getText()).append("\n");
+                        }
+
+                        resultText.setText(resultBuilder.toString());
                     }
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), getString(R.string.failed_to_detect_text_from_image) + e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), getString(R.string.failed_to_detect_text_from_image) + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
+
+    public static Bitmap sharpenImage(Bitmap original) {
+        Matrix matrix = new Matrix();
+        matrix.setScale(1.2f, 1.2f);
+        Bitmap sharpenedBitmap = Bitmap.createBitmap(original, 0, 0, original.getWidth(), original.getHeight(), matrix, true);
+        return sharpenedBitmap;
+    }
+    public static Bitmap toGrayscale(Bitmap original) {
+        Bitmap grayscaleBitmap = Bitmap.createBitmap(original.getWidth(), original.getHeight(), Bitmap.Config.ARGB_8888);
+        for (int x = 0; x < original.getWidth(); x++) {
+            for (int y = 0; y < original.getHeight(); y++) {
+                int pixel = original.getPixel(x, y);
+                int red = (pixel >> 16) & 0xFF;
+                int green = (pixel >> 8) & 0xFF;
+                int blue = pixel & 0xFF;
+                int gray = (int) (0.3 * red + 0.59 * green + 0.11 * blue);
+                grayscaleBitmap.setPixel(x, y, Color.rgb(gray, gray, gray));
+            }
+        }
+        return grayscaleBitmap;
+    }
+
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(networkChangeReceiver);
     }
 }

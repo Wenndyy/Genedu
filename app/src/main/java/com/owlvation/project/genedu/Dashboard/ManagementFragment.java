@@ -2,8 +2,10 @@ package com.owlvation.project.genedu.Dashboard;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
@@ -31,6 +33,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.owlvation.project.genedu.Mimo.MindfulMomentsActivity;
+import com.owlvation.project.genedu.Network.NetworkChangeReceiver;
 import com.owlvation.project.genedu.Note.NoteActivity;
 import com.owlvation.project.genedu.Note.NoteModel;
 import com.owlvation.project.genedu.R;
@@ -66,6 +69,8 @@ public class ManagementFragment extends Fragment {
     private SimpleDateFormat dateFormatter;
     private View rootView;
 
+    private NetworkChangeReceiver networkChangeReceiver;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -88,6 +93,7 @@ public class ManagementFragment extends Fragment {
         cvMimo = rootView.findViewById(R.id.cvMimo);
         calendarView = rootView.findViewById(R.id.calendarView);
         calendarDropdown = rootView.findViewById(R.id.calendarDropdown);
+        networkChangeReceiver = new NetworkChangeReceiver();
     }
 
     private void initializeFirebase() {
@@ -591,5 +597,18 @@ public class ManagementFragment extends Fragment {
                     R.string.no_matching_results_found_please_search_by_title,
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        requireActivity().registerReceiver(networkChangeReceiver, intentFilter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        requireActivity().unregisterReceiver(networkChangeReceiver);
     }
 }
