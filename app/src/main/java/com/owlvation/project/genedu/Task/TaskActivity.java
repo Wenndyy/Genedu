@@ -156,6 +156,10 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
         }
     }
     private void filterTask(String query) {
+        if (query == null || query.trim().isEmpty()) {
+            adapter.filterTask(mList);
+            return;
+        }
         List<TaskModel> filteredList = new ArrayList<>();
         for (TaskModel note : mList) {
             if (note.getTask().toLowerCase().contains(query.toLowerCase())) {
@@ -290,7 +294,7 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
 
         swipeRefreshLayout.setRefreshing(true);
         showData();
-        adapter.notifyDataSetChanged();
+
     }
 
     @Override

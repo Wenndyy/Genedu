@@ -111,6 +111,10 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     private void filterNotes(String query) {
+        if (query == null || query.trim().isEmpty()) {
+            adapter.filterList(noteList);
+            return;
+        }
         List<NoteModel> filteredList = new ArrayList<>();
         for (NoteModel note : noteList) {
             if (note.getTitle().toLowerCase().contains(query.toLowerCase())) {
@@ -174,7 +178,7 @@ public class NoteActivity extends AppCompatActivity {
         registerReceiver(networkChangeReceiver, intentFilter);
         swipeRefreshLayout.setRefreshing(true);
         fetchNotes();
-        adapter.notifyDataSetChanged();
+
     }
 
     @Override
