@@ -117,6 +117,21 @@
                     tools:ignore="RtlSymmetry"
                     android:padding="8dp" />
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <TextView
+                android:id="@+id/tvEmptyNotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_notes_added"
+                android:textSize="16sp"
+                android:textColor="@color/colorAccent"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/cdNote"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:gravity="center"
+                android:layout_marginTop="16dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

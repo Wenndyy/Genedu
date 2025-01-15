@@ -106,7 +106,6 @@ public class BottomNavActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         showExitConfirmationDialog();
     }
 
