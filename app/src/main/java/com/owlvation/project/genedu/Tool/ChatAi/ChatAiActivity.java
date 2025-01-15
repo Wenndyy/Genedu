@@ -91,7 +91,7 @@ public class ChatAiActivity extends AppCompatActivity {
         if (currentMode == Configuration.UI_MODE_NIGHT_YES) {
             layout_bottom.setBackgroundColor(getResources().getColor(android.R.color.system_background_dark));
         } else {
-            layout_bottom.setBackgroundColor(getResources().getColor(android.R.color.system_background_light));
+            layout_bottom.setBackgroundColor(getResources().getColor(android.R.color.background_light));
         }
     }
 

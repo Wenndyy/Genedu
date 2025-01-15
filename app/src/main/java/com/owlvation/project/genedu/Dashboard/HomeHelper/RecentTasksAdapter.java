@@ -80,7 +80,7 @@ public class RecentTasksAdapter extends RecyclerView.Adapter<RecentTasksAdapter.
     private void showTaskDetail(TaskModel task){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View dialogView = LayoutInflater.from(context)
-                .inflate(R.layout.dialog_note_detail, null);
+                .inflate(R.layout.dialog_task_detail, null);
 
         TextView titleTextView = dialogView.findViewById(R.id.titleTextView);
         TextView contentTextView = dialogView.findViewById(R.id.contentTextView);

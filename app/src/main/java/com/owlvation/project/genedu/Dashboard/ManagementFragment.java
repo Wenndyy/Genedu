@@ -507,7 +507,7 @@ public class ManagementFragment extends Fragment {
     private void showTaskDetail(TaskModel task){
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         View dialogView = LayoutInflater.from(requireContext())
-                .inflate(R.layout.dialog_note_detail, null);
+                .inflate(R.layout.dialog_task_detail, null);
 
         TextView titleTextView = dialogView.findViewById(R.id.titleTextView);
         TextView contentTextView = dialogView.findViewById(R.id.contentTextView);
@@ -537,6 +537,7 @@ public class ManagementFragment extends Fragment {
         cvTask.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), TaskActivity.class);
             startActivity(intent);
+
         });
 
         cvNote.setOnClickListener(v -> {

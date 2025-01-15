@@ -20,9 +20,7 @@ public class NetworkDialogHelper {
                     .setPositiveButton(context.getString(R.string.dialog_button_reload), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(context, ((Activity) context).getClass());
-                            context.startActivity(intent);
-                            ((Activity) context).finish();
+                            ((Activity) context).recreate();
                         }
                     })
                     .setNegativeButton(context.getString(R.string.dialog_button_exit), new DialogInterface.OnClickListener() {

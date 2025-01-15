@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,7 +38,6 @@ public class NoteActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     NoteAdapter adapter;
     List<NoteModel> noteList;
-    TextView tvEmptyNotes;
 
     FirebaseFirestore firebaseFirestore;
     FirebaseUser firebaseUser;
@@ -75,7 +73,6 @@ public class NoteActivity extends AppCompatActivity {
 
         icBack = findViewById(R.id.ic_back);
         mCreateNoteFab = findViewById(R.id.createFabNote);
-        tvEmptyNotes = findViewById(R.id.tvEmptyNotes);
         recyclerView = findViewById(R.id.recycerlviewNote);
         recyclerView.setHasFixedSize(true);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
@@ -123,10 +120,7 @@ public class NoteActivity extends AppCompatActivity {
         adapter.filterList(filteredList);
 
         if (filteredList.isEmpty()) {
-            tvEmptyNotes.setVisibility(View.VISIBLE);
             Toast.makeText(NoteActivity.this, R.string.no_matching_results_found_please_search_by_title, Toast.LENGTH_SHORT).show();
-        } else {
-            tvEmptyNotes.setVisibility(View.GONE);
         }
     }
 
@@ -155,12 +149,6 @@ public class NoteActivity extends AppCompatActivity {
                             adapter.notifyDataSetChanged();
                         }
 
-                        if (noteList.isEmpty()) {
-                            tvEmptyNotes.setVisibility(View.VISIBLE);
-                        } else {
-                            tvEmptyNotes.setVisibility(View.GONE);
-                        }
-
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 })
@@ -184,6 +172,9 @@ public class NoteActivity extends AppCompatActivity {
         super.onResume();
         IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkChangeReceiver, intentFilter);
+        swipeRefreshLayout.setRefreshing(true);
+        fetchNotes();
+        adapter.notifyDataSetChanged();
     }
 
     @Override

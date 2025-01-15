@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -50,7 +49,6 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
     private FirebaseFirestore firestore;
     private TaskAdapter adapter;
     private List<TaskModel> mList;
-    private TextView tvEmptyTasks;
     private Query query;
     SearchView searchView;
     OnQueryTextListener queryTextListener;
@@ -95,7 +93,6 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
 
         recyclerView = findViewById(R.id.recycerlview);
         mFab = findViewById(R.id.floatingActionButton);
-        tvEmptyTasks = findViewById(R.id.tvEmptyTasks);
         firestore = FirebaseFirestore.getInstance();
 
         recyclerView.setHasFixedSize(true);
@@ -168,10 +165,7 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
         adapter.filterTask(filteredList);
 
         if (filteredList.isEmpty()) {
-            tvEmptyTasks.setVisibility(View.VISIBLE);
             Toast.makeText(TaskActivity.this, getString(R.string.no_matching_results_found_please_search_by_title), Toast.LENGTH_SHORT).show();
-        } else {
-            tvEmptyTasks.setVisibility(View.GONE);
         }
     }
 
@@ -193,13 +187,6 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
                         mList.add(taskModel);
                     }
                     adapter.notifyDataSetChanged();
-
-                    if (mList.isEmpty()) {
-                        tvEmptyTasks.setVisibility(View.VISIBLE);
-                    } else {
-                        tvEmptyTasks.setVisibility(View.GONE);
-                    }
-
                     if (!mList.isEmpty()) {
                         showSwipeHintSnackbar();
                     }
@@ -300,6 +287,10 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
         super.onResume();
         IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkChangeReceiver, intentFilter);
+
+        swipeRefreshLayout.setRefreshing(true);
+        showData();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
