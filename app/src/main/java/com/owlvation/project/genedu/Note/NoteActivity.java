@@ -176,8 +176,7 @@ public class NoteActivity extends AppCompatActivity {
         super.onResume();
         IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkChangeReceiver, intentFilter);
-        swipeRefreshLayout.setRefreshing(true);
-        fetchNotes();
+
 
     }
 
