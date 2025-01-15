@@ -300,4 +300,5 @@
     <string name="no_text_detected">No text detected in the image.</string>
     <string name="no_notes_added">No notes added</string>
     <string name="no_tasks_added">No tasks added</string>
+    <string name="recent_tasks">Recent Tasks</string>
 </resources>
