@@ -296,4 +296,6 @@
     <string name="dialog_button_reload">Muat Ulang</string>
     <string name="dialog_button_exit">Keluar</string>
     <string name="no_text_detected">Tidak ada teks yang terdeteksi dalam gambar.</string>
+    <string name="no_notes_added">Tidak ada catatan</string>
+    <string name="no_tasks_added">Tidak ada tugas</string>
 </resources>

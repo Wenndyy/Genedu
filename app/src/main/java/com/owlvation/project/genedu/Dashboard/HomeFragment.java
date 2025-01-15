@@ -61,7 +61,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeFragment extends Fragment {
     private static final String TAG = "HomeFragment";
-    private TextView tvGreeting, tvNotesCount, tvViewAll, tvViewAllTasks, tvStreakCount, tvTotalTime, tvMostProductiveDay, tvTasksCount;
+    private TextView tvGreeting, tvNotesCount, tvViewAll, tvViewAllTasks, tvStreakCount, tvTotalTime, tvMostProductiveDay, tvTasksCount, tvNoNotes, tvNoTasks;
     private RecyclerView rvRecentNotes, rvRecentTasks;
     private FirebaseFirestore db;
     private CircleImageView imageAccount;
@@ -112,6 +112,8 @@ public class HomeFragment extends Fragment {
         tvViewAllTasks = rootView.findViewById(R.id.tvViewAllTask);
         rvRecentNotes = rootView.findViewById(R.id.rvRecentNotes);
         rvRecentTasks = rootView.findViewById(R.id.rvRecentTasks);
+        tvNoNotes = rootView.findViewById(R.id.tvNoNotes);
+        tvNoTasks = rootView.findViewById(R.id.tvNoTasks);
         usageChart = rootView.findViewById(R.id.usageChart);
     }
 
@@ -409,6 +411,12 @@ public class HomeFragment extends Fragment {
                                 }
                             }
                             recentNotesAdapter.notifyDataSetChanged();
+
+                            if (recentNotesList.isEmpty()) {
+                                tvNoNotes.setVisibility(View.VISIBLE);
+                            } else {
+                                tvNoNotes.setVisibility(View.GONE);
+                            }
                         }
                         progressDialog.dismiss();
                     })
@@ -447,6 +455,12 @@ public class HomeFragment extends Fragment {
                                 }
                             }
                             recentTasksAdapter.notifyDataSetChanged();
+
+                            if (recentTasksList.isEmpty()) {
+                                tvNoTasks.setVisibility(View.VISIBLE);
+                            } else {
+                                tvNoTasks.setVisibility(View.GONE);
+                            }
                         }
                         progressDialog.dismiss();
                     })

@@ -298,5 +298,6 @@
     <string name="dialog_button_reload">Reload</string>
     <string name="dialog_button_exit">Exit</string>
     <string name="no_text_detected">No text detected in the image.</string>
-
+    <string name="no_notes_added">No notes added</string>
+    <string name="no_tasks_added">No tasks added</string>
 </resources>
