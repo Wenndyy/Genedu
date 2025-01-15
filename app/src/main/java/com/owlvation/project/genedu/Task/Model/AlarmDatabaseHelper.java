@@ -75,7 +75,6 @@ public class AlarmDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-
     public Cursor getAlarmById(long id) {
         SQLiteDatabase db = this.getReadableDatabase();
 

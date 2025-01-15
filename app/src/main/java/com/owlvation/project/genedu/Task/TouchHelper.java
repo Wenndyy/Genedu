@@ -32,7 +32,7 @@ public class TouchHelper extends ItemTouchHelper.SimpleCallback {
     private List<TaskModel> taskList;
 
     public TouchHelper(TaskAdapter adapter, List<TaskModel> taskList) {
-        super(0 , ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+        super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         this.adapter = adapter;
         this.taskList = taskList;
     }
@@ -45,8 +45,8 @@ public class TouchHelper extends ItemTouchHelper.SimpleCallback {
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         final int position = viewHolder.getAdapterPosition();
-         AlarmDatabaseHelper dbHelper = new AlarmDatabaseHelper(adapter.getContext());
-        if (direction == ItemTouchHelper.RIGHT){
+        AlarmDatabaseHelper dbHelper = new AlarmDatabaseHelper(adapter.getContext());
+        if (direction == ItemTouchHelper.RIGHT) {
             AlertDialog.Builder builder = new AlertDialog.Builder(adapter.getContext());
             builder.setMessage(R.string.are_you_sure)
                     .setTitle(R.string.delete_task)
@@ -66,7 +66,7 @@ public class TouchHelper extends ItemTouchHelper.SimpleCallback {
                             if (cursor != null && cursor.moveToFirst()) {
                                 Log.d("TouchHelper", "Alarm found in database. Deleting...");
                                 dbHelper.deleteAlarm(alarmId);
-                                cancelPreviousAlarm(adapter.getContext(),alarmId,id,task_name, due_date,due_time);
+                                cancelPreviousAlarm(adapter.getContext(), alarmId, id, task_name, due_date, due_time);
                                 adapter.deleteTask(position);
                                 Toast.makeText(adapter.getContext(), R.string.delete_task, Toast.LENGTH_SHORT).show();
                             } else {
@@ -75,15 +75,15 @@ public class TouchHelper extends ItemTouchHelper.SimpleCallback {
                             }
                         }
                     }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    adapter.notifyItemChanged(position);
-                }
-            });
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            adapter.notifyItemChanged(position);
+                        }
+                    });
 
             AlertDialog dialog = builder.create();
             dialog.show();
-        }else{
+        } else {
             adapter.editTask(position);
         }
     }
@@ -94,13 +94,13 @@ public class TouchHelper extends ItemTouchHelper.SimpleCallback {
                 .addSwipeRightActionIcon(R.drawable.ic_delete)
                 .addSwipeRightBackgroundColor(Color.RED)
                 .addSwipeLeftActionIcon(R.drawable.ic_editt)
-                .addSwipeLeftBackgroundColor(ContextCompat.getColor(adapter.getContext() , R.color.colorAccent))
+                .addSwipeLeftBackgroundColor(ContextCompat.getColor(adapter.getContext(), R.color.colorAccent))
                 .create()
                 .decorate();
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
     }
 
-    private void cancelPreviousAlarm(Context context,long alarmId, String id, String task, String dueDate, String dueTime) {
+    private void cancelPreviousAlarm(Context context, long alarmId, String id, String task, String dueDate, String dueTime) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         Intent i = new Intent(context, MyBroadcastReceiver.class);
@@ -113,13 +113,13 @@ public class TouchHelper extends ItemTouchHelper.SimpleCallback {
         i.putExtra("due_date", dueDate);
         i.putExtra("due_time", dueTime);
 
-        Log.d("cancelAlarmDelete", "idTask: " + id + " task name: "+ task+ " alarm id: "+alarmId+" due date: "+dueDate+" due time: "+dueTime);
+        Log.d("cancelAlarmDelete", "idTask: " + id + " task name: " + task + " alarm id: " + alarmId + " due date: " + dueDate + " due time: " + dueTime);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
                 (int) alarmId,
                 i,
-                PendingIntent.FLAG_UPDATE_CURRENT  | PendingIntent.FLAG_IMMUTABLE
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
         alarmManager.cancel(pendingIntent);

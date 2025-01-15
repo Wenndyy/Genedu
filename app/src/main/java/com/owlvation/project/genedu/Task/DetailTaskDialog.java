@@ -25,6 +25,7 @@ public class DetailTaskDialog extends DialogFragment {
     private ImageView closeButton;
     private static final String TAG = "DetailTaskDialog";
     private FirebaseFirestore firestore;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +51,7 @@ public class DetailTaskDialog extends DialogFragment {
             String dueDate = bundle.getString("dueDate");
             String dueTime = bundle.getString("dueTime");
             taskTextView.setText(bundle.getString("task"));
-            String dueText = " "+ dueDate + " " + dueTime;
+            String dueText = " " + dueDate + " " + dueTime;
             int status = bundle.getInt("status");
             dueDateTextView.setText(dueText);
             mCheckBox.setChecked(toBoolean(status));

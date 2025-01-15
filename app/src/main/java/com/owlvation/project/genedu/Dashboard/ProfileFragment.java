@@ -203,7 +203,6 @@ public class ProfileFragment extends Fragment {
     }
 
 
-
     private void loadUserProfile() {
         if (!isAdded() || getActivity() == null) return;
 

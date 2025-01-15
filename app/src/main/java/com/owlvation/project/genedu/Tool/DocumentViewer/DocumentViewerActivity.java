@@ -157,8 +157,8 @@ public class DocumentViewerActivity extends AppCompatActivity {
 
         if (currentFileType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")) {
             docxDocument = new XWPFDocument(inputStream);
-        } else{
-            Toast.makeText(this, R.string.invalid_file_format,Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, R.string.invalid_file_format, Toast.LENGTH_LONG).show();
         }
 
         totalPages = calculateTotalPages();
@@ -169,7 +169,7 @@ public class DocumentViewerActivity extends AppCompatActivity {
         if (docxDocument != null) {
             return renderWordContentToBitmap(null, -1, true);
         } else {
-            Toast.makeText(this, R.string.invalid_file_format,Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.invalid_file_format, Toast.LENGTH_LONG).show();
         }
         return 0;
     }
@@ -238,7 +238,6 @@ public class DocumentViewerActivity extends AppCompatActivity {
                         float firstLineIndent = paragraph.getFirstLineIndent() > 0 ? paragraph.getFirstLineIndent() * 0.12f : 0;
 
 
-
                         if (paragraph.getNumIlvl() != null) {
                             BigInteger numId = paragraph.getNumID();
                             XWPFNum xwpfNum = docxDocument.getNumbering().getNum(numId);
@@ -253,17 +252,16 @@ public class DocumentViewerActivity extends AppCompatActivity {
 
                             int currentCounter = numCounters.getOrDefault(numId, 1);
 
-                            if (numFmt.isEmpty() ||numFmt == null) {
+                            if (numFmt.isEmpty() || numFmt == null) {
                                 if (lvlText.matches(".%[0-9]+.")) {
                                     if (lvlText.matches(".*[a-z].*")) {
                                         numFmt = "loweralpha";
                                     } else if (lvlText.matches(".*[A-Z].*")) {
                                         numFmt = "upperalpha";
                                     }
-                                }else {
+                                } else {
                                     numFmt = "decimal";
                                 }
-
 
 
                             }
@@ -344,9 +342,9 @@ public class DocumentViewerActivity extends AppCompatActivity {
                         }
 
 
-                        int availableWidth = (int)(950 - leftMargin - rightMargin);
+                        int availableWidth = (int) (950 - leftMargin - rightMargin);
 
-                        StaticLayout layout = StaticLayout.Builder.obtain( text.isEmpty() ? "\n" : text, 0, text.length(), textPaint, availableWidth)
+                        StaticLayout layout = StaticLayout.Builder.obtain(text.isEmpty() ? "\n" : text, 0, text.length(), textPaint, availableWidth)
                                 .setAlignment(canvasAlignment)
                                 .setLineSpacing(0f, 1.2f)
                                 .setIncludePad(true)
@@ -380,8 +378,8 @@ public class DocumentViewerActivity extends AppCompatActivity {
                                     int imageWidth = Math.min(500, imageBitmap.getWidth());
                                     int imageHeight = (int) (imageWidth / aspectRatio);
 
-                                     leftMargin = marginInPixels;
-                                     rightMargin = marginInPixels;
+                                    leftMargin = marginInPixels;
+                                    rightMargin = marginInPixels;
                                     if (paragraph.getIndentationLeft() > 0) {
                                         leftMargin += paragraph.getIndentationLeft() * 0.12f;
                                     }
@@ -424,8 +422,7 @@ public class DocumentViewerActivity extends AppCompatActivity {
                             }
                         }
                     }
-                }
-                else if (element instanceof XWPFTable) {
+                } else if (element instanceof XWPFTable) {
                     XWPFTable table = (XWPFTable) element;
 
                     Paint tablePaint = new Paint();
@@ -493,7 +490,7 @@ public class DocumentViewerActivity extends AppCompatActivity {
 
                                             if (imageBitmap != null) {
                                                 float aspectRatio = (float) imageBitmap.getWidth() / imageBitmap.getHeight();
-                                                int maxImageWidth = Math.min(150, (int)(cellWidth / 3));
+                                                int maxImageWidth = Math.min(150, (int) (cellWidth / 3));
                                                 int imageWidth = Math.min(maxImageWidth, imageBitmap.getWidth());
                                                 int imageHeight = (int) (imageWidth / aspectRatio);
 
@@ -533,7 +530,6 @@ public class DocumentViewerActivity extends AppCompatActivity {
                                     float textY = contentY;
                                     for (XWPFParagraph cellParagraph : cell.getParagraphs()) {
                                         String paragraphText = cellParagraph.getText();
-
 
 
                                         if (paragraphText.trim().isEmpty() || paragraphText.matches("^\\s*$")) {
@@ -578,7 +574,7 @@ public class DocumentViewerActivity extends AppCompatActivity {
 
                                                 if (imageBitmap != null) {
                                                     float aspectRatio = (float) imageBitmap.getWidth() / imageBitmap.getHeight();
-                                                    int maxImageWidth = Math.min(150, (int)(cellWidth - 2 * cellPadding));
+                                                    int maxImageWidth = Math.min(150, (int) (cellWidth - 2 * cellPadding));
                                                     int imageWidth = Math.min(maxImageWidth, imageBitmap.getWidth());
                                                     int imageHeight = (int) (imageWidth / aspectRatio);
 
@@ -656,6 +652,7 @@ public class DocumentViewerActivity extends AppCompatActivity {
             }
         }
     }
+
     private String toRoman(int number) {
         String[] romans = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
         int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};

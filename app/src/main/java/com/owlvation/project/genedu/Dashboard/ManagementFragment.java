@@ -37,7 +37,6 @@ import com.owlvation.project.genedu.Network.NetworkChangeReceiver;
 import com.owlvation.project.genedu.Note.NoteActivity;
 import com.owlvation.project.genedu.Note.NoteModel;
 import com.owlvation.project.genedu.R;
-import com.owlvation.project.genedu.Task.Adapter.TaskAdapter;
 import com.owlvation.project.genedu.Task.Model.TaskModel;
 import com.owlvation.project.genedu.Task.TaskActivity;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -504,7 +503,7 @@ public class ManagementFragment extends Fragment {
         alertDialog.show();
     }
 
-    private void showTaskDetail(TaskModel task){
+    private void showTaskDetail(TaskModel task) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         View dialogView = LayoutInflater.from(requireContext())
                 .inflate(R.layout.dialog_task_detail, null);
@@ -514,7 +513,7 @@ public class ManagementFragment extends Fragment {
 
 
         titleTextView.setText(getString(R.string.title) + task.getTask());
-        contentTextView.setText(getString(R.string.task_deadline)+ " " +  task.getDueDate() + getString(R.string.at_) + task.getDueTime() );
+        contentTextView.setText(getString(R.string.task_deadline) + " " + task.getDueDate() + getString(R.string.at_) + task.getDueTime());
         builder.setView(dialogView);
 
 

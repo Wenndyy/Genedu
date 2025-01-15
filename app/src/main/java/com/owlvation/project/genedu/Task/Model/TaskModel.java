@@ -2,7 +2,7 @@ package com.owlvation.project.genedu.Task.Model;
 
 public class TaskModel extends TaskId {
 
-    private String task, dueDate, dueTime,dueDateReminder, dueTimeReminder;
+    private String task, dueDate, dueTime, dueDateReminder, dueTimeReminder;
     private int status;
     private long alarmId;
 

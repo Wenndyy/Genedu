@@ -29,6 +29,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
     private FirebaseFirestore firestore;
     private String userId;
     private OnDialogCloseListner taskClickListener;
+
     public TaskAdapter(TaskActivity taskActivity, List<TaskModel> todoList, OnDialogCloseListner taskClickListener) {
         this.todoList = todoList;
         activity = taskActivity;
@@ -49,6 +50,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         todoList = filteredList;
         notifyDataSetChanged();
     }
+
     public void deleteTask(int position) {
         TaskModel taskModel = todoList.get(position);
         firestore.collection("task").document(userId)
@@ -115,7 +117,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
                 }
             }
         });
-
 
 
     }

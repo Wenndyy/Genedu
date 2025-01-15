@@ -32,7 +32,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         String id = intent.getStringExtra("id");
         String dueDate = intent.getStringExtra("due_date");
         String dueTime = intent.getStringExtra("due_time");
-        int status = intent.getIntExtra("status",0);
+        int status = intent.getIntExtra("status", 0);
 
         if (alarmId == -1) {
             Log.d("DEBUG", "Received alarm with invalid ID");
@@ -84,7 +84,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "Notify")
                     .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
                     .setContentTitle(context.getString(R.string.task_reminder) + taskName)
-                    .setContentText(context.getString(R.string.due_on) + dueDate +" "+ context.getString(R.string.at)+" " + dueTime)
+                    .setContentText(context.getString(R.string.due_on) + dueDate + " " + context.getString(R.string.at) + " " + dueTime)
                     .setAutoCancel(true)
                     .setPriority(NotificationCompat.PRIORITY_MAX)
                     .setCategory(NotificationCompat.CATEGORY_ALARM)

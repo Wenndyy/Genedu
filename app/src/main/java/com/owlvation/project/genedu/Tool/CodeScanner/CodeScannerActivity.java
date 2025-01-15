@@ -78,7 +78,7 @@ public class CodeScannerActivity extends AppCompatActivity {
         pick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               showImageDialog();
+                showImageDialog();
             }
         });
 

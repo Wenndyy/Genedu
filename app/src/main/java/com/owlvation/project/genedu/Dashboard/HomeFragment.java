@@ -73,6 +73,7 @@ public class HomeFragment extends Fragment {
     private LineChart usageChart;
     private ProgressDialog progressDialog;
     private NetworkChangeReceiver networkChangeReceiver;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -267,7 +268,6 @@ public class HomeFragment extends Fragment {
             usageChart.setScaleEnabled(false);
             usageChart.animateY(1000);
             usageChart.invalidate();
-
 
 
         } catch (Exception e) {

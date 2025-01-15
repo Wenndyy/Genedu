@@ -145,7 +145,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         }
 
 
-
         AlertDialog alertDialog = builder.create();
         alertDialog.setOnShowListener(dialog -> {
             alertDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

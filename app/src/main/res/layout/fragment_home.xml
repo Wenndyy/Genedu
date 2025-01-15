@@ -305,7 +305,6 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Section Recent Notes -->
             <TextView
                 android:id="@+id/tvRecentNotes"
                 android:layout_width="0dp"
@@ -358,7 +357,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-            <!-- Section Recent Tasks -->
             <TextView
                 android:id="@+id/tvRecentTasks"
                 android:layout_width="0dp"

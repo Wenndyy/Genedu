@@ -62,7 +62,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
     private TextView setDueTimeReminder;
     private TextView setDueReminder;
     private EditText mTaskEdit;
-    private LinearLayout  layoutReminderDueDate, layoutReminderDueTime;
+    private LinearLayout layoutReminderDueDate, layoutReminderDueTime;
     private FirebaseFirestore firestore;
     private Context context;
     private String userId;
@@ -78,7 +78,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
     private Switch switchToggle;
     private Button mSaveBtn;
     private String task = "";
-    private long alarmIdUpdate ,alarmId;
+    private long alarmIdUpdate, alarmId;
     private AlarmDatabaseHelper dbHelper;
     private int jam, menit, hari, bulan, tahun;
     private String date;
@@ -309,7 +309,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
                     if (!dueDateReminder.isEmpty() && !dueDateReminder.equals(dueDateReminderUpdate)) {
                         taskMap.put("dueDateReminder", dueDateReminder);
                         updateDate = true;
-                    }else if (dueDateReminder.isEmpty() && dueDateReminderUpdate != null) {
+                    } else if (dueDateReminder.isEmpty() && dueDateReminderUpdate != null) {
                         taskMap.put("dueDateReminder", "");
                     }
 
@@ -320,7 +320,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
                         taskMap.put("dueTimeReminder", "");
                     }
 
-                    if(currentTimeReminder != null && currentDateReminder != null &&
+                    if (currentTimeReminder != null && currentDateReminder != null &&
                             !currentTimeReminder.isEmpty() && !currentDateReminder.isEmpty()) {
 
                         if (updateTime) {
@@ -348,11 +348,11 @@ public class AddNewTask extends BottomSheetDialogFragment {
                             if (hourIndex != -1 && minuteIndex != -1 && dayIndex != -1 &&
                                     monthIndex != -1 && yearIndex != -1) {
 
-                                if(!updateTime) {
+                                if (!updateTime) {
                                     jam = cursor.getInt(hourIndex);
                                     menit = cursor.getInt(minuteIndex);
                                 }
-                                if(!updateDate) {
+                                if (!updateDate) {
                                     hari = cursor.getInt(dayIndex);
                                     bulan = cursor.getInt(monthIndex);
                                     tahun = cursor.getInt(yearIndex);
@@ -383,9 +383,9 @@ public class AddNewTask extends BottomSheetDialogFragment {
                                                 if (alarmId != -1) {
                                                     date = hari + "/" + (bulan + 1) + "/" + tahun;
                                                     Toast.makeText(context,
-                                                            context.getString(R.string.set_due_date_reminder_for)+ date + context.getString(R.string.at_) + jam + ":" + menit,
+                                                            context.getString(R.string.set_due_date_reminder_for) + date + context.getString(R.string.at_) + jam + ":" + menit,
                                                             Toast.LENGTH_SHORT).show();
-                                                    Log.d(TAG, "alarmIdUpdate: "+alarmIdUpdate);
+                                                    Log.d(TAG, "alarmIdUpdate: " + alarmIdUpdate);
                                                     cancelPreviousAlarm(alarmIdUpdate, id);
                                                     dbHelper.deleteAlarm(alarmIdUpdate);
                                                     setTimer(alarmId, id);
@@ -409,8 +409,8 @@ public class AddNewTask extends BottomSheetDialogFragment {
                     }
 
                 } else {
-                    if (check ){
-                        if(dueTimeReminder.isEmpty() || dueTimeReminder.isEmpty()){
+                    if (check) {
+                        if (dueTimeReminder.isEmpty() || dueTimeReminder.isEmpty()) {
                             Toast.makeText(context, getString(R.string.please_fill_in_all_fields), Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -427,7 +427,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
                         taskMap.put("dueTime", dueTime);
                         taskMap.put("dueDateReminder", dueDateReminder);
                         taskMap.put("dueTimeReminder", dueTimeReminder);
-                        if (alarmIdNew != -1){
+                        if (alarmIdNew != -1) {
                             taskMap.put("alarmId", alarmIdNew);
                         }
                         firestore.collection("task").document(userId)
@@ -445,14 +445,14 @@ public class AddNewTask extends BottomSheetDialogFragment {
                                                 if (alarmIdNew != -1) {
                                                     date = hari + "/" + (bulan + 1) + "/" + tahun;
                                                     Toast.makeText(context,
-                                                            context.getString(R.string.set_due_date_reminder_for)+ date + context.getString(R.string.at_) + jam + ":" + menit,
+                                                            context.getString(R.string.set_due_date_reminder_for) + date + context.getString(R.string.at_) + jam + ":" + menit,
                                                             Toast.LENGTH_SHORT).show();
                                                     setTimer(alarmIdNew, idTask);
                                                     checkAndRequestNotificationPermission();
                                                 }
                                             }
                                             Toast.makeText(context, R.string.task_added_successfully, Toast.LENGTH_SHORT).show();
-                                        }else{
+                                        } else {
                                             Toast.makeText(context, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                         }
                                     }
@@ -500,14 +500,14 @@ public class AddNewTask extends BottomSheetDialogFragment {
         i.putExtra("id", id);
         i.putExtra("alarm_id", alarmId);
         i.putExtra("task_name", task.isEmpty() ? mTaskEdit.getText().toString().trim() : task);
-        i.putExtra("due_date", dueDate.isEmpty() ? dueDateUpdate :dueDate);
-        i.putExtra("due_time", dueTime.isEmpty() ? dueTimeUpdate :dueTime);
+        i.putExtra("due_date", dueDate.isEmpty() ? dueDateUpdate : dueDate);
+        i.putExtra("due_time", dueTime.isEmpty() ? dueTimeUpdate : dueTime);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
                 (int) alarmId,
                 i,
-                PendingIntent.FLAG_UPDATE_CURRENT  | PendingIntent.FLAG_IMMUTABLE
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
         alarmManager.cancel(pendingIntent);
@@ -528,7 +528,6 @@ public class AddNewTask extends BottomSheetDialogFragment {
     }
 
 
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -539,10 +538,11 @@ public class AddNewTask extends BottomSheetDialogFragment {
     public void onDismiss(@NonNull DialogInterface dialog) {
         super.onDismiss(dialog);
         Activity activity = getActivity();
-        if (activity instanceof  OnDialogCloseListner){
-            ((OnDialogCloseListner)activity).onDialogClose(dialog);
+        if (activity instanceof OnDialogCloseListner) {
+            ((OnDialogCloseListner) activity).onDialogClose(dialog);
         }
     }
+
     private void notification() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
@@ -564,7 +564,6 @@ public class AddNewTask extends BottomSheetDialogFragment {
 
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.createNotificationChannel(channel);
-
 
 
         }
@@ -595,8 +594,8 @@ public class AddNewTask extends BottomSheetDialogFragment {
         i.putExtra("id", idTask);
         i.putExtra("alarm_id", alarmId);
         i.putExtra("task_name", task.isEmpty() ? mTaskEdit.getText().toString().trim() : task);
-        i.putExtra("due_date", dueDate.isEmpty() ? dueDateUpdate :dueDate);
-        i.putExtra("due_time", dueTime.isEmpty() ? dueTimeUpdate :dueTime);
+        i.putExtra("due_date", dueDate.isEmpty() ? dueDateUpdate : dueDate);
+        i.putExtra("due_time", dueTime.isEmpty() ? dueTimeUpdate : dueTime);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,

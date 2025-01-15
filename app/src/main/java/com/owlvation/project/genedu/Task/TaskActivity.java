@@ -109,9 +109,8 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
         });
 
 
-
         mList = new ArrayList<>();
-        adapter = new TaskAdapter(TaskActivity.this, mList,this);
+        adapter = new TaskAdapter(TaskActivity.this, mList, this);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new TouchHelper(adapter, mList));
         itemTouchHelper.attachToRecyclerView(recyclerView);
@@ -132,9 +131,9 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
             String taskName = intent.getStringExtra("task_name");
             String dueDate = intent.getStringExtra("due_date");
             String dueTime = intent.getStringExtra("due_time");
-            int status = intent.getIntExtra("status",0);
+            int status = intent.getIntExtra("status", 0);
 
-            showDetailTaskDialog(id, taskName, dueDate, dueTime,status);
+            showDetailTaskDialog(id, taskName, dueDate, dueTime, status);
         } else {
             Log.e("TaskActivity", "Intent is null");
         }
@@ -158,6 +157,7 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
             Log.e("TaskActivity", "Failed to show DetailTaskDialog", e);
         }
     }
+
     private void filterTask(String query) {
         if (query == null || query.trim().isEmpty()) {
             adapter.filterTask(mList);
@@ -215,7 +215,6 @@ public class TaskActivity extends AppCompatActivity implements OnDialogCloseList
 
         });
     }
-
 
 
     private void showSwipeHintSnackbar() {

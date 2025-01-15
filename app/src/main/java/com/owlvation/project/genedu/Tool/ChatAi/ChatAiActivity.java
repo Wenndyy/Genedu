@@ -147,6 +147,7 @@ public class ChatAiActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(inputMessage.getWindowToken(), 0);
         }
     }
+
     private void clearChatMessages() {
         chatMessages.clear();
         chatAdapter.notifyDataSetChanged();

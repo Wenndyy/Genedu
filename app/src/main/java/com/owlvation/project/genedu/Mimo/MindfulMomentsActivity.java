@@ -12,10 +12,8 @@ import android.os.CountDownTimer;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -27,8 +25,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.owlvation.project.genedu.Network.NetworkChangeReceiver;
 import com.owlvation.project.genedu.R;
-
-import java.util.Random;
 
 public class MindfulMomentsActivity extends AppCompatActivity {
     private long timeSelected = 0;
@@ -42,9 +38,7 @@ public class MindfulMomentsActivity extends AppCompatActivity {
     private int currentTrackIndex = -1;
     private static final int PICK_AUDIO_REQUEST = 1;
     private Uri selectedMusicUri = null;
-
     private NetworkChangeReceiver networkChangeReceiver;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -331,6 +325,7 @@ public class MindfulMomentsActivity extends AppCompatActivity {
 
         selectedMusicUri = null;
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -344,6 +339,7 @@ public class MindfulMomentsActivity extends AppCompatActivity {
             }
         }
     }
+
     private void updateDialogMusicName(String fileName) {
         if (currentDialog != null && currentDialog.isShowing()) {
             TextView selectedMusicText = currentDialog.findViewById(R.id.select_music_name);
@@ -355,6 +351,7 @@ public class MindfulMomentsActivity extends AppCompatActivity {
             }
         }
     }
+
     private String getFileNameFromUri(Uri uri) {
         String result = null;
         if (uri.getScheme().equals("content")) {

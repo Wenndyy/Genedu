@@ -44,6 +44,7 @@ public class TOSActivity extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
+
     @Override
     protected void onResume() {
         super.onResume();

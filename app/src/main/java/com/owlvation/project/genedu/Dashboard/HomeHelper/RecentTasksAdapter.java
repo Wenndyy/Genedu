@@ -1,7 +1,5 @@
 package com.owlvation.project.genedu.Dashboard.HomeHelper;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -77,7 +75,7 @@ public class RecentTasksAdapter extends RecyclerView.Adapter<RecentTasksAdapter.
         }
     }
 
-    private void showTaskDetail(TaskModel task){
+    private void showTaskDetail(TaskModel task) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View dialogView = LayoutInflater.from(context)
                 .inflate(R.layout.dialog_task_detail, null);
@@ -87,7 +85,7 @@ public class RecentTasksAdapter extends RecyclerView.Adapter<RecentTasksAdapter.
 
 
         titleTextView.setText(context.getString(R.string.title) + task.getTask());
-        contentTextView.setText(context.getString(R.string.task_deadline)+ " " +  task.getDueDate() +context.getString(R.string.at_) + task.getDueTime() );
+        contentTextView.setText(context.getString(R.string.task_deadline) + " " + task.getDueDate() + context.getString(R.string.at_) + task.getDueTime());
         builder.setView(dialogView);
 
 

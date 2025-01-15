@@ -11,11 +11,11 @@ import com.owlvation.project.genedu.R;
 
 import java.util.Locale;
 
-public class CustomMarkerView  extends MarkerView {
+public class CustomMarkerView extends MarkerView {
 
     private TextView tvContent;
 
-    public CustomMarkerView (Context context, int layoutResource) {
+    public CustomMarkerView(Context context, int layoutResource) {
         super(context, layoutResource);
         tvContent = findViewById(R.id.tvContent);
     }
@@ -31,7 +31,7 @@ public class CustomMarkerView  extends MarkerView {
 
     @Override
     public MPPointF getOffset() {
-        if(mOffset == null) {
+        if (mOffset == null) {
             mOffset = new MPPointF(-(getWidth() / 2), -getHeight() + 8);
         }
         return mOffset;
