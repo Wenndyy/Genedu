@@ -102,8 +102,7 @@
             android:theme="@style/Theme.Genedu" />
         <activity
             android:name="com.owlvation.project.genedu.Note.CreateNoteActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:exported="false" />
         <activity
             android:name="com.owlvation.project.genedu.Note.NoteActivity"
             android:exported="false" />

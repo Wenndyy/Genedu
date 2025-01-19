@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -60,6 +61,16 @@ public class StopwatchActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(dividerItemDecoration);
 
         networkChangeReceiver = new NetworkChangeReceiver();
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (isRunning) {
+                    Toast.makeText(StopwatchActivity.this, R.string.toast_exit_stopwatch, Toast.LENGTH_SHORT).show();
+                } else {
+                    showExitConfirm();
+                }
+            }
+        });
 
         startPauseButton.setOnClickListener(view -> {
             if (isRunning) {
@@ -88,14 +99,11 @@ public class StopwatchActivity extends AppCompatActivity {
             }
         });
 
-        icBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isRunning) {
-                    Toast.makeText(StopwatchActivity.this, R.string.toast_exit_stopwatch, Toast.LENGTH_SHORT).show();
-                } else {
-                    showExitConfirm();
-                }
+        icBack.setOnClickListener(v -> {
+            if (isRunning) {
+                Toast.makeText(StopwatchActivity.this, R.string.toast_exit_stopwatch, Toast.LENGTH_SHORT).show();
+            } else {
+                showExitConfirm();
             }
         });
     }
@@ -152,16 +160,6 @@ public class StopwatchActivity extends AppCompatActivity {
             handler.postDelayed(this, 0);
         }
     };
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (isRunning) {
-            Toast.makeText(this, R.string.toast_exit_stopwatch, Toast.LENGTH_SHORT).show();
-        } else {
-            showExitConfirm();
-        }
-    }
 
     private void showExitConfirm() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
